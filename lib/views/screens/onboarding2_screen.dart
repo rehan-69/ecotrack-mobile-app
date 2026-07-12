@@ -42,11 +42,11 @@ class Onboarding2Screen extends StatelessWidget {
                       SizedBox(height: context.height * 0.04),
 
                       CustomButton(
-                        text: "Next",
+                        text: "Get Started",
                         onPressed: () {},
-                        width: context.width * 0.90,
-                        height: context.height * 0.065,
-                        borderRadius: context.width * 0.045,
+                        width: context.width * 0.85,
+                        height: context.height * 0.070,
+                        borderRadius: context.width * 0.063,
                         fontSize: context.width * 0.043,
                         fontWeight: FontWeight.w700,
                       ),
