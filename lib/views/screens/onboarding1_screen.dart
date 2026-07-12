@@ -6,7 +6,6 @@ import 'package:project/views/widgets/custom_button.dart';
 import 'package:project/views/widgets/custom_onboarding_text.dart';
 import 'package:project/views/widgets/custome_page_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Onboarding1Screen extends StatelessWidget {
   const Onboarding1Screen({super.key});
@@ -39,20 +38,20 @@ class Onboarding1Screen extends StatelessWidget {
                         subtitle:
                             "Curated brands and trending drops in one\nfeed.",
                       ),
-                      
-                      SizedBox(height: context.height * 0.040),
+
+                      SizedBox(height: context.height * 0.04),
 
                       CustomButton(
                         text: "Next",
                         onPressed: () {},
-                        width: double.infinity,
+                        width: context.width * 0.90,
                         height: context.height * 0.065,
-                        borderRadius: 18,
+                        borderRadius: context.width * 0.045,
                         fontSize: context.width * 0.043,
                         fontWeight: FontWeight.w700,
                       ),
 
-                      SizedBox(height: context.height * 0.020),
+                      SizedBox(height: context.height * 0.02),
 
                       Text(
                         "Skip",
