@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project/viewmodel/provider.dart';
-import 'package:project/views/screens/onboarding3_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:project/viewmodel/provider.dart';
+import 'package:project/views/screens/splash_screen.dart';
 
 class EcoApp extends StatelessWidget {
   const EcoApp({super.key});
@@ -12,7 +12,7 @@ class EcoApp extends StatelessWidget {
       create: (context) => ProductProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Onboarding3Screen(),
+        home: const SplashScreen(),
       ),
     );
   }

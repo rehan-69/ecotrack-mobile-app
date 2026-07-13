@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/constants/mediaquery.dart';
 import 'package:project/viewmodel/provider.dart';
+import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/widgets/custom_button.dart';
 import 'package:project/views/widgets/custom_onboarding_text.dart';
 import 'package:project/views/widgets/custome_page_indicator.dart';
-import 'package:provider/provider.dart';
 
-class Onboarding2Screen extends StatelessWidget {
-  const Onboarding2Screen({super.key});
+class Onboarding3Screen extends StatelessWidget {
+  const Onboarding3Screen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +34,9 @@ class Onboarding2Screen extends StatelessWidget {
                       SizedBox(height: context.height * 0.03),
 
                       CustomOnboardingText(
-                        title: "Buy in a tap",
+                        title: "Track every step",
                         subtitle:
-                            "Saved cards, one-click checkout, doorstep\ndelivery.",
+                            "Real-time updates from warehouse to your\ndoor.",
                       ),
 
                       SizedBox(height: context.height * 0.04),

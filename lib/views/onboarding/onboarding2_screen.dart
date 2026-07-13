@@ -7,8 +7,8 @@ import 'package:project/views/widgets/custom_onboarding_text.dart';
 import 'package:project/views/widgets/custome_page_indicator.dart';
 import 'package:provider/provider.dart';
 
-class Onboarding3Screen extends StatelessWidget {
-  const Onboarding3Screen({super.key});
+class Onboarding2Screen extends StatelessWidget {
+  const Onboarding2Screen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +34,15 @@ class Onboarding3Screen extends StatelessWidget {
                       SizedBox(height: context.height * 0.03),
 
                       CustomOnboardingText(
-                        title: "Track every step",
+                        title: "Buy in a tap",
                         subtitle:
-                            "Real-time updates from warehouse to your\ndoor.",
+                            "Saved cards, one-click checkout, doorstep\ndelivery.",
                       ),
 
                       SizedBox(height: context.height * 0.04),
 
                       CustomButton(
-                        text: "Get Started",
+                        text: "Next",
                         onPressed: () {},
                         width: context.width * 0.85,
                         height: context.height * 0.070,
