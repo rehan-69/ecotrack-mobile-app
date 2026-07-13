@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/onboarding/onboarding1_screen.dart';
 
@@ -16,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    Timer(const Duration(seconds: 100), () {
+    Timer(const Duration(seconds: 1), () {
       if (!mounted) return;
 
       Navigator.pushReplacement(
@@ -73,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       fontSize: context.width * .095,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 1.2,
-                      color: Colors.white,
+                      color: AppColors.appWhiteColor,
                     ),
                   ),
 
@@ -86,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     style: GoogleFonts.inter(
                       fontSize: context.width * .043,
                       fontWeight: FontWeight.w500,
-                      color: Colors.white70,
+                      color: AppColors.appWhite70,
                       letterSpacing: .3,
                     ),
                   ),
@@ -99,7 +100,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     height: 28,
                     child: CircularProgressIndicator(
                       strokeWidth: 2.8,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      valueColor: AlwaysStoppedAnimation<Color>(AppColors.appWhiteColor),
                     ),
                   ),
                 ],

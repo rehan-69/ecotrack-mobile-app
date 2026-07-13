@@ -5,20 +5,25 @@ import 'package:project/constants/mediaquery.dart';
 class CustomOnboardingText extends StatelessWidget {
   final String title;
   final String subtitle;
+  final TextAlign textAlign;
+  final CrossAxisAlignment crossAxisAlignment;
 
   const CustomOnboardingText({
     super.key,
     required this.title,
     required this.subtitle,
+    this.textAlign = TextAlign.center,
+    this.crossAxisAlignment = CrossAxisAlignment.center,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: crossAxisAlignment,
       children: [
         Text(
           title,
-          textAlign: TextAlign.center,
+          textAlign: textAlign,
           style: GoogleFonts.inter(
             fontSize: context.width * 0.068,
             fontWeight: FontWeight.w700,
@@ -30,7 +35,7 @@ class CustomOnboardingText extends StatelessWidget {
 
         Text(
           subtitle,
-          textAlign: TextAlign.center,
+          textAlign: textAlign,
           style: GoogleFonts.inter(
             fontSize: context.width * 0.040,
             color: const Color(0xFF9CA3AF),

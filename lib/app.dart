@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/views/screens/welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:project/viewmodel/provider.dart';
 import 'package:project/views/screens/splash_screen.dart';
@@ -12,7 +13,7 @@ class EcoApp extends StatelessWidget {
       create: (context) => ProductProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: const SplashScreen(),
+        home: const WelcomeScreen(),
       ),
     );
   }

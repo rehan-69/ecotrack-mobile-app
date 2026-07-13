@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/constants/mediaquery.dart';
 import 'package:project/viewmodel/provider.dart';
+import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/widgets/custom_button.dart';
 import 'package:project/views/widgets/custom_onboarding_text.dart';
 import 'package:project/views/widgets/custome_page_indicator.dart';
-import 'package:provider/provider.dart';
 
 class Onboarding1Screen extends StatelessWidget {
   const Onboarding1Screen({super.key});
