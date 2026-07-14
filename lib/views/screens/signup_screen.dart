@@ -22,6 +22,7 @@ class Signupscreen extends StatelessWidget {
           ),
           body: SafeArea(
             child: SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: context.width * .05),
@@ -178,7 +179,7 @@ class Signupscreen extends StatelessWidget {
 
                     SizedBox(height: context.height * .03),
 
-                  CustomButton(
+                    CustomButton(
                       text: "Sign Up",
                       color: AppColors.primaryColor,
                       textColor: Theme.of(context).scaffoldBackgroundColor,

@@ -19,6 +19,7 @@ class LoginInScreen extends StatelessWidget {
         return Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: context.width * 0.07),

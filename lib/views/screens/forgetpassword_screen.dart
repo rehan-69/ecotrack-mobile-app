@@ -22,6 +22,7 @@ class ForgetPasswordscreen extends StatelessWidget {
           ),
           body: SafeArea(
             child: SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: context.width * .04),
