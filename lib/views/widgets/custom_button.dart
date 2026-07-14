@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/constants/app_colors.dart';
+import 'package:project/constants/mediaquery.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -9,13 +10,15 @@ class CustomButton extends StatelessWidget {
   final Color textColor;
   final double width;
   final double height;
+  final String? image;
   final double borderRadius;
   final double fontSize;
-  final Border border;  
+  final Border border;
   final FontWeight fontWeight;
 
   const CustomButton({
     super.key,
+    this.image,
     required this.text,
     required this.onPressed,
     this.color = AppColors.primaryColor,
@@ -48,13 +51,27 @@ class CustomButton extends StatelessWidget {
           ],
         ),
         alignment: Alignment.center,
-        child: Text(
-          text,
-          style: GoogleFonts.inter(
-            color: textColor,
-            fontSize: fontSize,
-            fontWeight: fontWeight,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (image != null)
+              Image.asset(
+                image!,
+                height: context.width * 0.047,
+                width: context.width * 0.047,
+              ),
+
+            SizedBox(width: context.width * 0.03),
+
+            Text(
+              text,
+              style: GoogleFonts.inter(
+                color: textColor,
+                fontSize: fontSize,
+                fontWeight: fontWeight,
+              ),
+            ),
+          ],
         ),
       ),
     );
