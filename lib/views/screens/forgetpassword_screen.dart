@@ -75,7 +75,7 @@ class ForgetPasswordscreen extends StatelessWidget {
                       },
                       onChanged: (value) {},
                       height: context.height * .072,
-                      color: Colors.white,
+                      color: AppColors.appWhiteColor,
                       borderRadius: context.width * .03,
                       prefixIcon: Icons.email_outlined,
                       title: "Email Id",

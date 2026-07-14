@@ -1,12 +1,14 @@
+import 'package:pinput/pinput.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pinput/pinput.dart';
+import 'package:project/viewmodel/provider.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
-import 'package:project/viewmodel/provider.dart';
 import 'package:project/views/widgets/custom_button.dart';
-import 'package:provider/provider.dart';
+
+
 
 class OtpVerificationScreen extends StatelessWidget {
   const OtpVerificationScreen({super.key});
@@ -116,7 +118,7 @@ class OtpVerificationScreen extends StatelessWidget {
                           color: const Color(0xFF1F2937),
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: AppColors.appWhiteColor,
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
                             color: const Color(0xFFE5E7EB),
@@ -133,7 +135,7 @@ class OtpVerificationScreen extends StatelessWidget {
                           color: const Color(0xFF1F2937),
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: AppColors.appWhiteColor,
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
                             color: AppColors.primaryColor,
