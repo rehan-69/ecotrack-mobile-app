@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 
 class ProductProvider extends ChangeNotifier {
-  final PageController pageController = PageController(initialPage :0);
+  final PageController pageController = PageController(initialPage: 0);
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController otpController = TextEditingController();
 
-  
+  @override
+  void dispose() {
+    pageController.dispose();
+    otpController.dispose();
+    super.dispose();
+  }
+
   bool checkBox = false;
 
-  void checkBoxTap(){
+  void checkBoxTap() {
     checkBox = !checkBox;
     notifyListeners();
   }

@@ -37,6 +37,7 @@ dependencies:
   google_fonts: ^8.1.0
   smooth_page_indicator: ^2.0.1
   provider: ^6.1.5+1
+  pinput: ^6.0.2
 
 dev_dependencies:
   flutter_test:
