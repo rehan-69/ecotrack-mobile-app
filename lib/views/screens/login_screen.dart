@@ -8,8 +8,8 @@ import 'package:project/views/widgets/custom_button.dart';
 import 'package:project/views/widgets/custom_text_field.dart';
 import 'package:provider/provider.dart';
 
-class LoginInScreen extends StatelessWidget {
-  LoginInScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
   final RegExp emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
 
   @override
