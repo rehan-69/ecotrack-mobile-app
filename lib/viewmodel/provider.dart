@@ -50,7 +50,8 @@ class ProductProvider extends ChangeNotifier {
   }
 
   Future<bool> signUp() async {
-    final response = await http.post(
+    try{
+      final response = await http.post(
       Uri.parse("http://127.0.0.1:3000/signup"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
@@ -64,6 +65,10 @@ class ProductProvider extends ChangeNotifier {
     if (response.statusCode == 201) {
       return true;
     } else {
+      return false;
+    }
+    }catch(e){
+      debugPrint('Signup Error: $e');
       return false;
     }
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/views/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:project/viewmodel/provider.dart';
@@ -193,10 +194,13 @@ class LoginScreen extends StatelessWidget {
                               ),
                             );
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Invalid Email or Password"),
-                              ),
+                            Fluttertoast.showToast(
+                              msg: "Invalid Email or Password",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              backgroundColor: const Color(0xFFD32F2F),
+                              textColor: Colors.white,
+                              fontSize: 13,
                             );
                           }
                         },

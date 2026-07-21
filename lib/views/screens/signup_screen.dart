@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:project/viewmodel/provider.dart';
 import 'package:project/constants/app_colors.dart';
@@ -187,9 +188,37 @@ class Signupscreen extends StatelessWidget {
                         color: const Color(0xFFC7C3FF),
                         width: 1.2,
                       ),
-                      onPressed: () {
-                        value.signUp();
-                        Navigator.push(context,MaterialPageRoute(builder:(context) => LoginScreen(),));
+                      onPressed: () async {
+                        bool success = await value.signUp();
+                        if (success) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginScreen(),
+                            ),
+                          );
+                          Fluttertoast.showToast(
+                            msg: "Signup Successful",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.TOP,
+                            backgroundColor: const Color(
+                              0xFF2E7D32,
+                            ), // Material Green 800
+                            textColor: Colors.white,
+                            fontSize: 13,
+                          );
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: "Signup Failed",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.TOP,
+                            backgroundColor: const Color(
+                              0xFFD32F2F,
+                            ), // Material Red 700
+                            textColor: Colors.white,
+                            fontSize: 14,
+                          );
+                        }
                       },
                       width: context.width * 0.95,
                       height: context.height * 0.070,
