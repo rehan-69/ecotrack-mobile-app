@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:project/viewmodel/provider.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
-import 'package:project/viewmodel/provider.dart';
 import 'package:project/views/screens/login_screen.dart';
 import 'package:project/views/widgets/custom_button.dart';
 import 'package:project/views/widgets/custom_text_field.dart';
-import 'package:provider/provider.dart';
 
 class Signupscreen extends StatelessWidget {
   Signupscreen({super.key});
@@ -187,7 +187,10 @@ class Signupscreen extends StatelessWidget {
                         color: const Color(0xFFC7C3FF),
                         width: 1.2,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        value.signUp();
+                        Navigator.push(context,MaterialPageRoute(builder:(context) => LoginScreen(),));
+                      },
                       width: context.width * 0.95,
                       height: context.height * 0.070,
                       borderRadius: context.width * 0.040,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:project/viewmodel/provider.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/views/onboarding/onboarding_page1.dart';
 import 'package:project/views/onboarding/onboarding_page2.dart';
 import 'package:project/views/onboarding/onboarding_page3.dart';
-import 'package:provider/provider.dart';
-import 'package:project/viewmodel/provider.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:project/views/screens/home_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:project/viewmodel/provider.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
-import 'package:project/viewmodel/provider.dart';
-import 'package:project/views/screens/forgetpassword_screen.dart';
 import 'package:project/views/screens/signup_screen.dart';
 import 'package:project/views/widgets/custom_button.dart';
 import 'package:project/views/widgets/custom_text_field.dart';
-import 'package:provider/provider.dart';
+import 'package:project/views/screens/forgetpassword_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -181,7 +182,24 @@ class LoginScreen extends StatelessWidget {
                       ),
                       child: CustomButton(
                         text: "Continue",
-                        onPressed: () {},
+                        onPressed: () async {
+                          bool success = await value.login();
+
+                          if (success) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomeScreen(),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Invalid Email or Password"),
+                              ),
+                            );
+                          }
+                        },
                         width: context.width * 0.85,
                         height: context.height * 0.065,
                         borderRadius: context.width * 0.040,

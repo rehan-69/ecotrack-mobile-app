@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class ProductProvider extends ChangeNotifier {
   final PageController pageController = PageController(initialPage: 0);
@@ -44,5 +47,53 @@ class ProductProvider extends ChangeNotifier {
       duration: Duration(microseconds: 300),
       curve: Curves.easeInOut,
     );
+  }
+
+  Future<bool> signUp() async {
+    final response = await http.post(
+      Uri.parse("http://127.0.0.1:3000/signup"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "name": nameController.text.trim(),
+        "email": emailController.text.trim(),
+        "mobile": mobileController.text.trim(),
+        "password": passwordController.text.trim(),
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> login() async {
+    try {
+      print("Login API Called");
+
+      final response = await http.post(
+        Uri.parse("http://127.0.0.1:3000/login"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "email": emailController.text.trim(),
+          "password": passwordController.text.trim(),
+        }),
+      );
+
+      print("Status Code: ${response.statusCode}");
+      print("Body: ${response.body}");
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print(data["token"]);
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      print("Login Error: $e");
+      return false;
+    }
   }
 }
