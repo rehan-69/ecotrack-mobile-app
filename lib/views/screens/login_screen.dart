@@ -66,59 +66,66 @@ class LoginScreen extends StatelessWidget {
                     ),
 
                     SizedBox(height: context.height * .050),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.width * .01,
-                      ),
-                      child: CustomTextField(
-                        controller: value.emailController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          if (!emailRegex.hasMatch(value)) {
-                            return 'Please enter a valid email';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {},
-                        height: context.height * .072,
-                        color: AppColors.appWhiteColor,
-                        borderRadius: context.width * .04,
-                        prefixIcon: Icons.email_outlined,
-                        title: "Email",
-                        labelText: "Email",
-                        iconColor: Colors.grey.shade600,
-                      ),
-                    ),
-
-                    SizedBox(height: context.height * .018),
-
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.width * .01,
-                      ),
-                      child: CustomTextField(
-                        controller: value.passwordController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          if (value.length < 6) {
-                            return 'Please enter a valid password';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {},
-                        height: context.height * .072,
-                        color: AppColors.appWhiteColor,
-                        borderRadius: context.width * .04,
-                        prefixIcon: Icons.lock_outline,
-                        suffixIcon: Icons.visibility_off_outlined,
-                        title: "Password",
-                        iconColor: Colors.grey.shade600,
-                        labelText: "Password",
-                        keyboardType: TextInputType.visiblePassword,
+                    Form(
+                      key: value.formKeyLogin,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: context.width * .01,
+                            ),
+                            child: CustomTextField(
+                              controller: value.emailController,
+                              validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your email';
+                                  }
+                                  if (!emailRegex.hasMatch(value)) {
+                                    return 'Please enter a valid email';
+                                  }
+                                return null;
+                              },
+                              onChanged: (value) {},
+                              height: context.height * .072,
+                              color: AppColors.appWhiteColor,
+                              borderRadius: context.width * .04,
+                              prefixIcon: Icons.email_outlined,
+                              title: "Email",
+                              labelText: "Email",
+                              iconColor: Colors.grey.shade600,
+                            ),
+                          ),
+                      
+                          SizedBox(height: context.height * .018),
+                      
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: context.width * .01,
+                            ),
+                            child: CustomTextField(
+                              controller: value.passwordController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your password';
+                                }
+                                if (value.length < 6) {
+                                  return 'Please enter a valid password';
+                                }
+                                return null;
+                              },
+                              onChanged: (value) {},
+                              height: context.height * .072,
+                              color: AppColors.appWhiteColor,
+                              borderRadius: context.width * .04,
+                              prefixIcon: Icons.lock_outline,
+                              suffixIcon: Icons.visibility_off_outlined,
+                              title: "Password",
+                              iconColor: Colors.grey.shade600,
+                              labelText: "Password",
+                              keyboardType: TextInputType.visiblePassword,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
 
@@ -185,23 +192,24 @@ class LoginScreen extends StatelessWidget {
                         text: "Continue",
                         onPressed: () async {
                           bool success = await value.login();
-
-                          if (success) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomeScreen(),
-                              ),
-                            );
-                          } else {
-                            Fluttertoast.showToast(
-                              msg: "Invalid Email or Password",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.TOP,
-                              backgroundColor: const Color(0xFFD32F2F),
-                              textColor: Colors.white,
-                              fontSize: 13,
-                            );
+                          if (value.formKeyLogin.currentState!.validate()) {
+                            if (success) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomeScreen(),
+                                ),
+                              );
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: "Invalid Email or Password",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.TOP,
+                                backgroundColor: const Color(0xFFD32F2F),
+                                textColor: Colors.white,
+                                fontSize: 13,
+                              );
+                            }
                           }
                         },
                         width: context.width * 0.85,

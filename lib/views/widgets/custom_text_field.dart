@@ -39,7 +39,7 @@ class CustomTextField extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return SizedBox(
-      height: height,
+      // height: height,
       width: double.infinity,
       child: TextFormField(
         controller: controller,

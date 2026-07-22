@@ -11,6 +11,8 @@ class ProductProvider extends ChangeNotifier {
   TextEditingController passwordController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  final formKeyLogin = GlobalKey<FormState>();
+  final formKeySignup = GlobalKey<FormState>();
 
   bool checkBox = false;
   int currentIndex = 0;

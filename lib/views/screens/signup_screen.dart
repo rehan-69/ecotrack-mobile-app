@@ -63,119 +63,132 @@ class Signupscreen extends StatelessWidget {
 
                     SizedBox(height: context.height * .035),
 
-                    CustomTextField(
-                      controller: value.nameController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your name';
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {},
-                      height: context.height * .075,
-                      color: AppColors.appWhiteColor,
-                      borderRadius: context.width * .04,
-                      prefixIcon: Icons.person_outline,
-                      title: "Name",
-                      labelText: "Name",
-                      iconColor: Colors.grey.shade600,
-                    ),
+                    Form(
+                      key: value.formKeySignup,
+                      child: Column(
+                        children: [
+                          CustomTextField(
+                            controller: value.nameController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your name';
+                              }
+                              if (value.trim().length < 3) {
+                                return 'Name must be at least 3 characters';
+                              }
+                              if (!RegExp(r"^[a-zA-Z ]+$").hasMatch(value)) {
+                                return 'Name can contain only letters';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {},
+                            height: context.height * .075,
+                            color: AppColors.appWhiteColor,
+                            borderRadius: context.width * .04,
+                            prefixIcon: Icons.person_outline,
+                            title: "Name",
+                            labelText: "Name",
+                            iconColor: Colors.grey.shade600,
+                          ),
 
-                    SizedBox(height: context.height * .016),
+                          SizedBox(height: context.height * .016),
 
-                    CustomTextField(
-                      controller: value.emailController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
-                        }
-                        if (!emailRegex.hasMatch(value)) {
-                          return 'Please enter a valid email';
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {},
-                      height: context.height * .075,
-                      color: AppColors.appWhiteColor,
-                      borderRadius: context.width * .04,
-                      prefixIcon: Icons.email_outlined,
-                      title: "Email",
-                      labelText: "Email",
-                      iconColor: Colors.grey.shade600,
-                    ),
+                          CustomTextField(
+                            controller: value.emailController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email';
+                              }
+                              if (!emailRegex.hasMatch(value)) {
+                                return 'Please enter a valid email';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {},
+                            height: context.height * .075,
+                            color: AppColors.appWhiteColor,
+                            borderRadius: context.width * .04,
+                            prefixIcon: Icons.email_outlined,
+                            title: "Email",
+                            labelText: "Email",
+                            iconColor: Colors.grey.shade600,
+                          ),
 
-                    SizedBox(height: context.height * .016),
+                          SizedBox(height: context.height * .016),
 
-                    CustomTextField(
-                      controller: value.mobileController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your mobile number';
-                        }
-                        if (value.length != 10) {
-                          return 'Please enter a valid mobile number';
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {},
-                      height: context.height * .075,
-                      color: AppColors.appWhiteColor,
-                      borderRadius: context.width * .04,
-                      prefixIcon: Icons.phone_outlined,
-                      title: "Mobile",
-                      labelText: "Mobile",
-                      iconColor: Colors.grey.shade600,
-                      keyboardType: TextInputType.phone,
-                    ),
+                          CustomTextField(
+                            controller: value.mobileController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your mobile number';
+                              }
+                              if (value.length != 10) {
+                                return 'Please enter a valid mobile number';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {},
+                            height: context.height * .075,
+                            color: AppColors.appWhiteColor,
+                            borderRadius: context.width * .04,
+                            prefixIcon: Icons.phone_outlined,
+                            title: "Mobile",
+                            labelText: "Mobile",
+                            iconColor: Colors.grey.shade600,
+                            keyboardType: TextInputType.phone,
+                          ),
 
-                    SizedBox(height: context.height * .016),
+                          SizedBox(height: context.height * .016),
 
-                    CustomTextField(
-                      controller: value.passwordController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        if (value.length < 6) {
-                          return 'Password must be at least 6 characters';
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {},
-                      height: context.height * .075,
-                      color: AppColors.appWhiteColor,
-                      borderRadius: context.width * .04,
-                      prefixIcon: Icons.lock_outline,
-                      suffixIcon: Icons.visibility_off_outlined,
-                      title: "Password",
-                      labelText: "Password",
-                      iconColor: Colors.grey.shade600,
-                      keyboardType: TextInputType.visiblePassword,
-                    ),
+                          CustomTextField(
+                            controller: value.passwordController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your password';
+                              }
+                              if (value.length < 6) {
+                                return 'Password must be at least 6 characters';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {},
+                            height: context.height * .075,
+                            color: AppColors.appWhiteColor,
+                            borderRadius: context.width * .04,
+                            prefixIcon: Icons.lock_outline,
+                            suffixIcon: Icons.visibility_off_outlined,
+                            title: "Password",
+                            labelText: "Password",
+                            iconColor: Colors.grey.shade600,
+                            keyboardType: TextInputType.visiblePassword,
+                          ),
 
-                    SizedBox(height: context.height * .016),
+                          SizedBox(height: context.height * .016),
 
-                    CustomTextField(
-                      controller: value.confirmPasswordController,
-                      validator: (val) {
-                        if (val == null || val.isEmpty) {
-                          return 'Please enter confirm password';
-                        }
-                        if (val != value.passwordController.text) {
-                          return 'Password does not match';
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {},
-                      height: context.height * .075,
-                      color: AppColors.appWhiteColor,
-                      borderRadius: context.width * .04,
-                      prefixIcon: Icons.lock_outline,
-                      suffixIcon: Icons.visibility_off_outlined,
-                      title: "Confirm Password",
-                      labelText: "Confirm Password",
-                      iconColor: Colors.grey.shade600,
-                      keyboardType: TextInputType.visiblePassword,
+                          CustomTextField(
+                            controller: value.confirmPasswordController,
+                            validator: (val) {
+                              if (val == null || val.isEmpty) {
+                                return 'Please enter confirm password';
+                              }
+                              if (val != value.passwordController.text) {
+                                return 'Password does not match';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {},
+                            height: context.height * .075,
+                            color: AppColors.appWhiteColor,
+                            borderRadius: context.width * .04,
+                            prefixIcon: Icons.lock_outline,
+                            suffixIcon: Icons.visibility_off_outlined,
+                            title: "Confirm Password",
+                            labelText: "Confirm Password",
+                            iconColor: Colors.grey.shade600,
+                            keyboardType: TextInputType.visiblePassword,
+                          ),
+                        ],
+                      ),
                     ),
 
                     SizedBox(height: context.height * .03),
@@ -190,34 +203,36 @@ class Signupscreen extends StatelessWidget {
                       ),
                       onPressed: () async {
                         bool success = await value.signUp();
-                        if (success) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginScreen(),
-                            ),
-                          );
-                          Fluttertoast.showToast(
-                            msg: "Signup Successful",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.TOP,
-                            backgroundColor: const Color(
-                              0xFF2E7D32,
-                            ), // Material Green 800
-                            textColor: Colors.white,
-                            fontSize: 13,
-                          );
-                        } else {
-                          Fluttertoast.showToast(
-                            msg: "Signup Failed",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.TOP,
-                            backgroundColor: const Color(
-                              0xFFD32F2F,
-                            ), // Material Red 700
-                            textColor: Colors.white,
-                            fontSize: 14,
-                          );
+                        if (value.formKeySignup.currentState!.validate()) {
+                          if (success) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginScreen(),
+                              ),
+                            );
+                            Fluttertoast.showToast(
+                              msg: "Signup Successful",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              backgroundColor: const Color(
+                                0xFF2E7D32,
+                              ), // Material Green 800
+                              textColor: Colors.white,
+                              fontSize: 13,
+                            );
+                          } else {
+                            Fluttertoast.showToast(
+                              msg: "Signup Failed",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              backgroundColor: const Color(
+                                0xFFD32F2F,
+                              ), // Material Red 700
+                              textColor: Colors.white,
+                              fontSize: 14,
+                            );
+                          }
                         }
                       },
                       width: context.width * 0.95,
