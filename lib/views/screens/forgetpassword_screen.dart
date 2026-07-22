@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:project/views/screens/otp_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:project/viewmodel/provider.dart';
 import 'package:project/constants/app_colors.dart';
@@ -74,7 +76,26 @@ class ForgetPasswordscreen extends StatelessWidget {
                         }
                         return null;
                       },
-                      onChanged: (value) {},
+                      onChanged: (val) async {
+                        bool success = await value.forgetPassword();
+                        if (success) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const OtpVerificationScreen(),
+                            ),
+                          );
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: "Invalid Email or Password",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.TOP,
+                            backgroundColor: const Color(0xFFD32F2F),
+                            textColor: Colors.white,
+                            fontSize: 13,
+                          );
+                        }
+                      },
                       height: context.height * .072,
                       color: AppColors.appWhiteColor,
                       borderRadius: context.width * .03,

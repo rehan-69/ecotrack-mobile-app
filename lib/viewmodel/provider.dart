@@ -52,24 +52,24 @@ class ProductProvider extends ChangeNotifier {
   }
 
   Future<bool> signUp() async {
-    try{
+    try {
       final response = await http.post(
-      Uri.parse("http://127.0.0.1:3000/signup"),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({
-        "name": nameController.text.trim(),
-        "email": emailController.text.trim(),
-        "mobile": mobileController.text.trim(),
-        "password": passwordController.text.trim(),
-      }),
-    );
+        Uri.parse("http://127.0.0.1:3000/signup"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "name": nameController.text.trim(),
+          "email": emailController.text.trim(),
+          "mobile": mobileController.text.trim(),
+          "password": passwordController.text.trim(),
+        }),
+      );
 
-    if (response.statusCode == 201) {
-      return true;
-    } else {
-      return false;
-    }
-    }catch(e){
+      if (response.statusCode == 201) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
       debugPrint('Signup Error: $e');
       return false;
     }
@@ -77,7 +77,7 @@ class ProductProvider extends ChangeNotifier {
 
   Future<bool> login() async {
     try {
-      print("Login API Called");
+      debugPrint("Login API Called");
 
       final response = await http.post(
         Uri.parse("http://127.0.0.1:3000/login"),
@@ -88,19 +88,67 @@ class ProductProvider extends ChangeNotifier {
         }),
       );
 
-      print("Status Code: ${response.statusCode}");
-      print("Body: ${response.body}");
+      debugPrint("Status Code: ${response.statusCode}");
+      debugPrint("Body: ${response.body}");
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print(data["token"]);
+        debugPrint(data["token"]);
         return true;
       }
 
       return false;
     } catch (e) {
-      print("Login Error: $e");
+      debugPrint("Login Error: $e");
       return false;
     }
   }
+
+  Future<bool> forgetPassword() async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://127.0.0.1:3000/forgot-password'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"email": emailController.text.trim()}),
+      );
+
+      debugPrint('status code : ${response.statusCode}');
+      debugPrint('body : ${response.body}');
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        debugPrint("Message : ${data["message"]}");
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      debugPrint("Forget Error: $e");
+      return false;
+    }
+  }
+
+  // Future<bool> verifyOTP() async {
+  //   try {
+  //     final response = await http.post(
+  //       Uri.parse('http://127.0.0.1:3000/verify-otp'),
+  //       headers: {"Content-Type": "application/json"},
+  //       body: jsonEncode({
+  //         "email": emailController.text.trim(),
+  //         "otp": otpController.text.trim(),
+  //       }),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+  //       debugPrint('data : ${data['message']}');
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     debugPrint('verify Error : $e');
+  //     return false;
+  //   }
+  // }
 }

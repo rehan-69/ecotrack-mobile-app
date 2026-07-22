@@ -91,7 +91,7 @@ class OtpVerificationScreen extends StatelessWidget {
                     SizedBox(height: context.height * .012),
 
                     Text(
-                      "We sent a 4-digit code to ava@aurora.co",
+                      "We sent a 4-digit code to ${value.emailController.text}",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
                         fontSize: context.width * .036,
