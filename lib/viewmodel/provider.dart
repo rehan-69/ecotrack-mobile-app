@@ -10,17 +10,27 @@ class ProductProvider extends ChangeNotifier {
   TextEditingController mobileController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   final formKeyLogin = GlobalKey<FormState>();
   final formKeySignup = GlobalKey<FormState>();
-
+  final formKeyReset = GlobalKey<FormState>();
+  final formKeyForgetPassword = GlobalKey<FormState>();
+  bool newPasswordObscure = true;
+  bool confirmPasswordObscure = true;
   bool checkBox = false;
   int currentIndex = 0;
 
   @override
   void dispose() {
-    pageController.dispose();
     otpController.dispose();
+    pageController.dispose();
+    nameController.dispose();
+    emailController.dispose();
+    mobileController.dispose();
+    passwordController.dispose();
+    newPasswordController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -49,6 +59,16 @@ class ProductProvider extends ChangeNotifier {
       duration: Duration(microseconds: 300),
       curve: Curves.easeInOut,
     );
+  }
+
+  void toggleNewPassword() {
+    newPasswordObscure = !newPasswordObscure;
+    notifyListeners();
+  }
+
+  void toggleConfirmPassword() {
+    confirmPasswordObscure = !confirmPasswordObscure;
+    notifyListeners();
   }
 
   Future<bool> signUp() async {
@@ -128,27 +148,57 @@ class ProductProvider extends ChangeNotifier {
     }
   }
 
-  // Future<bool> verifyOTP() async {
-  //   try {
-  //     final response = await http.post(
-  //       Uri.parse('http://127.0.0.1:3000/verify-otp'),
-  //       headers: {"Content-Type": "application/json"},
-  //       body: jsonEncode({
-  //         "email": emailController.text.trim(),
-  //         "otp": otpController.text.trim(),
-  //       }),
-  //     );
+  Future<bool> verifyOTP() async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://127.0.0.1:3000/verify-otp'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "email": emailController.text.trim(),
+          "otp": otpController.text.trim(),
+        }),
+      );
 
-  //     if (response.statusCode == 200) {
-  //       final data = jsonDecode(response.body);
-  //       debugPrint('data : ${data['message']}');
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   } catch (e) {
-  //     debugPrint('verify Error : $e');
-  //     return false;
-  //   }
-  // }
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        debugPrint('data : ${data['message']}');
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      debugPrint('verify Error : $e');
+      return false;
+    }
+  }
+
+  Future<bool> resetPassword(String email) async {
+    try {
+      final response = await http.post(
+        Uri.parse("http://127.0.0.1:3000/reset-password"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "email": email,
+          "password": newPasswordController.text.trim(),
+          "confirmPassword": confirmPasswordController.text.trim(),
+        }),
+      );
+
+      debugPrint("Status Code : ${response.statusCode}");
+      debugPrint("Body : ${response.body}");
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        debugPrint(data["message"]);
+        return true;
+      } else {
+        final data = jsonDecode(response.body);
+        debugPrint(data["message"]);
+        return false;
+      }
+    } catch (e) {
+      debugPrint("Reset Password Error : $e");
+      return false;
+    }
+  }
 }

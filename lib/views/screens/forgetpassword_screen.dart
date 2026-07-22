@@ -65,44 +65,28 @@ class ForgetPasswordscreen extends StatelessWidget {
 
                     SizedBox(height: context.height * .050),
 
-                    CustomTextField(
-                      controller: value.emailController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
-                        }
-                        if (!emailRegex.hasMatch(value)) {
-                          return 'Please enter a valid email';
-                        }
-                        return null;
-                      },
-                      onChanged: (val) async {
-                        bool success = await value.forgetPassword();
-                        if (success) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const OtpVerificationScreen(),
-                            ),
-                          );
-                        } else {
-                          Fluttertoast.showToast(
-                            msg: "Invalid Email or Password",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.TOP,
-                            backgroundColor: const Color(0xFFD32F2F),
-                            textColor: Colors.white,
-                            fontSize: 13,
-                          );
-                        }
-                      },
-                      height: context.height * .072,
-                      color: AppColors.appWhiteColor,
-                      borderRadius: context.width * .03,
-                      prefixIcon: Icons.email_outlined,
-                      title: "Email Id",
-                      labelText: "Email Id",
-                      iconColor: Colors.grey.shade600,
+                    Form(
+                      key: value.formKeyForgetPassword,
+                      child: CustomTextField(
+                        controller: value.emailController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email';
+                          }
+                          if (!emailRegex.hasMatch(value)) {
+                            return 'Please enter a valid email';
+                          }
+                          return null;
+                        },
+
+                        height: context.height * .072,
+                        color: AppColors.appWhiteColor,
+                        borderRadius: context.width * .03,
+                        prefixIcon: Icons.email_outlined,
+                        title: "Email Id",
+                        labelText: "Email Id",
+                        iconColor: Colors.grey.shade600,
+                      ),
                     ),
 
                     SizedBox(height: context.height * .020),
@@ -115,7 +99,40 @@ class ForgetPasswordscreen extends StatelessWidget {
                         color: const Color(0xFFC7C3FF),
                         width: 1.2,
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        if (value.formKeyForgetPassword.currentState!
+                            .validate()) {
+                          bool success = await value.forgetPassword();
+                          if (success) {
+                            Fluttertoast.showToast(
+                              msg:
+                                  "OTP sent successfully. Please check your email.",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              backgroundColor: const Color(0xFF2E7D32),
+                              textColor: Colors.white,
+                              fontSize: 13,
+                            );
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const OtpVerificationScreen(),
+                              ),
+                            );
+                          } else {
+                            Fluttertoast.showToast(
+                              msg:
+                                  "Email not found. Please enter a registered email.",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              backgroundColor: const Color(0xFFD32F2F),
+                              textColor: Colors.white,
+                              fontSize: 13,
+                            );
+                          }
+                        }
+                      },
                       width: context.width * 0.95,
                       height: context.height * 0.070,
                       borderRadius: context.width * 0.040,

@@ -1,14 +1,14 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project/views/screens/reset_password_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/viewmodel/provider.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/widgets/custom_button.dart';
-
-
 
 class OtpVerificationScreen extends StatelessWidget {
   const OtpVerificationScreen({super.key});
@@ -175,7 +175,38 @@ class OtpVerificationScreen extends StatelessWidget {
 
                     CustomButton(
                       text: "Verify",
-                      onPressed: () {},
+                      onPressed: () async {
+                        bool success = await value.verifyOTP();
+
+                        if (success) {
+                          Fluttertoast.showToast(
+                            msg: "OTP verified successfully.",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.TOP,
+                            backgroundColor: const Color(0xFF2E7D32),
+                            textColor: Colors.white,
+                            fontSize: 13,
+                          );
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => ResetPasswordScreen(
+                                email: value.emailController.text.trim(),
+                              ),
+                            ),
+                          );
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: "Invalid or expired OTP. Please try again.",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.TOP,
+                            backgroundColor: const Color(0xFFD32F2F),
+                            textColor: Colors.white,
+                            fontSize: 13,
+                          );
+                        }
+                      },
                       width: context.width * .90,
                       height: context.height * .070,
                       borderRadius: context.width * .06,

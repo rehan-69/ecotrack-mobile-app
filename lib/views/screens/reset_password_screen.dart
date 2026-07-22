@@ -1,0 +1,200 @@
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:project/views/widgets/custom_text_field.dart';
+import 'package:provider/provider.dart';
+import 'package:project/constants/app_colors.dart';
+import 'package:project/constants/mediaquery.dart';
+import 'package:project/viewmodel/provider.dart';
+import 'package:project/views/widgets/custom_button.dart';
+
+class ResetPasswordScreen extends StatelessWidget {
+  final String email;
+
+  const ResetPasswordScreen({super.key, required this.email});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ProductProvider>(
+      builder: (context, value, child) {
+        return Scaffold(
+          backgroundColor: AppColors.scaffoldColor,
+
+          appBar: AppBar(
+            backgroundColor: AppColors.scaffoldColor,
+            elevation: 0,
+            centerTitle: true,
+            title: const Text(
+              "Reset Password",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            leading: IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
+            ),
+          ),
+
+          body: SafeArea(
+            child: SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: context.width * .06),
+                child: Column(
+                  children: [
+                    SizedBox(height: context.height * .05),
+
+                    Container(
+                      height: context.width * .22,
+                      width: context.width * .22,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFEDEEFF),
+                        borderRadius: BorderRadius.circular(22),
+                      ),
+                      child: Icon(
+                        Icons.lock_reset_rounded,
+                        color: AppColors.primaryColor,
+                        size: context.width * .09,
+                      ),
+                    ),
+
+                    SizedBox(height: context.height * .04),
+
+                    Text(
+                      "Create New Password",
+                      style: GoogleFonts.inter(
+                        fontSize: context.width * .065,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    SizedBox(height: context.height * .015),
+
+                    Text(
+                      "Your new password must be different from the previous password.",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.inter(
+                        color: Colors.grey,
+                        fontSize: context.width * .037,
+                      ),
+                    ),
+
+                    SizedBox(height: context.height * .05),
+
+                    Form(
+                      key: value.formKeyReset,
+                      child: Column(
+                        children: [
+                          CustomTextField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter new password";
+                              }
+
+                              if (value.length < 6) {
+                                return "Password must be at least 6 characters";
+                              }
+
+                              return null;
+                            },
+                            title: "New Password",
+                            labelText: "New Password",
+                            controller: value.newPasswordController,
+                            prefixIcon: Icons.lock_outline,
+                            suffixIcon: value.newPasswordObscure
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            onSuffixTap: value.toggleNewPassword,
+                            obscureText: value.newPasswordObscure,
+                            borderRadius: context.width * .04,
+                            height: context.height * .07,
+                            color: Colors.white,
+                            iconColor: AppColors.primaryColor,
+                          ),
+
+                          SizedBox(height: context.height * .025),
+
+                          CustomTextField(
+                            validator: (val) {
+                              if (val == null || val.isEmpty) {
+                                return "Please confirm your password";
+                              }
+
+                              if (val !=
+                                  value.newPasswordController.text.trim()) {
+                                return "Passwords do not match";
+                              }
+
+                              return null;
+                            },
+                            title: "Confirm Password",
+                            labelText: "Confirm Password",
+                            controller: value.confirmPasswordController,
+                            prefixIcon: Icons.lock_outline,
+                            suffixIcon: value.confirmPasswordObscure
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            onSuffixTap: value.toggleConfirmPassword,
+                            obscureText: value.confirmPasswordObscure,
+                            borderRadius: context.width * .04,
+                            height: context.height * .07,
+                            color: Colors.white,
+                            iconColor: AppColors.primaryColor,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    SizedBox(height: context.height * .06),
+
+                    CustomButton(
+                      text: "Save Password",
+                      onPressed: () async {
+                        if (value.formKeyReset.currentState!.validate()) {
+                          bool success = await value.resetPassword(email);
+
+                          if (success) {
+                            Fluttertoast.showToast(
+                              msg: "Password reset successfully.",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              backgroundColor: const Color(0xFF2E7D32), // Green
+                              textColor: Colors.white,
+                              fontSize: 13,
+                            );
+
+                            Navigator.popUntil(
+                              context,
+                              (route) => route.isFirst,
+                            );
+                          } else {
+                            Fluttertoast.showToast(
+                              msg:
+                                  "Failed to reset password. Please try again.",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              backgroundColor: const Color(0xFFD32F2F), // Red
+                              textColor: Colors.white,
+                              fontSize: 13,
+                            );
+                          }
+                        }
+                      },
+                      width: context.width * .9,
+                      height: context.height * .07,
+                      borderRadius: context.width * .04,
+                      fontSize: context.width * .045,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
