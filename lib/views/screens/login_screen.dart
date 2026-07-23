@@ -77,12 +77,12 @@ class LoginScreen extends StatelessWidget {
                             child: CustomTextField(
                               controller: value.emailController,
                               validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your email';
-                                  }
-                                  if (!emailRegex.hasMatch(value)) {
-                                    return 'Please enter a valid email';
-                                  }
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your email';
+                                }
+                                if (!emailRegex.hasMatch(value)) {
+                                  return 'Please enter a valid email';
+                                }
                                 return null;
                               },
                               onChanged: (value) {},
@@ -95,9 +95,9 @@ class LoginScreen extends StatelessWidget {
                               iconColor: Colors.grey.shade600,
                             ),
                           ),
-                      
+
                           SizedBox(height: context.height * .018),
-                      
+
                           Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: context.width * .01,
@@ -118,7 +118,11 @@ class LoginScreen extends StatelessWidget {
                               color: AppColors.appWhiteColor,
                               borderRadius: context.width * .04,
                               prefixIcon: Icons.lock_outline,
-                              suffixIcon: Icons.visibility_off_outlined,
+                              suffixIcon: value.password
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility,
+                              onSuffixTap: value.togglePassword,
+                              obscureText: value.password,
                               title: "Password",
                               iconColor: Colors.grey.shade600,
                               labelText: "Password",
@@ -190,11 +194,24 @@ class LoginScreen extends StatelessWidget {
                       ),
                       child: CustomButton(
                         text: "Continue",
+                        isLoading: value.isLoading,
                         onPressed: () async {
-                          bool success = await value.login();
+                          FocusManager.instance.primaryFocus?.unfocus();
                           if (value.formKeyLogin.currentState!.validate()) {
+                            bool success = await value.login();
                             if (success) {
-                              Navigator.push(
+                              Fluttertoast.showToast(
+                                msg: "Welcome back!",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: const Color(
+                                  0xFF4F46E5,
+                                ), // Primary Indigo/Purple
+                                textColor: Colors.white,
+                                fontSize: 14,
+                              );
+
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => HomeScreen(),
@@ -202,12 +219,12 @@ class LoginScreen extends StatelessWidget {
                               );
                             } else {
                               Fluttertoast.showToast(
-                                msg: "Invalid Email or Password",
+                                msg: "Invalid email or password.",
                                 toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.TOP,
-                                backgroundColor: const Color(0xFFD32F2F),
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: const Color(0xFFB91C1C),
                                 textColor: Colors.white,
-                                fontSize: 13,
+                                fontSize: 14,
                               );
                             }
                           }

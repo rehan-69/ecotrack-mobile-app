@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -12,17 +13,22 @@ class ProductProvider extends ChangeNotifier {
   final TextEditingController otpController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  final formKeyReset = GlobalKey<FormState>();
   final formKeyLogin = GlobalKey<FormState>();
   final formKeySignup = GlobalKey<FormState>();
-  final formKeyReset = GlobalKey<FormState>();
   final formKeyForgetPassword = GlobalKey<FormState>();
   bool newPasswordObscure = true;
   bool confirmPasswordObscure = true;
   bool checkBox = false;
+  bool password = true;
+  bool isLoading = false;
   int currentIndex = 0;
+  Timer? otpTimer;
+  int remainingSeconds = 120;
 
   @override
   void dispose() {
+    otpTimer?.cancel();
     otpController.dispose();
     pageController.dispose();
     nameController.dispose();
@@ -71,7 +77,31 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> signUp() async {
+  void togglePassword() {
+    password = !password;
+    notifyListeners();
+  }
+
+  void startOtpTimer() {
+    otpTimer?.cancel();
+
+    remainingSeconds = 120;
+    notifyListeners();
+
+    otpTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (remainingSeconds > 0) {
+        remainingSeconds--;
+        notifyListeners();
+      } else {
+        timer.cancel();
+      }
+    });
+  }
+
+  Future<String?> signUp() async {
+    isLoading = true;
+    notifyListeners();
+
     try {
       final response = await http.post(
         Uri.parse("http://127.0.0.1:3000/signup"),
@@ -84,18 +114,25 @@ class ProductProvider extends ChangeNotifier {
         }),
       );
 
+      final data = jsonDecode(response.body);
+
       if (response.statusCode == 201) {
-        return true;
-      } else {
-        return false;
+        return null; // Success
       }
+
+      return data["message"];
     } catch (e) {
-      debugPrint('Signup Error: $e');
-      return false;
+      debugPrint("Signup Error : $e");
+      return "Something went wrong";
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
   }
 
   Future<bool> login() async {
+    isLoading = true;
+    notifyListeners();
     try {
       debugPrint("Login API Called");
 
@@ -121,10 +158,15 @@ class ProductProvider extends ChangeNotifier {
     } catch (e) {
       debugPrint("Login Error: $e");
       return false;
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
   }
 
   Future<bool> forgetPassword() async {
+    isLoading = true;
+    notifyListeners();
     try {
       final response = await http.post(
         Uri.parse('http://127.0.0.1:3000/forgot-password'),
@@ -145,10 +187,15 @@ class ProductProvider extends ChangeNotifier {
     } catch (e) {
       debugPrint("Forget Error: $e");
       return false;
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
   }
 
   Future<bool> verifyOTP() async {
+    isLoading = true;
+    notifyListeners();
     try {
       final response = await http.post(
         Uri.parse('http://127.0.0.1:3000/verify-otp'),
@@ -169,10 +216,15 @@ class ProductProvider extends ChangeNotifier {
     } catch (e) {
       debugPrint('verify Error : $e');
       return false;
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
   }
 
   Future<bool> resetPassword(String email) async {
+    isLoading = true;
+    notifyListeners();
     try {
       final response = await http.post(
         Uri.parse("http://127.0.0.1:3000/reset-password"),
@@ -199,6 +251,9 @@ class ProductProvider extends ChangeNotifier {
     } catch (e) {
       debugPrint("Reset Password Error : $e");
       return false;
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
   }
 }

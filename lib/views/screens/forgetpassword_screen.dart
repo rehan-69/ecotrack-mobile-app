@@ -93,6 +93,7 @@ class ForgetPasswordscreen extends StatelessWidget {
 
                     CustomButton(
                       text: "Continue",
+                      isLoading: value.isLoading,
                       color: AppColors.primaryColor,
                       textColor: Theme.of(context).scaffoldBackgroundColor,
                       border: Border.all(
@@ -100,18 +101,20 @@ class ForgetPasswordscreen extends StatelessWidget {
                         width: 1.2,
                       ),
                       onPressed: () async {
+                        FocusManager.instance.primaryFocus?.unfocus();
                         if (value.formKeyForgetPassword.currentState!
                             .validate()) {
                           bool success = await value.forgetPassword();
                           if (success) {
                             Fluttertoast.showToast(
-                              msg:
-                                  "OTP sent successfully. Please check your email.",
+                              msg: "Verification code sent to your email.",
                               toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.TOP,
-                              backgroundColor: const Color(0xFF2E7D32),
+                              gravity: ToastGravity.BOTTOM,
+                              backgroundColor: const Color(
+                                0xFF4F46E5,
+                              ), // Primary Purple
                               textColor: Colors.white,
-                              fontSize: 13,
+                              fontSize: 14,
                             );
 
                             Navigator.push(
@@ -122,13 +125,14 @@ class ForgetPasswordscreen extends StatelessWidget {
                             );
                           } else {
                             Fluttertoast.showToast(
-                              msg:
-                                  "Email not found. Please enter a registered email.",
+                              msg: "Email address not found.",
                               toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.TOP,
-                              backgroundColor: const Color(0xFFD32F2F),
+                              gravity: ToastGravity.BOTTOM,
+                              backgroundColor: const Color(
+                                0xFFB91C1C,
+                              ), // Soft Dark Red
                               textColor: Colors.white,
-                              fontSize: 13,
+                              fontSize: 14,
                             );
                           }
                         }

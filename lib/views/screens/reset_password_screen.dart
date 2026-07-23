@@ -150,19 +150,22 @@ class ResetPasswordScreen extends StatelessWidget {
                     SizedBox(height: context.height * .06),
 
                     CustomButton(
-                      text: "Save Password",
+                      text: "Change Password",
+                      isLoading: value.isLoading,
                       onPressed: () async {
                         if (value.formKeyReset.currentState!.validate()) {
                           bool success = await value.resetPassword(email);
 
                           if (success) {
                             Fluttertoast.showToast(
-                              msg: "Password reset successfully.",
+                              msg: "Password updated successfully.",
                               toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.TOP,
-                              backgroundColor: const Color(0xFF2E7D32), // Green
+                              gravity: ToastGravity.BOTTOM,
+                              backgroundColor: const Color(
+                                0xFF4F46E5,
+                              ), // Primary Purple
                               textColor: Colors.white,
-                              fontSize: 13,
+                              fontSize: 14,
                             );
 
                             Navigator.popUntil(
@@ -171,13 +174,14 @@ class ResetPasswordScreen extends StatelessWidget {
                             );
                           } else {
                             Fluttertoast.showToast(
-                              msg:
-                                  "Failed to reset password. Please try again.",
+                              msg: "Unable to update password.",
                               toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.TOP,
-                              backgroundColor: const Color(0xFFD32F2F), // Red
+                              gravity: ToastGravity.BOTTOM,
+                              backgroundColor: const Color(
+                                0xFFB91C1C,
+                              ), // Soft Dark Red
                               textColor: Colors.white,
-                              fontSize: 13,
+                              fontSize: 14,
                             );
                           }
                         }

@@ -156,7 +156,11 @@ class Signupscreen extends StatelessWidget {
                             color: AppColors.appWhiteColor,
                             borderRadius: context.width * .04,
                             prefixIcon: Icons.lock_outline,
-                            suffixIcon: Icons.visibility_off_outlined,
+                            suffixIcon: value.newPasswordObscure
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            onSuffixTap: value.toggleNewPassword,
+                            obscureText: value.newPasswordObscure,
                             title: "Password",
                             labelText: "Password",
                             iconColor: Colors.grey.shade600,
@@ -181,7 +185,11 @@ class Signupscreen extends StatelessWidget {
                             color: AppColors.appWhiteColor,
                             borderRadius: context.width * .04,
                             prefixIcon: Icons.lock_outline,
-                            suffixIcon: Icons.visibility_off_outlined,
+                            suffixIcon: value.confirmPasswordObscure
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            onSuffixTap: value.toggleConfirmPassword,
+                            obscureText: value.confirmPasswordObscure,
                             title: "Confirm Password",
                             labelText: "Confirm Password",
                             iconColor: Colors.grey.shade600,
@@ -195,6 +203,7 @@ class Signupscreen extends StatelessWidget {
 
                     CustomButton(
                       text: "Sign Up",
+                      isLoading: value.isLoading,
                       color: AppColors.primaryColor,
                       textColor: Theme.of(context).scaffoldBackgroundColor,
                       border: Border.all(
@@ -202,33 +211,31 @@ class Signupscreen extends StatelessWidget {
                         width: 1.2,
                       ),
                       onPressed: () async {
-                        bool success = await value.signUp();
+                        FocusManager.instance.primaryFocus?.unfocus();
+
                         if (value.formKeySignup.currentState!.validate()) {
-                          if (success) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoginScreen(),
-                              ),
-                            );
+                          String? error = await value.signUp();
+
+                          if (error == null) {
                             Fluttertoast.showToast(
-                              msg: "Signup Successful",
+                              msg: "Account created successfully.",
                               toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.TOP,
-                              backgroundColor: const Color(
-                                0xFF2E7D32,
-                              ), // Material Green 800
+                              gravity: ToastGravity.BOTTOM,
+                              backgroundColor: const Color(0xFF4F46E5),
                               textColor: Colors.white,
-                              fontSize: 13,
+                              fontSize: 14,
+                            );
+
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (_) => LoginScreen()),
                             );
                           } else {
                             Fluttertoast.showToast(
-                              msg: "Signup Failed",
+                              msg: error,
                               toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.TOP,
-                              backgroundColor: const Color(
-                                0xFFD32F2F,
-                              ), // Material Red 700
+                              gravity: ToastGravity.BOTTOM,
+                              backgroundColor: const Color(0xFFB91C1C),
                               textColor: Colors.white,
                               fontSize: 14,
                             );

@@ -15,6 +15,7 @@ class CustomButton extends StatelessWidget {
   final double fontSize;
   final Border border;
   final FontWeight fontWeight;
+  final bool isLoading;
 
   const CustomButton({
     super.key,
@@ -29,12 +30,13 @@ class CustomButton extends StatelessWidget {
     required this.borderRadius,
     required this.fontSize,
     required this.fontWeight,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: isLoading ? null : onPressed,
       child: Container(
         width: width,
         height: height,
@@ -63,14 +65,23 @@ class CustomButton extends StatelessWidget {
 
             SizedBox(width: context.width * 0.03),
 
-            Text(
-              text,
-              style: GoogleFonts.inter(
-                color: textColor,
-                fontSize: fontSize,
-                fontWeight: fontWeight,
-              ),
-            ),
+            isLoading
+                ? SizedBox(
+                    width: context.width * 0.055,
+                    height: context.width * 0.055,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2.5,
+                      color: textColor,
+                    ),
+                  )
+                : Text(
+                    text,
+                    style: GoogleFonts.inter(
+                      color: textColor,
+                      fontSize: fontSize,
+                      fontWeight: fontWeight,
+                    ),
+                  ),
           ],
         ),
       ),

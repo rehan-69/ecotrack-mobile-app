@@ -1,19 +1,32 @@
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project/views/screens/reset_password_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/viewmodel/provider.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/widgets/custom_button.dart';
+import 'package:project/views/screens/reset_password_screen.dart';
 
-class OtpVerificationScreen extends StatelessWidget {
+class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({super.key});
 
   @override
+  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
+}
+
+class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      context.read<ProductProvider>().startOtpTimer();
+    });
+  }
+
   Widget build(BuildContext context) {
     return Consumer<ProductProvider>(
       builder: (context, value, child) {
@@ -147,34 +160,50 @@ class OtpVerificationScreen extends StatelessWidget {
 
                     SizedBox(height: context.height * .04),
 
-                    RichText(
-                      text: TextSpan(
-                        style: GoogleFonts.inter(
-                          fontSize: context.width * .040,
-                        ),
-                        children: const [
-                          TextSpan(
-                            text: "Resend in ",
-                            style: TextStyle(
-                              color: Color(0xFF9CA3AF),
-                              fontWeight: FontWeight.w600,
+                    value.remainingSeconds > 0
+                        ? RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "Resend in ",
+                                  style: TextStyle(
+                                    color: Color(0xFF9CA3AF),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text:
+                                      "${(value.remainingSeconds ~/ 60).toString().padLeft(2, '0')}:${(value.remainingSeconds % 60).toString().padLeft(2, '0')}",
+                                  style: const TextStyle(
+                                    color: AppColors.primaryColor,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : GestureDetector(
+                            onTap: () async {
+                              bool success = await value.forgetPassword();
+
+                              if (success) {
+                                value.startOtpTimer();
+                              }
+                            },
+                            child: const Text(
+                              "Resend OTP",
+                              style: TextStyle(
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                          TextSpan(
-                            text: "00:24",
-                            style: TextStyle(
-                              color: AppColors.primaryColor,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
 
                     SizedBox(height: context.height * .05),
 
                     CustomButton(
                       text: "Verify",
+                      isLoading: value.isLoading,
                       onPressed: () async {
                         bool success = await value.verifyOTP();
 
@@ -182,13 +211,15 @@ class OtpVerificationScreen extends StatelessWidget {
                           Fluttertoast.showToast(
                             msg: "OTP verified successfully.",
                             toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.TOP,
-                            backgroundColor: const Color(0xFF2E7D32),
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: const Color(
+                              0xFF4F46E5,
+                            ), // Primary Purple
                             textColor: Colors.white,
-                            fontSize: 13,
+                            fontSize: 14,
                           );
 
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (_) => ResetPasswordScreen(
@@ -198,12 +229,14 @@ class OtpVerificationScreen extends StatelessWidget {
                           );
                         } else {
                           Fluttertoast.showToast(
-                            msg: "Invalid or expired OTP. Please try again.",
+                            msg: "Invalid or expired verification code.",
                             toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.TOP,
-                            backgroundColor: const Color(0xFFD32F2F),
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: const Color(
+                              0xFFB91C1C,
+                            ), // Soft Dark Red
                             textColor: Colors.white,
-                            fontSize: 13,
+                            fontSize: 14,
                           );
                         }
                       },
