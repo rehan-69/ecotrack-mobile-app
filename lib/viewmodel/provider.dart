@@ -295,8 +295,6 @@ class ProductProvider extends ChangeNotifier {
   }
 
   Future<bool> googleLogin() async {
-    isLoading = true;
-    notifyListeners();
 
     try {
       final credential = await _googleAuthService.signInWithGoogle();
@@ -323,9 +321,6 @@ class ProductProvider extends ChangeNotifier {
     } catch (e) {
       debugPrint(e.toString());
       return false;
-    } finally {
-      isLoading = false;
-      notifyListeners();
-    }
+    } 
   }
 }
