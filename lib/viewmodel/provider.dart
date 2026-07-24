@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:project/services/google_auth_service.dart';
 
 class ProductProvider extends ChangeNotifier {
   final PageController pageController = PageController(initialPage: 0);
@@ -15,6 +17,7 @@ class ProductProvider extends ChangeNotifier {
   final TextEditingController otpController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  final GoogleAuthService _googleAuthService = GoogleAuthService();
   bool newPasswordObscure = true;
   bool confirmPasswordObscure = true;
   bool checkBox = false;
@@ -291,4 +294,30 @@ class ProductProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<User?> googleLogin() async {
+  isLoading = true;
+  notifyListeners();
+
+  try {
+    final User? user = await _googleAuthService.signInWithGoogle();
+
+    if (user == null) {
+      return null;
+    }
+
+    debugPrint("Google Login Success");
+    debugPrint("UID : ${user.uid}");
+    debugPrint("Name : ${user.displayName}");
+    debugPrint("Email : ${user.email}");
+
+    return user;
+  } catch (e) {
+    debugPrint("Google Login Error : $e");
+    return null;
+  } finally {
+    isLoading = false;
+    notifyListeners();
+  }
+}
 }
