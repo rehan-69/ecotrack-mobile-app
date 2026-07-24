@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project/services/google_auth_service.dart';
 
 class ProductProvider extends ChangeNotifier {
@@ -295,29 +294,38 @@ class ProductProvider extends ChangeNotifier {
     }
   }
 
-  Future<User?> googleLogin() async {
-  isLoading = true;
-  notifyListeners();
-
-  try {
-    final User? user = await _googleAuthService.signInWithGoogle();
-
-    if (user == null) {
-      return null;
-    }
-
-    debugPrint("Google Login Success");
-    debugPrint("UID : ${user.uid}");
-    debugPrint("Name : ${user.displayName}");
-    debugPrint("Email : ${user.email}");
-
-    return user;
-  } catch (e) {
-    debugPrint("Google Login Error : $e");
-    return null;
-  } finally {
-    isLoading = false;
+  Future<bool> googleLogin() async {
+    isLoading = true;
     notifyListeners();
+
+    try {
+      final credential = await _googleAuthService.signInWithGoogle();
+
+      if (credential == null) {
+        return false;
+      }
+
+      final idToken = await credential.user?.getIdToken();
+
+      final response = await http.post(
+        Uri.parse("http://127.0.0.1:3000/google-login"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"idToken": idToken}),
+      );
+
+      debugPrint(response.body);
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
   }
-}
 }
