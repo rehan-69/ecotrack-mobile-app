@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "334438809092",
+    "project_id": "notchrehxn",
+    "storage_bucket": "notchrehxn.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334438809092:android:bc5e06cb1fcba47f677f51",
+        "android_client_info": {
+          "package_name": "com.example.project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaKYF1431TO8HZMAac6c-yRe2oq1xzfS4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
