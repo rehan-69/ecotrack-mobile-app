@@ -9,6 +9,8 @@ import 'package:project/views/widgets/custom_button.dart';
 import 'package:project/views/widgets/custom_text_field.dart';
 
 class ForgetPasswordscreen extends StatelessWidget {
+  final formKeyForgetPassword = GlobalKey<FormState>();
+
   ForgetPasswordscreen({super.key});
 
   final RegExp emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
@@ -66,9 +68,9 @@ class ForgetPasswordscreen extends StatelessWidget {
                     SizedBox(height: context.height * .050),
 
                     Form(
-                      key: value.formKeyForgetPassword,
+                      key: formKeyForgetPassword,
                       child: CustomTextField(
-                        controller: value.emailController,
+                        controller: value.forgetPasswordEmailController,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your email';
@@ -102,8 +104,7 @@ class ForgetPasswordscreen extends StatelessWidget {
                       ),
                       onPressed: () async {
                         FocusManager.instance.primaryFocus?.unfocus();
-                        if (value.formKeyForgetPassword.currentState!
-                            .validate()) {
+                        if (formKeyForgetPassword.currentState!.validate()) {
                           bool success = await value.forgetPassword();
                           if (success) {
                             Fluttertoast.showToast(

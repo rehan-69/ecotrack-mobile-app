@@ -104,7 +104,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     SizedBox(height: context.height * .012),
 
                     Text(
-                      "We sent a 4-digit code to ${value.emailController.text}",
+                      "We sent a 4-digit code to ${value.forgetPasswordEmailController.text}",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
                         fontSize: context.width * .036,
@@ -223,7 +223,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (_) => ResetPasswordScreen(
-                                email: value.emailController.text.trim(),
+                                email: value.forgetPasswordEmailController.text.trim(),
                               ),
                             ),
                           );

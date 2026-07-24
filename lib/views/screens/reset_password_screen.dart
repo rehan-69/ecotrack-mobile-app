@@ -9,9 +9,10 @@ import 'package:project/viewmodel/provider.dart';
 import 'package:project/views/widgets/custom_button.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
+  final formKeyReset = GlobalKey<FormState>();
   final String email;
 
-  const ResetPasswordScreen({super.key, required this.email});
+  ResetPasswordScreen({super.key, required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +85,7 @@ class ResetPasswordScreen extends StatelessWidget {
                     SizedBox(height: context.height * .05),
 
                     Form(
-                      key: value.formKeyReset,
+                      key:formKeyReset,
                       child: Column(
                         children: [
                           CustomTextField(
@@ -153,7 +154,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       text: "Change Password",
                       isLoading: value.isLoading,
                       onPressed: () async {
-                        if (value.formKeyReset.currentState!.validate()) {
+                        if (formKeyReset.currentState!.validate()) {
                           bool success = await value.resetPassword(email);
 
                           if (success) {

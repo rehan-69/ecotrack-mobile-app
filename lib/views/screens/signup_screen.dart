@@ -9,6 +9,7 @@ import 'package:project/views/widgets/custom_button.dart';
 import 'package:project/views/widgets/custom_text_field.dart';
 
 class Signupscreen extends StatelessWidget {
+  final formKeySignup = GlobalKey<FormState>();
   Signupscreen({super.key});
   final RegExp emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
 
@@ -64,7 +65,7 @@ class Signupscreen extends StatelessWidget {
                     SizedBox(height: context.height * .035),
 
                     Form(
-                      key: value.formKeySignup,
+                      key: formKeySignup,
                       child: Column(
                         children: [
                           CustomTextField(
@@ -94,7 +95,7 @@ class Signupscreen extends StatelessWidget {
                           SizedBox(height: context.height * .016),
 
                           CustomTextField(
-                            controller: value.emailController,
+                            controller: value.signupEmailController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your email';
@@ -141,7 +142,7 @@ class Signupscreen extends StatelessWidget {
                           SizedBox(height: context.height * .016),
 
                           CustomTextField(
-                            controller: value.passwordController,
+                            controller: value.signupPasswordController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your password';
@@ -175,7 +176,7 @@ class Signupscreen extends StatelessWidget {
                               if (val == null || val.isEmpty) {
                                 return 'Please enter confirm password';
                               }
-                              if (val != value.passwordController.text) {
+                              if (val != value.signupPasswordController.text) {
                                 return 'Password does not match';
                               }
                               return null;
@@ -213,7 +214,7 @@ class Signupscreen extends StatelessWidget {
                       onPressed: () async {
                         FocusManager.instance.primaryFocus?.unfocus();
 
-                        if (value.formKeySignup.currentState!.validate()) {
+                        if (formKeySignup.currentState!.validate()) {
                           String? error = await value.signUp();
 
                           if (error == null) {
@@ -225,6 +226,7 @@ class Signupscreen extends StatelessWidget {
                               textColor: Colors.white,
                               fontSize: 14,
                             );
+                            value.clearControllers();
 
                             Navigator.pushReplacement(
                               context,

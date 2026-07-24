@@ -11,6 +11,8 @@ import 'package:project/views/widgets/custom_text_field.dart';
 import 'package:project/views/screens/forgetpassword_screen.dart';
 
 class LoginScreen extends StatelessWidget {
+  final formKeyLogin = GlobalKey<FormState>();
+
   LoginScreen({super.key});
   final RegExp emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
 
@@ -67,7 +69,7 @@ class LoginScreen extends StatelessWidget {
 
                     SizedBox(height: context.height * .050),
                     Form(
-                      key: value.formKeyLogin,
+                      key: formKeyLogin,
                       child: Column(
                         children: [
                           Padding(
@@ -75,7 +77,7 @@ class LoginScreen extends StatelessWidget {
                               horizontal: context.width * .01,
                             ),
                             child: CustomTextField(
-                              controller: value.emailController,
+                              controller: value.loginEmailController,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your email';
@@ -103,7 +105,7 @@ class LoginScreen extends StatelessWidget {
                               horizontal: context.width * .01,
                             ),
                             child: CustomTextField(
-                              controller: value.passwordController,
+                              controller: value.loginPasswordController,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your password';
@@ -197,7 +199,7 @@ class LoginScreen extends StatelessWidget {
                         isLoading: value.isLoading,
                         onPressed: () async {
                           FocusManager.instance.primaryFocus?.unfocus();
-                          if (value.formKeyLogin.currentState!.validate()) {
+                          if (formKeyLogin.currentState!.validate()) {
                             bool success = await value.login();
                             if (success) {
                               Fluttertoast.showToast(

@@ -1,22 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ProductProvider extends ChangeNotifier {
   final PageController pageController = PageController(initialPage: 0);
   TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController signupEmailController = TextEditingController();
+  TextEditingController forgetPasswordEmailController = TextEditingController();
+  TextEditingController loginEmailController = TextEditingController();
+  TextEditingController loginPasswordController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController signupPasswordController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  final formKeyReset = GlobalKey<FormState>();
-  final formKeyLogin = GlobalKey<FormState>();
-  final formKeySignup = GlobalKey<FormState>();
-  final formKeyForgetPassword = GlobalKey<FormState>();
   bool newPasswordObscure = true;
   bool confirmPasswordObscure = true;
   bool checkBox = false;
@@ -29,12 +27,15 @@ class ProductProvider extends ChangeNotifier {
   @override
   void dispose() {
     otpTimer?.cancel();
-    otpController.dispose();
     pageController.dispose();
     nameController.dispose();
-    emailController.dispose();
+    signupEmailController.dispose();
+    loginEmailController.dispose();
+    forgetPasswordEmailController.dispose();
+    loginPasswordController.dispose();
+    signupPasswordController.dispose();
     mobileController.dispose();
-    passwordController.dispose();
+    otpController.dispose();
     newPasswordController.dispose();
     confirmPasswordController.dispose();
     super.dispose();
@@ -98,6 +99,40 @@ class ProductProvider extends ChangeNotifier {
     });
   }
 
+  void clearControllers() {
+    // Signup
+    nameController.clear();
+    signupEmailController.clear();
+    mobileController.clear();
+    signupPasswordController.clear();
+    confirmPasswordController.clear();
+
+    // Login
+    loginEmailController.clear();
+    loginPasswordController.clear();
+
+    // Forgot Password
+    forgetPasswordEmailController.clear();
+
+    // OTP
+    otpController.clear();
+
+    // Reset Password
+    newPasswordController.clear();
+
+    // Reset UI States
+    password = true;
+    newPasswordObscure = true;
+    confirmPasswordObscure = true;
+    checkBox = false;
+
+    // Reset Timer
+    otpTimer?.cancel();
+    remainingSeconds = 120;
+
+    notifyListeners();
+  }
+
   Future<String?> signUp() async {
     isLoading = true;
     notifyListeners();
@@ -108,9 +143,9 @@ class ProductProvider extends ChangeNotifier {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           "name": nameController.text.trim(),
-          "email": emailController.text.trim(),
+          "email": signupEmailController.text.trim(),
           "mobile": mobileController.text.trim(),
-          "password": passwordController.text.trim(),
+          "password": signupPasswordController.text.trim(),
         }),
       );
 
@@ -140,8 +175,8 @@ class ProductProvider extends ChangeNotifier {
         Uri.parse("http://127.0.0.1:3000/login"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
-          "email": emailController.text.trim(),
-          "password": passwordController.text.trim(),
+          "email": loginEmailController.text.trim(),
+          "password": loginPasswordController.text.trim(),
         }),
       );
 
@@ -171,7 +206,7 @@ class ProductProvider extends ChangeNotifier {
       final response = await http.post(
         Uri.parse('http://127.0.0.1:3000/forgot-password'),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"email": emailController.text.trim()}),
+        body: jsonEncode({"email": forgetPasswordEmailController.text.trim()}),
       );
 
       debugPrint('status code : ${response.statusCode}');
@@ -201,7 +236,7 @@ class ProductProvider extends ChangeNotifier {
         Uri.parse('http://127.0.0.1:3000/verify-otp'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
-          "email": emailController.text.trim(),
+          "email": forgetPasswordEmailController.text.trim(),
           "otp": otpController.text.trim(),
         }),
       );
