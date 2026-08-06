@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:project/constants/app_colors.dart';
 import 'package:project/views/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:project/viewmodel/provider.dart';
@@ -160,7 +161,7 @@ class LoginScreen extends StatelessWidget {
                           "Remember me",
                           style: TextStyle(
                             fontSize: context.width * .038,
-                            color: Colors.black87,
+                            color: AppColors.primaryColor,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
