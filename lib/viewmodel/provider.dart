@@ -54,7 +54,7 @@ class ProductProvider extends ChangeNotifier {
   }
 
   void nextPage() {
-    if (currentIndex < 2) {
+    if (currentIndex < 3) {
       pageController.nextPage(
         duration: Duration(milliseconds: 300),
         curve: Curves.easeInOut,

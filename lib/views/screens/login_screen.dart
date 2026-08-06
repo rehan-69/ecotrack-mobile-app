@@ -4,7 +4,6 @@ import 'package:project/constants/app_colors.dart';
 import 'package:project/views/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:project/viewmodel/provider.dart';
-import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/screens/signup_screen.dart';
 import 'package:project/views/widgets/custom_button.dart';

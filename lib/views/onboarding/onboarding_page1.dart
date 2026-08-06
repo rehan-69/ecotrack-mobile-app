@@ -5,7 +5,7 @@ import 'package:project/viewmodel/provider.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/widgets/custom_button.dart';
 import 'package:project/views/widgets/custom_onboarding_text.dart';
-import 'package:project/views/widgets/custome_page_indicator.dart';
+import 'package:project/views/widgets/custom_page_indicator.dart';
 
 class OnboardingPage1 extends StatelessWidget {
   const OnboardingPage1({super.key});
