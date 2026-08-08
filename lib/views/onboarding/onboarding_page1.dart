@@ -43,9 +43,9 @@ class OnboardingPage1 extends StatelessWidget {
                     SizedBox(height: context.height * 0.03),
 
                     const CustomOnboardingText(
-                      title: "Discover premium picks",
+                      title: "Keep Your City Clean",
                       subtitle:
-                          "Curated brands and trending drops in one\nfeed.",
+                          "Report waste problems and help keep your\nneighborhood clean and green.",
                     ),
 
                     SizedBox(height: context.height * 0.04),

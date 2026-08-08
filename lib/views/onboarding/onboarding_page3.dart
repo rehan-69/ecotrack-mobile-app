@@ -43,9 +43,9 @@ class OnboardingPage3 extends StatelessWidget {
                     SizedBox(height: context.height * 0.03),
 
                     const CustomOnboardingText(
-                      title: "Track every step",
+                      title: "Make a Greener Difference",
                       subtitle:
-                          "Real-time updates from warehouse\nto your door.",
+                          "Track your reports and work together for a\ncleaner and healthier city.",
                     ),
 
                     SizedBox(height: context.height * 0.04),

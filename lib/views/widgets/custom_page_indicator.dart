@@ -18,7 +18,7 @@ class CustomPageIndicator extends StatelessWidget {
       controller: controller,
       count: count,
       effect: ExpandingDotsEffect(
-        activeDotColor: const Color(0xFF4F46E5),
+        activeDotColor: const Color(0xFF2E7D32),
         dotColor: Colors.grey.shade300,
         dotHeight: context.width * 0.02,
         dotWidth: context.width * 0.02,

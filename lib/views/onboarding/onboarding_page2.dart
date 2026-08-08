@@ -44,9 +44,9 @@ class OnboardingPage2 extends StatelessWidget {
                     SizedBox(height: context.height * 0.03),
 
                     const CustomOnboardingText(
-                      title: "Buy in a tap",
+                      title: "Report Waste Easily",
                       subtitle:
-                          "Saved cards, one-click checkout,\ndoorstep delivery.",
+                          "Quickly report garbage and cleanliness\nissues in your area.",
                     ),
 
                     SizedBox(height: context.height * 0.04),
