@@ -135,39 +135,12 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
 
-                    SizedBox(height: context.height * .012),
-                    Row(
-                      children: [
-                        Transform.scale(
-                          scale: 0.90,
-                          child: Checkbox(
-                            value: value.checkBox,
-                            activeColor: AppColors.primaryColor,
-                            side: BorderSide(
-                              color: Colors.grey.shade400,
-                              width: 1.2,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            onChanged: (_) {
-                              value.checkBoxTap();
-                            },
-                          ),
-                        ),
-
-                        Text(
-                          "Remember me",
-                          style: TextStyle(
-                            fontSize: context.width * .038,
-                            color: AppColors.primaryColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-
-                        SizedBox(width: context.width * .1),
-
-                        GestureDetector(
+                    SizedBox(height: context.height * .015),
+                    Padding(
+                      padding:  EdgeInsets.only(right: context.width * 0.020),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
@@ -185,10 +158,10 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
 
-                    SizedBox(height: context.height * 0.035),
+                    SizedBox(height: context.height * 0.020),
 
                     Padding(
                       padding: EdgeInsets.symmetric(
