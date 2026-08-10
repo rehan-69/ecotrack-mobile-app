@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/constants/mediaquery.dart';
+import 'package:project/views/widgets/custom_recent_complaint.dart';
 import 'package:project/views/widgets/custom_statuscard.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -49,14 +50,14 @@ class HomeScreen extends StatelessWidget {
                             children: [
                               Text(
                                 'Good morning,',
-                                style:  GoogleFonts.inter(
+                                style: GoogleFonts.inter(
                                   fontSize: context.width * 0.036,
                                   color: const Color(0xFF6B7280),
                                 ),
                               ),
                               Text(
                                 'Rahul Sharma',
-                                style:  GoogleFonts.inter(
+                                style: GoogleFonts.inter(
                                   fontSize: context.width * 0.046,
                                   fontWeight: FontWeight.w700,
                                   color: const Color(0xFF1F2937),
@@ -95,7 +96,7 @@ class HomeScreen extends StatelessWidget {
 
                       Text(
                         'Keep Your City',
-                        style:  GoogleFonts.inter(
+                        style: GoogleFonts.inter(
                           fontSize: context.width * 0.065,
                           fontWeight: FontWeight.w700,
                           color: const Color(0xFF1F2937),
@@ -106,7 +107,7 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           Text(
                             'Clean',
-                            style:  GoogleFonts.inter(
+                            style: GoogleFonts.inter(
                               fontSize: context.width * 0.065,
                               fontWeight: FontWeight.w700,
                               color: const Color(0xFF1B5E20),
@@ -166,7 +167,7 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             Text(
                               'Report Complaint',
-                              style:  GoogleFonts.inter(
+                              style: GoogleFonts.inter(
                                 fontSize: context.width * 0.050,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
@@ -175,7 +176,7 @@ class HomeScreen extends StatelessWidget {
 
                             Text(
                               'Snap, locate & submit in 30s',
-                              style:  GoogleFonts.inter(
+                              style: GoogleFonts.inter(
                                 fontSize: context.width * 0.034,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.white,
@@ -204,7 +205,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Overview',
-                    style:  GoogleFonts.inter(
+                    style: GoogleFonts.inter(
                       fontSize: context.width * 0.055,
                       fontWeight: FontWeight.w700,
                       color: const Color(0xFF1F2937),
@@ -215,7 +216,7 @@ class HomeScreen extends StatelessWidget {
 
                   Text(
                     'This month',
-                    style:  GoogleFonts.inter(
+                    style: GoogleFonts.inter(
                       fontSize: context.width * 0.034,
                       fontWeight: FontWeight.w400,
                       color: const Color(0xFF6B7280),
@@ -233,7 +234,9 @@ class HomeScreen extends StatelessWidget {
                     child: StatusCard(
                       title: '12',
                       subtitle: 'Total',
-                      cardBorder: Border.all(color: Color.fromARGB(255, 199, 197, 197),),
+                      cardBorder: Border.all(
+                        color: Color.fromARGB(255, 199, 197, 197),
+                      ),
                       cardColor: const Color(0xFFF9FAFC),
                       textTitleColor: Colors.black,
                       textSubtitleColor: Color.fromARGB(255, 199, 197, 197),
@@ -246,7 +249,9 @@ class HomeScreen extends StatelessWidget {
                     child: StatusCard(
                       title: '04',
                       subtitle: 'Pending',
-                      cardBorder: Border.all(color: const Color.fromARGB(255, 245, 194, 106)),
+                      cardBorder: Border.all(
+                        color: const Color.fromARGB(255, 245, 194, 106),
+                      ),
                       cardColor: const Color(0xFFFEF7E7),
                       textTitleColor: const Color(0xFFFFA000),
                       textSubtitleColor: Color.fromARGB(255, 199, 197, 197),
@@ -259,7 +264,9 @@ class HomeScreen extends StatelessWidget {
                     child: StatusCard(
                       title: '08',
                       subtitle: 'Completed',
-                      cardBorder: Border.all(color: const Color.fromARGB(255, 150, 248, 184)),
+                      cardBorder: Border.all(
+                        color: const Color.fromARGB(255, 150, 248, 184),
+                      ),
                       cardColor: const Color(0xFFEEFBF1),
                       textTitleColor: const Color(0xFF28BF5E),
                       textSubtitleColor: Color.fromARGB(255, 199, 197, 197),
@@ -268,6 +275,65 @@ class HomeScreen extends StatelessWidget {
 
                   SizedBox(width: context.width * 0.040),
                 ],
+              ),
+
+              SizedBox(height: context.height * 0.020),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    'Recent Complaints',
+                    style: GoogleFonts.inter(
+                      fontSize: context.width * 0.050,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF1F2937),
+                    ),
+                  ),
+
+                  SizedBox(width: context.width * 0.13),
+
+                  Text(
+                    'View all',
+                    style: GoogleFonts.inter(
+                      fontSize: context.width * 0.038,
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFF2E7D32),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: context.height * 0.015),
+
+              RecentComplaint(
+                image: 'assets/waste1.png',
+                title: 'ECO-1042',
+                subTitle1: 'Household Waste',
+                subTitle2: '12 Mar 2026 Ward 07',
+                progress: 'In Progress',
+                progressColor: const Color.fromARGB(255, 238, 151, 1),
+              ),
+
+              SizedBox(height: context.height * 0.010),
+
+              RecentComplaint(
+                image: 'assets/waste2.png',
+                title: 'ECO-1038',
+                subTitle1: 'Construction Debris',
+                subTitle2: '08 Mar 2026 Ward 07',
+                progress: 'Completed',
+                progressColor: Color(0xFF28BF5E),
+              ),
+
+              SizedBox(height: context.height * 0.010),
+
+              RecentComplaint(
+                image: 'assets/waste3.png',
+                title: 'ECO-1031',
+                subTitle1: 'Garden Waste',
+                subTitle2: '02 Mar 2026 Ward 04',
+                progress: 'Completed',
+                progressColor: Color(0xFF28BF5E),
               ),
             ],
           ),
