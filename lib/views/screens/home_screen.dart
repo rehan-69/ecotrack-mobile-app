@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:project/constants/mediaquery.dart';
+import 'package:project/views/widgets/custom_statuscard.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,109 +17,259 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
-          child: Container(
-            height: context.height * 0.22,
-            width: double.infinity,
-            color: const Color(0xFFF1F8F1),
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: context.width * 0.080,
-                top: context.height * 0.010,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+          child: Column(
+            children: [
+              Container(
+                height: context.height * 0.20,
+                width: double.infinity,
+                color: const Color(0xFFF1F8F1),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: context.width * 0.080,
+                    top: context.height * 0.010,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircleAvatar(
-                        radius: context.width * 0.087,
-                        backgroundColor: Colors.white,
-                        child: CircleAvatar(
-                          radius: context.width * 0.077,
-                          backgroundImage: const AssetImage(
-                            'assets/avatar.png',
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: context.width * 0.030),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
                         children: [
-                          Text(
-                            'Good morning,',
-                            style: TextStyle(
-                              fontSize: context.width * 0.036,
-                              color: const Color(0xFF6B7280),
+                          CircleAvatar(
+                            radius: context.width * 0.087,
+                            backgroundColor: Colors.white,
+                            child: CircleAvatar(
+                              radius: context.width * 0.077,
+                              backgroundImage: const AssetImage(
+                                'assets/avatar.png',
+                              ),
                             ),
                           ),
-                          Text(
-                            'Rahul Sharma',
-                            style: TextStyle(
-                              fontSize: context.width * 0.046,
-                              fontWeight: FontWeight.w700,
-                              color: const Color(0xFF1F2937),
+                          SizedBox(width: context.width * 0.030),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Good morning,',
+                                style:  GoogleFonts.inter(
+                                  fontSize: context.width * 0.036,
+                                  color: const Color(0xFF6B7280),
+                                ),
+                              ),
+                              Text(
+                                'Rahul Sharma',
+                                style:  GoogleFonts.inter(
+                                  fontSize: context.width * 0.046,
+                                  fontWeight: FontWeight.w700,
+                                  color: const Color(0xFF1F2937),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: context.width * 0.2),
+                            child: Container(
+                              height: context.width * 0.115,
+                              width: context.width * 0.115,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color(0x1A000000),
+                                    blurRadius: 8,
+                                    spreadRadius: 1,
+                                    offset: Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Icon(
+                                Icons.notifications_none_outlined,
+                                size: context.width * 0.055,
+                                color: const Color(0xFF1F2937),
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: context.width * 0.2),
-                        child: Container(
-                          height: context.width * 0.115,
-                          width: context.width * 0.115,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0x1A000000),
-                                blurRadius: 8,
-                                spreadRadius: 1,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Icon(
-                            Icons.notifications_none_outlined,
-                            size: context.width * 0.055,
-                            color: const Color(0xFF1F2937),
-                          ),
+
+                      SizedBox(height: context.height * 0.020),
+
+                      Text(
+                        'Keep Your City',
+                        style:  GoogleFonts.inter(
+                          fontSize: context.width * 0.065,
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xFF1F2937),
                         ),
+                      ),
+
+                      Row(
+                        children: [
+                          Text(
+                            'Clean',
+                            style:  GoogleFonts.inter(
+                              fontSize: context.width * 0.065,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFF1B5E20),
+                            ),
+                          ),
+                          Icon(
+                            Icons.eco,
+                            size: context.width * 0.065,
+                            color: const Color(0xFF2E7D32),
+                          ),
+                        ],
                       ),
                     ],
                   ),
+                ),
+              ),
 
-                  SizedBox(height: context.height * 0.020),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF2E7D32),
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 8,
+                        spreadRadius: 1,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  height: context.height * 0.085,
+                  child: Row(
+                    children: [
+                      SizedBox(width: context.width * 0.060),
+                      Container(
+                        height: context.width * 0.10,
+                        width: context.width * 0.10,
+                        decoration: const BoxDecoration(
+                          color: Colors.white24,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.camera_alt_outlined,
+                          size: context.width * 0.055,
+                          color: Colors.white,
+                        ),
+                      ),
 
+                      SizedBox(width: context.width * 0.040),
+
+                      Padding(
+                        padding: EdgeInsets.only(top: context.height * 0.0125),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Report Complaint',
+                              style:  GoogleFonts.inter(
+                                fontSize: context.width * 0.050,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
+
+                            Text(
+                              'Snap, locate & submit in 30s',
+                              style:  GoogleFonts.inter(
+                                fontSize: context.width * 0.034,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(width: context.width * 0.16),
+
+                      Icon(
+                        Icons.chevron_right,
+                        size: context.width * 0.060,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(height: context.height * 0.002),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
                   Text(
-                    'Keep Your City',
-                    style: TextStyle(
-                      fontSize: context.width * 0.065,
+                    'Overview',
+                    style:  GoogleFonts.inter(
+                      fontSize: context.width * 0.055,
                       fontWeight: FontWeight.w700,
                       color: const Color(0xFF1F2937),
                     ),
                   ),
 
-                  Row(
-                    children: [
-                      Text(
-                        'Clean',
-                        style: TextStyle(
-                          fontSize: context.width * 0.065,
-                          fontWeight: FontWeight.w700,
-                          color: const Color(0xFF1B5E20),
-                        ),
-                      ),
-                      Icon(
-                        Icons.eco,
-                        size: context.width * 0.065,
-                        color: const Color(0xFF2E7D32),
-                      ),
-                    ],
+                  SizedBox(width: context.width * 0.30),
+
+                  Text(
+                    'This month',
+                    style:  GoogleFonts.inter(
+                      fontSize: context.width * 0.034,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(0xFF6B7280),
+                    ),
                   ),
                 ],
               ),
-            ),
+              SizedBox(height: context.height * 0.020),
+
+              Row(
+                children: [
+                  SizedBox(width: context.width * 0.040),
+
+                  Expanded(
+                    child: StatusCard(
+                      title: '12',
+                      subtitle: 'Total',
+                      cardBorder: Border.all(color: Color.fromARGB(255, 199, 197, 197),),
+                      cardColor: const Color(0xFFF9FAFC),
+                      textTitleColor: Colors.black,
+                      textSubtitleColor: Color.fromARGB(255, 199, 197, 197),
+                    ),
+                  ),
+
+                  SizedBox(width: context.width * 0.040),
+
+                  Expanded(
+                    child: StatusCard(
+                      title: '04',
+                      subtitle: 'Pending',
+                      cardBorder: Border.all(color: const Color.fromARGB(255, 245, 194, 106)),
+                      cardColor: const Color(0xFFFEF7E7),
+                      textTitleColor: const Color(0xFFFFA000),
+                      textSubtitleColor: Color.fromARGB(255, 199, 197, 197),
+                    ),
+                  ),
+
+                  SizedBox(width: context.width * 0.040),
+
+                  Expanded(
+                    child: StatusCard(
+                      title: '08',
+                      subtitle: 'Completed',
+                      cardBorder: Border.all(color: const Color.fromARGB(255, 150, 248, 184)),
+                      cardColor: const Color(0xFFEEFBF1),
+                      textTitleColor: const Color(0xFF28BF5E),
+                      textSubtitleColor: Color.fromARGB(255, 199, 197, 197),
+                    ),
+                  ),
+
+                  SizedBox(width: context.width * 0.040),
+                ],
+              ),
+            ],
           ),
         ),
       ),
