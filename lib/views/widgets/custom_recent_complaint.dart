@@ -36,8 +36,17 @@ class RecentComplaint extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
+          color: Colors.white, // ⭐ ye important hai
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: const Color(0xFFE5E7EB), width: 1.5),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x30000000),
+              blurRadius: 6,
+              spreadRadius: -2,
+              offset: Offset(0, 5),
+            ),
+          ],
         ),
         width: double.infinity,
         child: Row(
