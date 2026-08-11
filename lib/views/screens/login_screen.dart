@@ -92,6 +92,7 @@ class LoginScreen extends StatelessWidget {
                               color: AppColors.appWhiteColor,
                               borderRadius: context.width * .04,
                               prefixIcon: Icons.email_outlined,
+                              fontSize: context.width * 0.041,
                               title: "Email",
                               labelText: "Email",
                               iconColor: Colors.grey.shade600,
@@ -124,6 +125,7 @@ class LoginScreen extends StatelessWidget {
                                   ? Icons.visibility_off_outlined
                                   : Icons.visibility,
                               onSuffixTap: value.togglePassword,
+                              fontSize: context.width * 0.041,
                               obscureText: value.password,
                               title: "Password",
                               iconColor: Colors.grey.shade600,
@@ -137,7 +139,7 @@ class LoginScreen extends StatelessWidget {
 
                     SizedBox(height: context.height * .015),
                     Padding(
-                      padding:  EdgeInsets.only(right: context.width * 0.020),
+                      padding: EdgeInsets.only(right: context.width * 0.020),
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: GestureDetector(

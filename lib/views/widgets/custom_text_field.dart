@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:project/constants/app_colors.dart';
 
 class CustomTextField extends StatelessWidget {
   final Color? color;
   final String title;
   final double height;
+  final double fontSize;
   final Color? iconColor;
   final bool obscureText;
-  final String labelText;
+  final String? labelText;
+  final Color? borderColor;
   final IconData prefixIcon;
   final double borderRadius;
   final IconData? suffixIcon;
@@ -24,9 +27,11 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon,
     this.onSuffixTap,
     required this.title,
+    required this.fontSize,
+    this.borderColor,
     this.color,
     required this.height,
-    required this.labelText,
+    this.labelText,
     this.iconColor,
     required this.controller,
     required this.prefixIcon,
@@ -57,12 +62,13 @@ class CustomTextField extends StatelessWidget {
           hintText: title,
           labelText: labelText,
           labelStyle: TextStyle(color: AppColors.primaryColor),
-          hintStyle: TextStyle(
-            color: Colors.black54,
-            fontSize: size.width * 0.041,
+          hintStyle: GoogleFonts.inter(
+            color: Color(0xFF9CA3AF),
+            fontSize: fontSize,
+            fontWeight: FontWeight.w400,
           ),
 
-          // filled: true,
+          filled: true,
           fillColor: color,
 
           prefixIcon: Icon(
@@ -89,14 +95,18 @@ class CustomTextField extends StatelessWidget {
 
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(borderRadius),
-            borderSide: const BorderSide(color: Colors.black, width: 1.2),
+            borderSide: BorderSide(
+              color: borderColor ?? Colors.black,
+              width: 1,
+            ),
           ),
-
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(borderRadius),
-            borderSide: const BorderSide(color: Color(0xFF2E7D32), width: 1.8),
+            borderSide: BorderSide(
+              color: borderColor ?? const Color(0xFF2E7D32),
+              width: 1,
+            ),
           ),
-
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(borderRadius),
             borderSide: const BorderSide(color: Colors.red),

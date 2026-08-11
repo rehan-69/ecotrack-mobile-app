@@ -86,6 +86,7 @@ class Signupscreen extends StatelessWidget {
                             height: context.height * .075,
                             color: AppColors.appWhiteColor,
                             borderRadius: context.width * .04,
+                            fontSize: context.width * 0.041,
                             prefixIcon: Icons.person_outline,
                             title: "Name",
                             labelText: "Name",
@@ -107,6 +108,7 @@ class Signupscreen extends StatelessWidget {
                             },
                             onChanged: (value) {},
                             height: context.height * .075,
+                            fontSize: context.width * 0.041,
                             color: AppColors.appWhiteColor,
                             borderRadius: context.width * .04,
                             prefixIcon: Icons.email_outlined,
@@ -133,6 +135,7 @@ class Signupscreen extends StatelessWidget {
                             color: AppColors.appWhiteColor,
                             borderRadius: context.width * .04,
                             prefixIcon: Icons.phone_outlined,
+                            fontSize: context.width * 0.041,
                             title: "Mobile",
                             labelText: "Mobile",
                             iconColor: Colors.grey.shade600,
@@ -157,6 +160,7 @@ class Signupscreen extends StatelessWidget {
                             color: AppColors.appWhiteColor,
                             borderRadius: context.width * .04,
                             prefixIcon: Icons.lock_outline,
+                            fontSize: context.width * 0.041,
                             suffixIcon: value.newPasswordObscure
                                 ? Icons.visibility_off
                                 : Icons.visibility,
@@ -185,6 +189,7 @@ class Signupscreen extends StatelessWidget {
                             height: context.height * .075,
                             color: AppColors.appWhiteColor,
                             borderRadius: context.width * .04,
+                            fontSize: context.width * 0.041,
                             prefixIcon: Icons.lock_outline,
                             suffixIcon: value.confirmPasswordObscure
                                 ? Icons.visibility_off

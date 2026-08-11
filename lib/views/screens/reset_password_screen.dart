@@ -85,7 +85,7 @@ class ResetPasswordScreen extends StatelessWidget {
                     SizedBox(height: context.height * .05),
 
                     Form(
-                      key:formKeyReset,
+                      key: formKeyReset,
                       child: Column(
                         children: [
                           CustomTextField(
@@ -110,6 +110,7 @@ class ResetPasswordScreen extends StatelessWidget {
                             onSuffixTap: value.toggleNewPassword,
                             obscureText: value.newPasswordObscure,
                             borderRadius: context.width * .04,
+                            fontSize: context.width * 0.041,
                             height: context.height * .07,
                             color: Colors.white,
                             iconColor: AppColors.primaryColor,
@@ -140,6 +141,7 @@ class ResetPasswordScreen extends StatelessWidget {
                             onSuffixTap: value.toggleConfirmPassword,
                             obscureText: value.confirmPasswordObscure,
                             borderRadius: context.width * .04,
+                            fontSize: context.width * 0.041,
                             height: context.height * .07,
                             color: Colors.white,
                             iconColor: AppColors.primaryColor,

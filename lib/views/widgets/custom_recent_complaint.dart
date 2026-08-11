@@ -5,19 +5,24 @@ import 'package:project/constants/mediaquery.dart';
 class RecentComplaint extends StatelessWidget {
   final String title;
   final String image;
+  final double? width;
+  final double? height;
   final String progress;
+  final Widget? infoRow;
   final String subTitle1;
-  final String subTitle2;
+  final String? subTitle2;
   final Color progressColor;
-
 
   const RecentComplaint({
     super.key,
+    this.infoRow,
+    this.subTitle2,
     required this.title,
     required this.image,
+    required this.width,
+    required this.height,
     required this.progress,
     required this.subTitle1,
-    required this.subTitle2,
     required this.progressColor,
   });
 
@@ -33,7 +38,6 @@ class RecentComplaint extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: const Color(0xFFE5E7EB), width: 1.5),
-
         ),
         width: double.infinity,
         child: Row(
@@ -43,8 +47,8 @@ class RecentComplaint extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               child: Image.asset(
                 image,
-                height: context.width * 0.15,
-                width: context.width * 0.15,
+                height: height,
+                width: width,
                 fit: BoxFit.cover,
               ),
             ),
@@ -72,11 +76,15 @@ class RecentComplaint extends StatelessWidget {
                   ),
                 ),
 
+                SizedBox(height: context.height * 0.005),
+
+                if (infoRow != null) ?infoRow,
+
                 Text(
-                  subTitle2,
+                  subTitle2 ?? '',
                   style: GoogleFonts.inter(
                     fontSize: context.width * 0.032,
-                    color:  Color.fromARGB(255, 199, 197, 197),
+                    color: Color.fromARGB(255, 199, 197, 197),
                   ),
                 ),
               ],

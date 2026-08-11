@@ -17,6 +17,8 @@ class ProductProvider extends ChangeNotifier {
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   final GoogleAuthService _googleAuthService = GoogleAuthService();
+  TextEditingController complaintController = TextEditingController();
+
   bool newPasswordObscure = true;
   bool confirmPasswordObscure = true;
   bool checkBox = false;
