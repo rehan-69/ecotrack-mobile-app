@@ -14,7 +14,7 @@ class ReportComplaintScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Report Complaints',
+          'Report Complaint',
           style: TextStyle(
             fontSize: context.width * 0.060,
             fontWeight: FontWeight.w700,
