@@ -27,6 +27,8 @@ class MyComplaintScreen extends StatelessWidget {
             ),
           ),
           body: SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 Divider(

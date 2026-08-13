@@ -14,7 +14,7 @@ class ReportComplaintScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Complaints Details',
+          'Report Complaints',
           style: TextStyle(
             fontSize: context.width * 0.060,
             fontWeight: FontWeight.w700,
@@ -23,6 +23,8 @@ class ReportComplaintScreen extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             Divider(
@@ -303,7 +305,6 @@ class ReportComplaintScreen extends StatelessWidget {
             ),
 
             SizedBox(height: context.height * 0.010),
-
           ],
         ),
       ),
