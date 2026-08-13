@@ -43,7 +43,7 @@ class CustomImagePickerButton extends StatelessWidget {
             title,
             style: GoogleFonts.inter(
               fontSize: context.width * 0.035,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.bold,
               color: textColor,
             ),
           ),

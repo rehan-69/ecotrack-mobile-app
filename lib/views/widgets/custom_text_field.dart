@@ -6,22 +6,24 @@ class CustomTextField extends StatelessWidget {
   final Color? color;
   final String title;
   final double height;
+  final int? maxLines;
   final double fontSize;
   final Color? iconColor;
   final bool obscureText;
   final String? labelText;
   final Color? borderColor;
-  final IconData prefixIcon;
+  final IconData? prefixIcon;
   final double borderRadius;
   final IconData? suffixIcon;
   final VoidCallback? onSuffixTap;
   final TextInputType keyboardType;
   final ValueChanged<String>? onChanged;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
 
   const CustomTextField({
     super.key,
+    this.maxLines,
     this.onChanged,
     this.validator,
     this.suffixIcon,
@@ -33,8 +35,8 @@ class CustomTextField extends StatelessWidget {
     required this.height,
     this.labelText,
     this.iconColor,
-    required this.controller,
-    required this.prefixIcon,
+    this.controller,
+    this.prefixIcon,
     this.obscureText = false,
     required this.borderRadius,
     this.keyboardType = TextInputType.text,
@@ -45,12 +47,13 @@ class CustomTextField extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return SizedBox(
-      // height: height,
       width: double.infinity,
+      height: height,
       child: TextFormField(
         controller: controller,
         validator: validator,
         onChanged: onChanged,
+         maxLines: maxLines ?? 1,
         keyboardType: keyboardType,
         obscureText: obscureText,
         style: TextStyle(
@@ -71,11 +74,9 @@ class CustomTextField extends StatelessWidget {
           filled: true,
           fillColor: color,
 
-          prefixIcon: Icon(
-            prefixIcon,
-            color: iconColor,
-            size: size.width * 0.06,
-          ),
+          prefixIcon: prefixIcon != null
+              ? Icon(prefixIcon, color: iconColor, size: size.width * 0.06)
+              : null,
 
           suffixIcon: suffixIcon != null
               ? InkWell(
