@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/screens/my_complaint_screen.dart';
+import 'package:project/views/screens/report_complaint_screen.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({super.key});
@@ -10,14 +11,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
     return Container(
       height: context.height * 0.080,
       width: double.infinity,
-      padding: EdgeInsets.only(
-        bottom: context.height * 0.005,
-      ),
+      padding: EdgeInsets.only(bottom: context.height * 0.005),
       decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(18),
-        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
         boxShadow: [
           BoxShadow(
             color: Color(0x18000000),
@@ -38,9 +35,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 size: context.width * 0.060,
                 color: const Color(0xFF6B7280),
               ),
-              SizedBox(
-                height: context.height * 0.004,
-              ),
+              SizedBox(height: context.height * 0.004),
               Text(
                 'Home',
                 style: TextStyle(
@@ -52,26 +47,34 @@ class CustomBottomNavigationBar extends StatelessWidget {
             ],
           ),
 
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.add,
-                size: context.width * 0.060,
-                color: const Color(0xFF6B7280),
-              ),
-              SizedBox(
-                height: context.height * 0.004,
-              ),
-              Text(
-                'Report',
-                style: TextStyle(
-                  fontSize: context.width * 0.032,
-                  fontWeight: FontWeight.w500,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ReportComplaintScreen(),
+                ),
+              );
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.add,
+                  size: context.width * 0.060,
                   color: const Color(0xFF6B7280),
                 ),
-              ),
-            ],
+                SizedBox(height: context.height * 0.004),
+                Text(
+                  'Report',
+                  style: TextStyle(
+                    fontSize: context.width * 0.032,
+                    fontWeight: FontWeight.w500,
+                    color: const Color(0xFF6B7280),
+                  ),
+                ),
+              ],
+            ),
           ),
 
           GestureDetector(
@@ -91,9 +94,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                   size: context.width * 0.060,
                   color: const Color(0xFF6B7280),
                 ),
-                SizedBox(
-                  height: context.height * 0.004,
-                ),
+                SizedBox(height: context.height * 0.004),
                 Text(
                   'Complaints',
                   style: TextStyle(
@@ -114,9 +115,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 size: context.width * 0.060,
                 color: const Color(0xFF6B7280),
               ),
-              SizedBox(
-                height: context.height * 0.004,
-              ),
+              SizedBox(height: context.height * 0.004),
               Text(
                 'Profile',
                 style: TextStyle(

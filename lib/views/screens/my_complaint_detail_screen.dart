@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:timeline_tile/timeline_tile.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ComplaintDetailScreen extends StatelessWidget {
   const ComplaintDetailScreen({super.key});
