@@ -25,6 +25,7 @@ class MyComplaintScreen extends StatelessWidget {
                 color: const Color(0xFF1F2937),
               ),
             ),
+            centerTitle: true,
           ),
           body: SingleChildScrollView(
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
