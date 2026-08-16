@@ -3,15 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/screens/profile_screen.dart';
-import 'package:project/views/widgets/bottom_sheet.dart';
+import 'package:project/views/screens/report_complaint_screen.dart';
 import 'package:project/views/widgets/custom_recent_complaint.dart';
 import 'package:project/views/widgets/custom_statuscard.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+ const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
         statusBarColor: Color(0xFFF1F8F1),
@@ -142,75 +143,85 @@ class HomeScreen extends StatelessWidget {
 
                 Padding(
                   padding: const EdgeInsets.all(15.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF2E7D32),
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 8,
-                          spreadRadius: 1,
-                          offset: Offset(0, 4),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ReportComplaintScreen(),
                         ),
-                      ],
-                    ),
-                    height: context.height * 0.085,
-                    child: Row(
-                      children: [
-                        SizedBox(width: context.width * 0.060),
-                        Container(
-                          height: context.width * 0.10,
-                          width: context.width * 0.10,
-                          decoration: const BoxDecoration(
-                            color: Colors.white24,
-                            shape: BoxShape.circle,
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF2E7D32),
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 8,
+                            spreadRadius: 1,
+                            offset: Offset(0, 4),
                           ),
-                          child: Icon(
-                            Icons.camera_alt_outlined,
-                            size: context.width * 0.055,
+                        ],
+                      ),
+                      height: context.height * 0.085,
+                      child: Row(
+                        children: [
+                          SizedBox(width: context.width * 0.060),
+                          Container(
+                            height: context.width * 0.10,
+                            width: context.width * 0.10,
+                            decoration: const BoxDecoration(
+                              color: Colors.white24,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.camera_alt_outlined,
+                              size: context.width * 0.055,
+                              color: Colors.white,
+                            ),
+                          ),
+
+                          SizedBox(width: context.width * 0.040),
+
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: context.height * 0.0125,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Report Complaint',
+                                  style: GoogleFonts.inter(
+                                    fontSize: context.width * 0.050,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                ),
+
+                                Text(
+                                  'Snap, locate & submit in 30s',
+                                  style: GoogleFonts.inter(
+                                    fontSize: context.width * 0.034,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          SizedBox(width: context.width * 0.16),
+
+                          Icon(
+                            Icons.chevron_right,
+                            size: context.width * 0.060,
                             color: Colors.white,
                           ),
-                        ),
-
-                        SizedBox(width: context.width * 0.040),
-
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: context.height * 0.0125,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Report Complaint',
-                                style: GoogleFonts.inter(
-                                  fontSize: context.width * 0.050,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                ),
-                              ),
-
-                              Text(
-                                'Snap, locate & submit in 30s',
-                                style: GoogleFonts.inter(
-                                  fontSize: context.width * 0.034,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(width: context.width * 0.16),
-
-                        Icon(
-                          Icons.chevron_right,
-                          size: context.width * 0.060,
-                          color: Colors.white,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -362,7 +373,6 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomNavigationBar(),
       ),
     );
   }

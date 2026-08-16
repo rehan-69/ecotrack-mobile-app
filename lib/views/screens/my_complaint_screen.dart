@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/viewmodel/provider.dart';
-import 'package:project/views/widgets/bottom_sheet.dart';
 import 'package:project/views/widgets/custom_complaint_filter_chip.dart';
 import 'package:project/views/widgets/custom_recent_complaint.dart';
 import 'package:project/views/widgets/custom_text_field.dart';
@@ -13,6 +12,7 @@ class MyComplaintScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Consumer<ProductProvider>(
       builder: (context, value, child) {
         return Scaffold(
@@ -141,7 +141,7 @@ class MyComplaintScreen extends StatelessWidget {
               ],
             ),
           ),
-          bottomNavigationBar: CustomBottomNavigationBar(),
+        
         );
       },
     );

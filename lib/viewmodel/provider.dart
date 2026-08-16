@@ -27,6 +27,7 @@ class ProductProvider extends ChangeNotifier {
   int currentIndex = 0;
   Timer? otpTimer;
   int remainingSeconds = 120;
+  int selectedIndex = 0;
 
   @override
   void dispose() {
@@ -134,6 +135,11 @@ class ProductProvider extends ChangeNotifier {
     otpTimer?.cancel();
     remainingSeconds = 120;
 
+    notifyListeners();
+  }
+
+  void changeIndex(int index) {
+    selectedIndex = index;
     notifyListeners();
   }
 
@@ -297,7 +303,6 @@ class ProductProvider extends ChangeNotifier {
   }
 
   Future<bool> googleLogin() async {
-
     try {
       final credential = await _googleAuthService.signInWithGoogle();
 
@@ -323,6 +328,6 @@ class ProductProvider extends ChangeNotifier {
     } catch (e) {
       debugPrint(e.toString());
       return false;
-    } 
+    }
   }
 }

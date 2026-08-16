@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/views/screens/home_screen.dart';
+import 'package:project/views/widgets/main_navigation_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:project/viewmodel/provider.dart';
 import 'package:project/constants/mediaquery.dart';
@@ -191,7 +192,7 @@ class LoginScreen extends StatelessWidget {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => HomeScreen(),
+                                  builder: (context) => MainNavigationScreen(),
                                 ),
                               );
                             } else {

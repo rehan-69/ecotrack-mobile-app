@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/mediaquery.dart';
-import 'package:project/views/screens/my_complaint_screen.dart';
-import 'package:project/views/screens/profile_screen.dart';
-import 'package:project/views/screens/report_complaint_screen.dart';
+
 
 class CustomBottomNavigationBar extends StatelessWidget {
-  const CustomBottomNavigationBar({super.key});
+  final int selectedIndex;
+  final ValueChanged<int> onItemSelected;
+  const CustomBottomNavigationBar({
+    super.key,
+    required this.selectedIndex,
+    required this.onItemSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,46 +32,21 @@ class CustomBottomNavigationBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.home_outlined,
-                size: context.width * 0.060,
-                color: const Color(0xFF6B7280),
-              ),
-              SizedBox(height: context.height * 0.004),
-              Text(
-                'Home',
-                style: TextStyle(
-                  fontSize: context.width * 0.032,
-                  fontWeight: FontWeight.w500,
-                  color: const Color(0xFF6B7280),
-                ),
-              ),
-            ],
-          ),
-
           GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ReportComplaintScreen(),
-                ),
-              );
+              onItemSelected(0);
             },
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
-                  Icons.add,
+                  Icons.home_outlined,
                   size: context.width * 0.060,
                   color: const Color(0xFF6B7280),
                 ),
                 SizedBox(height: context.height * 0.004),
                 Text(
-                  'Report',
+                  'Home',
                   style: TextStyle(
                     fontSize: context.width * 0.032,
                     fontWeight: FontWeight.w500,
@@ -78,14 +57,34 @@ class CustomBottomNavigationBar extends StatelessWidget {
             ),
           ),
 
+          // GestureDetector(
+          //   onTap: () {
+          //     onItemSelected(1);
+          //   },
+          //   child: Column(
+          //     mainAxisSize: MainAxisSize.min,
+          //     children: [
+          //       Icon(
+          //         Icons.add,
+          //         size: context.width * 0.060,
+          //         color: const Color(0xFF6B7280),
+          //       ),
+          //       SizedBox(height: context.height * 0.004),
+          //       Text(
+          //         'Report',
+          //         style: TextStyle(
+          //           fontSize: context.width * 0.032,
+          //           fontWeight: FontWeight.w500,
+          //           color: const Color(0xFF6B7280),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+
           GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const MyComplaintScreen(),
-                ),
-              );
+              onItemSelected(1);
             },
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -110,10 +109,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
           GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ProfileScreen()),
-              );
+              onItemSelected(2);
             },
             child: Column(
               mainAxisSize: MainAxisSize.min,
