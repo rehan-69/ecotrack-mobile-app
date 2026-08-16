@@ -16,6 +16,7 @@ class CustomButton extends StatelessWidget {
   final Border border;
   final FontWeight fontWeight;
   final bool isLoading;
+  final IconData? icon;
 
   const CustomButton({
     super.key,
@@ -31,6 +32,7 @@ class CustomButton extends StatelessWidget {
     required this.fontSize,
     required this.fontWeight,
     this.isLoading = false,
+    this.icon,
   });
 
   @override
@@ -61,6 +63,13 @@ class CustomButton extends StatelessWidget {
                 image!,
                 height: context.width * 0.047,
                 width: context.width * 0.047,
+              ),
+
+            if (icon != null)
+              Icon(
+                icon,
+                size: context.width * 0.055,
+                color: const Color(0xFFF58585),
               ),
 
             SizedBox(width: context.width * 0.03),

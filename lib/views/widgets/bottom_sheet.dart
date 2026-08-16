@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/screens/my_complaint_screen.dart';
+import 'package:project/views/screens/profile_screen.dart';
 import 'package:project/views/screens/report_complaint_screen.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -107,24 +108,32 @@ class CustomBottomNavigationBar extends StatelessWidget {
             ),
           ),
 
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.person_outline,
-                size: context.width * 0.060,
-                color: const Color(0xFF6B7280),
-              ),
-              SizedBox(height: context.height * 0.004),
-              Text(
-                'Profile',
-                style: TextStyle(
-                  fontSize: context.width * 0.032,
-                  fontWeight: FontWeight.w500,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfileScreen()),
+              );
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.person_outline,
+                  size: context.width * 0.060,
                   color: const Color(0xFF6B7280),
                 ),
-              ),
-            ],
+                SizedBox(height: context.height * 0.004),
+                Text(
+                  'Profile',
+                  style: TextStyle(
+                    fontSize: context.width * 0.032,
+                    fontWeight: FontWeight.w500,
+                    color: const Color(0xFF6B7280),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

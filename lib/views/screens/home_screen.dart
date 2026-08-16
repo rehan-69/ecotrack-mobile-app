@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/constants/mediaquery.dart';
+import 'package:project/views/screens/profile_screen.dart';
 import 'package:project/views/widgets/bottom_sheet.dart';
 import 'package:project/views/widgets/custom_recent_complaint.dart';
 import 'package:project/views/widgets/custom_statuscard.dart';
@@ -23,26 +24,36 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  height: context.height * 0.20,
                   width: double.infinity,
                   color: const Color(0xFFF1F8F1),
                   child: Padding(
                     padding: EdgeInsets.only(
                       left: context.width * 0.080,
                       top: context.height * 0.010,
+                      bottom: context.height * 0.010,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            CircleAvatar(
-                              radius: context.width * 0.087,
-                              backgroundColor: Colors.white,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const ProfileScreen(),
+                                  ),
+                                );
+                              },
                               child: CircleAvatar(
-                                radius: context.width * 0.077,
-                                backgroundImage: const AssetImage(
-                                  'assets/avatar.png',
+                                radius: context.width * 0.087,
+                                backgroundColor: Colors.white,
+                                child: CircleAvatar(
+                                  radius: context.width * 0.077,
+                                  backgroundImage: const AssetImage(
+                                    'assets/avatar.png',
+                                  ),
                                 ),
                               ),
                             ),

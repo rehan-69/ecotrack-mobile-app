@@ -8,6 +8,7 @@ class CustomTextField extends StatelessWidget {
   final double height;
   final int? maxLines;
   final double fontSize;
+  final bool showBorder;
   final Color? iconColor;
   final bool obscureText;
   final String? labelText;
@@ -29,6 +30,7 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon,
     this.onSuffixTap,
     required this.title,
+    this.showBorder = true,
     required this.fontSize,
     this.borderColor,
     this.color,
@@ -53,7 +55,7 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         validator: validator,
         onChanged: onChanged,
-         maxLines: maxLines ?? 1,
+        maxLines: maxLines ?? 1,
         keyboardType: keyboardType,
         obscureText: obscureText,
         style: TextStyle(
@@ -96,18 +98,21 @@ class CustomTextField extends StatelessWidget {
 
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(borderRadius),
-            borderSide: BorderSide(
-              color: borderColor ?? Colors.black,
-              width: 1,
-            ),
+            borderSide: showBorder
+                ? BorderSide(color: borderColor ?? Colors.black, width: 1)
+                : BorderSide.none,
           ),
+
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(borderRadius),
-            borderSide: BorderSide(
-              color: borderColor ?? const Color(0xFF2E7D32),
-              width: 1,
-            ),
+            borderSide: showBorder
+                ? BorderSide(
+                    color: borderColor ?? const Color(0xFF2E7D32),
+                    width: 1,
+                  )
+                : BorderSide.none,
           ),
+
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(borderRadius),
             borderSide: const BorderSide(color: Colors.red),
