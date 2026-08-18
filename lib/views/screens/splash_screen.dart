@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [AppColors.primaryColor,],
+              colors: [AppColors.primaryColor,AppColors.primaryColor],
             ),
           ),
           child: SafeArea(

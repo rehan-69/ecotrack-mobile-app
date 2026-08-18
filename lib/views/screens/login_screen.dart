@@ -278,7 +278,7 @@ class LoginScreen extends StatelessWidget {
 
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (_) => HomeScreen()),
+                              MaterialPageRoute(builder: (_) => MainNavigationScreen()),
                             );
                           } else {
                             Fluttertoast.showToast(
