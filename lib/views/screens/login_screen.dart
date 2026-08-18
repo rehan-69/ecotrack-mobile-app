@@ -289,7 +289,7 @@ class LoginScreen extends StatelessWidget {
                           }
                         },
                         image: "assets/google.png",
-                        color: Theme.of(context).scaffoldBackgroundColor,
+                        color: Colors.white,
                         textColor: AppColors.primaryColor,
                         border: Border.all(
                           color: AppColors.primaryColor,

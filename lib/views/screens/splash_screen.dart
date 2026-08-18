@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
-        statusBarColor: Color(0xFF1B5E20),
+        statusBarColor: Color(0xFF2E7D32),
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.dark,
       ),
@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Color(0xFF1B5E20), Color(0xFF2E7D32)],
+              colors: [Color(0xFF2E7D32), Color(0xFF2E7D32)],
             ),
           ),
           child: SafeArea(
