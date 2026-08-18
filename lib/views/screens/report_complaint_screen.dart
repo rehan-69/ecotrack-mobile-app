@@ -76,7 +76,8 @@ class ReportComplaintScreen extends StatelessWidget {
                       height: context.width * 0.12,
                       width: context.width * 0.12,
                       decoration: const BoxDecoration(
-                        color: Color(0xFF2E7D32),
+                        color: AppColors.primaryColor,
+
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -268,7 +269,7 @@ class ReportComplaintScreen extends StatelessWidget {
                     Icon(
                       Icons.location_on_outlined,
                       size: context.width * 0.065,
-                      color: const Color(0xFF2E7D32),
+                      color: AppColors.primaryColor,
                     ),
 
                     SizedBox(width: context.width * 0.035),
@@ -281,7 +282,7 @@ class ReportComplaintScreen extends StatelessWidget {
                           style: GoogleFonts.inter(
                             fontSize: context.width * 0.038,
                             fontWeight: FontWeight.w700,
-                            color: const Color(0xFF2E7D32),
+                            color: AppColors.primaryColor,
                           ),
                         ),
 

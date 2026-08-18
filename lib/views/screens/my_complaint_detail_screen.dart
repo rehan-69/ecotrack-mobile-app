@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
@@ -201,7 +202,8 @@ class ComplaintDetailScreen extends StatelessWidget {
                   isFirst: true,
                   indicatorStyle: IndicatorStyle(
                     width: context.width * 0.055,
-                    color: const Color(0xFF2E7D32),
+                    color: AppColors.primaryColor,
+
                     iconStyle: IconStyle(
                       iconData: Icons.check,
                       color: Colors.white,
@@ -209,7 +211,8 @@ class ComplaintDetailScreen extends StatelessWidget {
                     ),
                   ),
                   afterLineStyle: const LineStyle(
-                    color: Color(0xFF2E7D32),
+                    color: AppColors.primaryColor,
+
                     thickness: 2,
                   ),
                   endChild: Padding(
@@ -245,7 +248,8 @@ class ComplaintDetailScreen extends StatelessWidget {
                   alignment: TimelineAlign.start,
                   indicatorStyle: IndicatorStyle(
                     width: context.width * 0.055,
-                    color: const Color(0xFF2E7D32),
+                    color: AppColors.primaryColor,
+
                     iconStyle: IconStyle(
                       iconData: Icons.check,
                       color: Colors.white,
@@ -253,7 +257,8 @@ class ComplaintDetailScreen extends StatelessWidget {
                     ),
                   ),
                   beforeLineStyle: const LineStyle(
-                    color: Color(0xFF2E7D32),
+                    color: AppColors.primaryColor,
+
                     thickness: 2,
                   ),
                   afterLineStyle: const LineStyle(
@@ -359,7 +364,7 @@ class ComplaintDetailScreen extends StatelessWidget {
                     style: GoogleFonts.inter(
                       fontSize: context.width * 0.040,
                       fontWeight: FontWeight.w700,
-                      color: const Color(0xFF2E7D32),
+                      color: AppColors.primaryColor,
                     ),
                   ),
 

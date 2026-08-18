@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/screens/profile_screen.dart';
 import 'package:project/views/widgets/custom_statuscard.dart';
 import 'package:project/views/screens/report_complaint_screen.dart';
 import 'package:project/views/widgets/custom_recent_complaint.dart';
+
 class HomeScreen extends StatelessWidget {
- const HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
         statusBarColor: Color(0xFFF1F8F1),
@@ -131,7 +132,7 @@ class HomeScreen extends StatelessWidget {
                             Icon(
                               Icons.eco,
                               size: context.width * 0.065,
-                              color: const Color(0xFF2E7D32),
+                              color: AppColors.primaryColor,
                             ),
                           ],
                         ),
@@ -153,7 +154,8 @@ class HomeScreen extends StatelessWidget {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFF2E7D32),
+                        color: AppColors.primaryColor,
+
                         borderRadius: BorderRadius.circular(15),
                         boxShadow: const [
                           BoxShadow(
@@ -325,7 +327,7 @@ class HomeScreen extends StatelessWidget {
                       style: GoogleFonts.inter(
                         fontSize: context.width * 0.038,
                         fontWeight: FontWeight.bold,
-                        color: const Color(0xFF2E7D32),
+                        color: AppColors.primaryColor,
                       ),
                     ),
                   ],

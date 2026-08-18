@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 
 class CustomProfileOption extends StatelessWidget {
@@ -60,7 +61,7 @@ class CustomProfileOption extends StatelessWidget {
                     child: Icon(
                       Icons.help_outline,
                       size: context.width * 0.055,
-                      color: const Color(0xFF2E7D32),
+                      color: AppColors.primaryColor,
                     ),
                   ),
 
@@ -115,7 +116,7 @@ class CustomProfileOption extends StatelessWidget {
                     child: Icon(
                       Icons.info_outline,
                       size: context.width * 0.055,
-                      color: const Color(0xFF2E7D32),
+                      color: AppColors.primaryColor,
                     ),
                   ),
 

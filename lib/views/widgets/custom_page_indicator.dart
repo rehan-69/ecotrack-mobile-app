@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -18,7 +19,7 @@ class CustomPageIndicator extends StatelessWidget {
       controller: controller,
       count: count,
       effect: ExpandingDotsEffect(
-        activeDotColor: const Color(0xFF2E7D32),
+        activeDotColor: AppColors.primaryColor,
         dotColor: Colors.grey.shade300,
         dotHeight: context.width * 0.02,
         dotWidth: context.width * 0.02,

@@ -57,31 +57,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
             ),
           ),
 
-          // GestureDetector(
-          //   onTap: () {
-          //     onItemSelected(1);
-          //   },
-          //   child: Column(
-          //     mainAxisSize: MainAxisSize.min,
-          //     children: [
-          //       Icon(
-          //         Icons.add,
-          //         size: context.width * 0.060,
-          //         color: const Color(0xFF6B7280),
-          //       ),
-          //       SizedBox(height: context.height * 0.004),
-          //       Text(
-          //         'Report',
-          //         style: TextStyle(
-          //           fontSize: context.width * 0.032,
-          //           fontWeight: FontWeight.w500,
-          //           color: const Color(0xFF6B7280),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-
           GestureDetector(
             onTap: () {
               onItemSelected(1);

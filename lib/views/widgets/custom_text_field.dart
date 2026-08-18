@@ -48,9 +48,10 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return SizedBox(
-      width: double.infinity,
-      height: height,
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+      minHeight: height,
+      ),
       child: TextFormField(
         controller: controller,
         validator: validator,
@@ -107,7 +108,7 @@ class CustomTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(borderRadius),
             borderSide: showBorder
                 ? BorderSide(
-                    color: borderColor ?? const Color(0xFF2E7D32),
+                    color: borderColor ?? AppColors.primaryColor,
                     width: 1,
                   )
                 : BorderSide.none,
