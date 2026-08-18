@@ -18,7 +18,9 @@ class Signupscreen extends StatelessWidget {
     return Consumer<ProductProvider>(
       builder: (context, value, child) {
         return Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
+            backgroundColor: Colors.white,
             elevation: 0,
             leading: BackButton(color: Colors.black),
           ),

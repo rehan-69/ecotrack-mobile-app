@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/screens/onboarding_screen.dart';
 
@@ -20,56 +21,56 @@ class _SplashScreenState extends State<SplashScreen> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (_) => const OnboardingScreen(),
-        ),
+        MaterialPageRoute(builder: (_) => const OnboardingScreen()),
       );
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF1B5E20),
-              Color(0xFF2E7D32),
-            ],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Color(0xFF1B5E20),
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+      ),
+      child: Scaffold(
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFF1B5E20), Color(0xFF2E7D32)],
+            ),
           ),
-        ),
-        child: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                /// Logo
-                Image.asset(
-                  "assets/logo.png",
-                  width: context.width * 0.99,
-                  height: context.width * 0.99,
-                  fit: BoxFit.contain,
-                ),
+          child: SafeArea(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  /// Logo
+                  Image.asset(
+                    "assets/logo.png",
+                    width: context.width * 0.99,
+                    height: context.width * 0.99,
+                    fit: BoxFit.contain,
+                  ),
 
-                SizedBox(height: context.height * 0.03),
+                  SizedBox(height: context.height * 0.03),
 
-                /// Loader
-                const SizedBox(
-                  width: 42,
-                  height: 42,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 3,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.white,
+                  /// Loader
+                  const SizedBox(
+                    width: 42,
+                    height: 42,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 3,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

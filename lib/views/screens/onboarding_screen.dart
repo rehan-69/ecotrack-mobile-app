@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:project/viewmodel/provider.dart';
 import 'package:project/constants/app_colors.dart';
@@ -13,20 +14,27 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ProductProvider>(
       builder: (context, value, child) {
-        return Scaffold(
-          backgroundColor: AppColors.appWhiteColor,
-          body: PageView(
-            controller: value.pageController,
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: const SystemUiOverlayStyle(
+            statusBarColor: Colors.white,
+            statusBarIconBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.light,
+          ),
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            body: PageView(
+              controller: value.pageController,
 
-            onPageChanged: (index) {
-              value.changePage(index);
-            },
+              onPageChanged: (index) {
+                value.changePage(index);
+              },
 
-            children: const [
-              OnboardingPage1(),
-              OnboardingPage2(),
-              OnboardingPage3(),
-            ],
+              children: const [
+                OnboardingPage1(),
+                OnboardingPage2(),
+                OnboardingPage3(),
+              ],
+            ),
           ),
         );
       },
