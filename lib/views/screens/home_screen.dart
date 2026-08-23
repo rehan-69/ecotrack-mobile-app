@@ -3,10 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
+import 'package:project/viewmodel/provider.dart';
 import 'package:project/views/screens/profile_screen.dart';
 import 'package:project/views/widgets/custom_statuscard.dart';
 import 'package:project/views/screens/report_complaint_screen.dart';
 import 'package:project/views/widgets/custom_recent_complaint.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -40,12 +42,7 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const ProfileScreen(),
-                                  ),
-                                );
+                                context.read<ProductProvider>().changeIndex(2);
                               },
                               child: CircleAvatar(
                                 radius: context.width * 0.087,
@@ -126,7 +123,7 @@ class HomeScreen extends StatelessWidget {
                               style: GoogleFonts.inter(
                                 fontSize: context.width * 0.065,
                                 fontWeight: FontWeight.w700,
-                                color: const Color(0xFF1B5E20),
+                                color: AppColors.primaryColor,
                               ),
                             ),
                             Icon(
