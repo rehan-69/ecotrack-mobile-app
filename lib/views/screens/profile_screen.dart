@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:project/constants/mediaquery.dart';
-import 'package:project/viewmodel/provider.dart';
-import 'package:project/views/widgets/custom_button.dart';
-import 'package:project/views/widgets/custom_contact_info_card.dart';
-import 'package:project/views/widgets/custom_profile_option.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:project/viewmodel/provider.dart';
+import 'package:project/constants/mediaquery.dart';
+import 'package:project/views/widgets/custom_button.dart';
+import 'package:project/views/widgets/custom_profile_option.dart';
+import 'package:project/views/widgets/custom_contact_info_card.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

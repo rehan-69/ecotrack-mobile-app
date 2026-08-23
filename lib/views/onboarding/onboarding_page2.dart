@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:project/viewmodel/provider.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/widgets/custom_button.dart';
-import 'package:project/views/widgets/custom_onboarding_text.dart';
 import 'package:project/views/widgets/custom_page_indicator.dart';
+import 'package:project/views/widgets/custom_onboarding_text.dart';
 
 class OnboardingPage2 extends StatelessWidget {
   const OnboardingPage2({super.key});
