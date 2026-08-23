@@ -213,7 +213,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                             backgroundColor: const Color(
-                              0xFF4F46E5,
+                              0xFF33A444,
                             ), // Primary Purple
                             textColor: Colors.white,
                             fontSize: 14,

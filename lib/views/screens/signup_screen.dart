@@ -229,7 +229,7 @@ class Signupscreen extends StatelessWidget {
                               msg: "Account created successfully.",
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
-                              backgroundColor: const Color(0xFF4F46E5),
+                              backgroundColor: const Color(0xFF33A444),
                               textColor: Colors.white,
                               fontSize: 14,
                             );

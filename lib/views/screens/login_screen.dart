@@ -193,7 +193,7 @@ class LoginScreen extends StatelessWidget {
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.BOTTOM,
                                   backgroundColor: const Color(
-                                    0xFF4F46E5,
+                                    0xFF33A444,
                                   ), // Primary Indigo/Purple
                                   textColor: Colors.white,
                                   fontSize: 14,
@@ -271,7 +271,7 @@ class LoginScreen extends StatelessWidget {
                           if (success) {
                             Fluttertoast.showToast(
                               msg: "Google Login Successful",
-                              backgroundColor: const Color(0xFF4F46E5),
+                              backgroundColor: const Color(0xFF33A444),
                               textColor: Colors.white,
                             );
 
