@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project/constants/mediaquery.dart';
 
-
 class CustomBottomNavigationBar extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onItemSelected;
+
   const CustomBottomNavigationBar({
     super.key,
     required this.selectedIndex,
@@ -14,99 +14,112 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.height * 0.080,
+      height: context.height * 0.085,
       width: double.infinity,
-      padding: EdgeInsets.only(bottom: context.height * 0.005),
-      decoration: const BoxDecoration(
+
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(22),
+        ),
+
         boxShadow: [
           BoxShadow(
-            color: Color(0x18000000),
-            blurRadius: 10,
+            color: Colors.black.withValues(
+              alpha: 0.12,
+            ),
+            blurRadius: 12,
             spreadRadius: 0,
-            offset: Offset(0, -3),
+            offset: const Offset(0, -3),
           ),
         ],
       ),
+
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment:
+            MainAxisAlignment.spaceAround,
+
         children: [
-          GestureDetector(
-            onTap: () {
-              onItemSelected(0);
-            },
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.home_outlined,
-                  size: context.width * 0.060,
-                  color: const Color(0xFF6B7280),
-                ),
-                SizedBox(height: context.height * 0.004),
-                Text(
-                  'Home',
-                  style: TextStyle(
-                    fontSize: context.width * 0.032,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF6B7280),
-                  ),
-                ),
-              ],
-            ),
+          _navigationItem(
+            context,
+            index: 0,
+            icon: Icons.home_outlined,
+            label: 'Home',
           ),
 
-          GestureDetector(
-            onTap: () {
-              onItemSelected(1);
-            },
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.format_list_bulleted,
-                  size: context.width * 0.060,
-                  color: const Color(0xFF6B7280),
-                ),
-                SizedBox(height: context.height * 0.004),
-                Text(
-                  'Complaints',
-                  style: TextStyle(
-                    fontSize: context.width * 0.032,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF6B7280),
-                  ),
-                ),
-              ],
-            ),
+          _navigationItem(
+            context,
+            index: 1,
+            icon: Icons.format_list_bulleted,
+            label: 'Complaints',
           ),
 
-          GestureDetector(
-            onTap: () {
-              onItemSelected(2);
-            },
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.person_outline,
-                  size: context.width * 0.060,
-                  color: const Color(0xFF6B7280),
-                ),
-                SizedBox(height: context.height * 0.004),
-                Text(
-                  'Profile',
-                  style: TextStyle(
-                    fontSize: context.width * 0.032,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF6B7280),
-                  ),
-                ),
-              ],
-            ),
+          _navigationItem(
+            context,
+            index: 2,
+            icon: Icons.person_outline,
+            label: 'Profile',
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _navigationItem(
+    BuildContext context, {
+    required int index,
+    required IconData icon,
+    required String label,
+  }) {
+    final bool isSelected =
+        selectedIndex == index;
+
+    return Expanded(
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+
+        onTap: () {
+          onItemSelected(index);
+        },
+
+        child: Column(
+          mainAxisAlignment:
+              MainAxisAlignment.center,
+
+          children: [
+            Icon(
+              icon,
+
+              size: context.width * 0.065,
+
+              color: const Color(
+                0xFF6B7280,
+              ),
+            ),
+
+            SizedBox(
+              height: context.height * 0.005,
+            ),
+
+            Text(
+              label,
+
+              style: TextStyle(
+                fontSize:
+                    context.width * 0.035,
+
+                fontWeight: isSelected
+                    ? FontWeight.w600
+                    : FontWeight.w500,
+
+                color: const Color(
+                  0xFF4B5563,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
