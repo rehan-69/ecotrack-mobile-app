@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project/viewmodel/home_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/viewmodel/provider.dart';
@@ -14,6 +15,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeProvider = context.watch<HomeProvider>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (homeProvider.homeData == null && !homeProvider.isLoading) {
+        context.read<HomeProvider>().getHomeData();
+      }
+    });
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
         statusBarColor: Color(0xFFF1F8F1),
