@@ -54,7 +54,7 @@ class OverViewData {
 }
 
 class RecentComplaint {
-  final int complaintId;
+  final String complaintId;
   final String? image;
   final String wasteType;
   final String location;
@@ -72,7 +72,7 @@ class RecentComplaint {
 
   factory RecentComplaint.fromJson(Map<String, dynamic> json) {
     return RecentComplaint(
-      complaintId: json["Complaint_id"],
+      complaintId: json["complaint_id"].toString(),
       image: json["image"],
       wasteType: json["waste_type"],
       location: json["location"],

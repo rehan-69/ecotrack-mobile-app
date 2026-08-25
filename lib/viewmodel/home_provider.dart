@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project/models/home_models.dart';
-
 import 'package:project/services/home_service.dart';
 
 class HomeProvider extends ChangeNotifier {
@@ -20,12 +19,27 @@ class HomeProvider extends ChangeNotifier {
 
     try {
       homeData = await _homeService.getHomeData();
+
+      debugPrint("========== HOME DATA ==========");
+      debugPrint("User: ${homeData?.user.name}");
+      debugPrint("Total: ${homeData?.overview.total}");
+      debugPrint("Pending: ${homeData?.overview.pending}");
+      debugPrint("Completed: ${homeData?.overview.completed}");
+
+      debugPrint(
+        "Recent Complaints Count: ${homeData?.recentComplaints.length}",
+      );
+
+      for (final complaint in homeData?.recentComplaints ?? []) {
+        debugPrint("Complaint ID: ${complaint.complaintId}");
+        debugPrint("Waste Type: ${complaint.wasteType}");
+        debugPrint("Location: ${complaint.location}");
+        debugPrint("Status: ${complaint.status}");
+      }
     } catch (e) {
       errorMessage = e.toString();
 
-      debugPrint(
-        "Home API Error: $e",
-      );
+      debugPrint("Home API Error: $e");
     } finally {
       isLoading = false;
 

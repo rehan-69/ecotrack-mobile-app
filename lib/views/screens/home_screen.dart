@@ -13,6 +13,41 @@ import 'package:project/views/widgets/custom_recent_complaint.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  String _formatDate(DateTime date) {
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+
+    return '${date.day} ${months[date.month - 1]} ${date.year}';
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'Completed':
+        return const Color(0xFF28BF5E);
+
+      case 'In Progress':
+        return const Color(0xFFFF9701);
+
+      case 'Pending':
+        return const Color(0xFFFFA000);
+
+      default:
+        return Colors.grey;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final homeProvider = context.watch<HomeProvider>();
@@ -74,7 +109,7 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  'Rahul Sharma',
+                                  homeProvider.homeData?.user.name ?? 'User',
                                   style: GoogleFonts.inter(
                                     fontSize: context.width * 0.046,
                                     fontWeight: FontWeight.w700,
@@ -265,7 +300,7 @@ class HomeScreen extends StatelessWidget {
 
                     Expanded(
                       child: StatusCard(
-                        title: '12',
+                        title: '${homeProvider.homeData?.overview.total ?? 0}',
                         subtitle: 'Total',
                         cardBorder: Border.all(
                           color: Color.fromARGB(255, 199, 197, 197),
@@ -280,7 +315,8 @@ class HomeScreen extends StatelessWidget {
 
                     Expanded(
                       child: StatusCard(
-                        title: '04',
+                        title:
+                            '${homeProvider.homeData?.overview.pending ?? 0}',
                         subtitle: 'Pending',
                         cardBorder: Border.all(
                           color: const Color.fromARGB(255, 245, 194, 106),
@@ -295,7 +331,8 @@ class HomeScreen extends StatelessWidget {
 
                     Expanded(
                       child: StatusCard(
-                        title: '08',
+                        title:
+                            '${homeProvider.homeData?.overview.completed ?? 0}',
                         subtitle: 'Completed',
                         cardBorder: Border.all(
                           color: const Color.fromARGB(255, 150, 248, 184),
@@ -338,42 +375,30 @@ class HomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: context.height * 0.015),
 
-                RecentComplaint(
-                  image: 'assets/waste1.png',
-                  title: 'ECO-1042',
-                  subTitle1: 'Household Waste',
-                  subTitle2: '12 Mar 2026 Ward 07',
-                  progress: 'In Progress',
-                  height: context.width * 0.15,
-                  width: context.width * 0.15,
-                  progressColor: const Color.fromARGB(255, 238, 151, 1),
-                ),
+                if (homeProvider.isLoading)
+                  const Center(child: CircularProgressIndicator())
+                else if (homeProvider.homeData == null)
+                  const Center(child: Text('Unable to load complaints'))
+                else
+                  ...homeProvider.homeData!.recentComplaints.map((complaint) {
+                    return Column(
+                      children: [
+                        RecentComplaint(
+                          image: complaint.image ?? 'assets/waste1.png',
+                          title: complaint.complaintId,
+                          subTitle1: complaint.wasteType,
+                          subTitle2:
+                              '${_formatDate(complaint.createdAt)} ${complaint.location}',
+                          progress: complaint.status,
+                          height: context.width * 0.15,
+                          width: context.width * 0.15,
+                          progressColor: _getStatusColor(complaint.status),
+                        ),
 
-                SizedBox(height: context.height * 0.020),
-
-                RecentComplaint(
-                  image: 'assets/waste2.png',
-                  title: 'ECO-1038',
-                  subTitle1: 'Construction Debris',
-                  subTitle2: '08 Mar 2026 Ward 07',
-                  progress: 'Completed',
-                  height: context.width * 0.15,
-                  width: context.width * 0.15,
-                  progressColor: Color(0xFF28BF5E),
-                ),
-
-                SizedBox(height: context.height * 0.020),
-
-                RecentComplaint(
-                  image: 'assets/waste3.png',
-                  title: 'ECO-1031',
-                  subTitle1: 'Garden Waste',
-                  subTitle2: '02 Mar 2026 Ward 04',
-                  progress: 'Completed',
-                  height: context.width * 0.15,
-                  width: context.width * 0.15,
-                  progressColor: Color(0xFF28BF5E),
-                ),
+                        SizedBox(height: context.height * 0.020),
+                      ],
+                    );
+                  }).toList(),
               ],
             ),
           ),
