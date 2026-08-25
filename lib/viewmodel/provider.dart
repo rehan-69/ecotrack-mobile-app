@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project/services/google_auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductProvider extends ChangeNotifier {
   final PageController pageController = PageController(initialPage: 0);
@@ -178,6 +179,7 @@ class ProductProvider extends ChangeNotifier {
   Future<bool> login() async {
     isLoading = true;
     notifyListeners();
+
     try {
       debugPrint("Login API Called");
 
@@ -195,7 +197,15 @@ class ProductProvider extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        debugPrint(data["token"]);
+
+        final token = data["token"];
+
+        final prefs = await SharedPreferences.getInstance();
+
+        await prefs.setString("jwt_token", token);
+
+        debugPrint("JWT Token Saved Successfully");
+
         return true;
       }
 
