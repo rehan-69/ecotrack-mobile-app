@@ -22,7 +22,8 @@ class MainNavigationScreen extends StatelessWidget {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value:
           navigationProvider.selectedIndex == 0 ||
-              navigationProvider.selectedIndex == 2
+          navigationProvider.selectedIndex == 1 ||
+          navigationProvider.selectedIndex == 2
           ? const SystemUiOverlayStyle(
               statusBarColor: Color(0xFFF1F7F1),
               statusBarIconBrightness: Brightness.dark,
