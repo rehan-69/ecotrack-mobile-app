@@ -7,6 +7,7 @@ class ComplaintService {
 
   Future<void> createComplaint({
     required String complaintId,
+    required String description,
     String? image,
     required String title,
     required String wasteType,
@@ -28,6 +29,7 @@ class ComplaintService {
       },
       body: jsonEncode({
         "complaintId": complaintId,
+        "description": description,
         "image": image,
         "title": title,
         "wasteType": wasteType,
@@ -41,7 +43,7 @@ class ComplaintService {
     }
 
     if (response.statusCode == 401) {
-      throw Exception(data['message'] ?? 'Session expire, login again');
+      throw Exception(data['message'] ?? 'Session expired. Please login again');
     }
 
     throw Exception(data['message'] ?? 'Failed to create complaint');

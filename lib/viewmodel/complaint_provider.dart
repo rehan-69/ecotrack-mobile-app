@@ -10,6 +10,7 @@ class ComplaintProvider extends ChangeNotifier {
 
   Future<void> createComplaint({
     required String complaintId,
+    required String description,
     String? image,
     required String title,
     required String wasteType,
@@ -19,8 +20,9 @@ class ComplaintProvider extends ChangeNotifier {
     errorMessage = null;
     notifyListeners();
     try {
-     await _complaintService.createComplaint(
+      await _complaintService.createComplaint(
         complaintId: complaintId,
+        description: description,
         image: image,
         title: title,
         wasteType: wasteType,
