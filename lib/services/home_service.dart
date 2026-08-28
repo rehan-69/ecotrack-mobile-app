@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:project/models/home_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class HomeService {
   final String baseUrl = "http://127.0.0.1:3000";
 
@@ -25,18 +24,20 @@ class HomeService {
       },
     );
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
+    final data = jsonDecode(response.body);
 
+    if (response.statusCode == 200) {
       return HomeModel.fromJson(data);
     }
 
     if (response.statusCode == 401) {
-      throw Exception("Session expired. Please login again.");
+      throw Exception(
+        data["message"] ?? "Session expired. Please login again.",
+      );
     }
 
     throw Exception(
-      "Failed to load home data: ${response.statusCode}",
+      data["message"] ?? "Failed to load home data",
     );
   }
 }

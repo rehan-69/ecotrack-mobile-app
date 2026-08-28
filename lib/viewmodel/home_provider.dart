@@ -18,7 +18,7 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await Future.delayed(const Duration(seconds: 3));
+      // await Future.delayed(const Duration(seconds: 3));
       homeData = await _homeService.getHomeData();
 
       debugPrint("========== HOME DATA ==========");
