@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -20,15 +21,11 @@ class CustomBottomNavigationBar extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
 
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(22),
-        ),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
 
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(
-              alpha: 0.12,
-            ),
+            color: Colors.black.withValues(alpha: 0.12),
             blurRadius: 12,
             spreadRadius: 0,
             offset: const Offset(0, -3),
@@ -37,8 +34,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
       ),
 
       child: Row(
-        mainAxisAlignment:
-            MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
 
         children: [
           _navigationItem(
@@ -72,8 +68,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
     required IconData icon,
     required String label,
   }) {
-    final bool isSelected =
-        selectedIndex == index;
+    final bool isSelected = selectedIndex == index;
 
     return Expanded(
       child: GestureDetector(
@@ -84,8 +79,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         },
 
         child: Column(
-          mainAxisAlignment:
-              MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
 
           children: [
             Icon(
@@ -93,29 +87,22 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
               size: context.width * 0.065,
 
-              color: const Color(
-                0xFF6B7280,
-              ),
+              color: isSelected
+                  ? AppColors.primaryColor
+                  : const Color(0xFF6B7280),
             ),
 
-            SizedBox(
-              height: context.height * 0.005,
-            ),
+            SizedBox(height: context.height * 0.005),
 
             Text(
               label,
 
               style: TextStyle(
-                fontSize:
-                    context.width * 0.035,
+                fontSize: context.width * 0.035,
 
-                fontWeight: isSelected
-                    ? FontWeight.w600
-                    : FontWeight.w500,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
 
-                color: const Color(
-                  0xFF4B5563,
-                ),
+                color: isSelected ? AppColors.primaryColor :const Color(0xFF4B5563),
               ),
             ),
           ],
