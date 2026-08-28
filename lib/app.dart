@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/viewmodel/complaint_provider.dart';
 import 'package:project/viewmodel/home_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:project/viewmodel/provider.dart';
@@ -17,6 +18,10 @@ class EcoApp extends StatelessWidget {
 
         ChangeNotifierProvider<HomeProvider>(
           create: (context) => HomeProvider()..getHomeData(),
+        ),
+
+        ChangeNotifierProvider<ComplaintProvider>(
+          create: (context) => ComplaintProvider(),
         ),
       ],
       child: MaterialApp(
