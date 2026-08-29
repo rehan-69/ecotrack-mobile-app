@@ -221,7 +221,13 @@ class ReportComplaintScreen extends StatelessWidget {
                   ),
                 ),
 
-                DropdownButtonField(),
+                Padding(
+                   padding: EdgeInsets.symmetric(
+                    horizontal: context.width * 0.040,
+                    vertical: context.height * 0.010,
+                  ),
+                  child: DropdownButtonField(),
+                ),
 
                 SizedBox(height: context.height * 0.001),
 

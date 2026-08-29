@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:project/services/complaint_service.dart';
 
 class ComplaintProvider extends ChangeNotifier {
+  final ImagePicker _picker = ImagePicker();
   final ComplaintService _complaintService = ComplaintService();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -9,6 +11,7 @@ class ComplaintProvider extends ChangeNotifier {
   bool isLoading = false;
   String? errorMessage;
   String? selectedWaste;
+  XFile? selectedImage;
 
   Future<void> createComplaint({
     required String complaintId,
@@ -34,6 +37,15 @@ class ComplaintProvider extends ChangeNotifier {
       errorMessage = e.toString();
     } finally {
       isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> pickImageFromCamera() async {
+    final image = await _picker.pickImage(source: ImageSource.camera);
+
+    if (image != null) {
+      selectedImage = image;
       notifyListeners();
     }
   }
