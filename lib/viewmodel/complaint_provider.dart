@@ -3,6 +3,9 @@ import 'package:project/services/complaint_service.dart';
 
 class ComplaintProvider extends ChangeNotifier {
   final ComplaintService _complaintService = ComplaintService();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController wasteTypeController = TextEditingController();
 
   bool isLoading = false;
 

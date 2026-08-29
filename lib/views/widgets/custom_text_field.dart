@@ -13,9 +13,9 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final String? labelText;
   final Color? borderColor;
-  final IconData? prefixIcon;
   final double borderRadius;
   final IconData? suffixIcon;
+  final IconData? prefixIcon;
   final VoidCallback? onSuffixTap;
   final TextInputType keyboardType;
   final ValueChanged<String>? onChanged;
