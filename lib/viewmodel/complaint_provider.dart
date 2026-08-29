@@ -11,12 +11,12 @@ class ComplaintProvider extends ChangeNotifier {
   bool isLoading = false;
   String? errorMessage;
   String? selectedWaste;
-  XFile? selectedImage;
+  List<XFile> selectedImages = [];
 
   Future<void> createComplaint({
     required String complaintId,
     required String description,
-    String? image,
+    List<String>? image,
     required String title,
     required String wasteType,
     required String location,
@@ -41,11 +41,24 @@ class ComplaintProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> pickImageFromCamera() async {
-    final image = await _picker.pickImage(source: ImageSource.camera);
+  // Future<void> pickImageFromCamera() async {
+  //   try {
+  //     final image = await _picker.pickImage(source: ImageSource.camera);
 
-    if (image != null) {
-      selectedImage = image;
+  //     if (image != null) {
+  //       selectedImage = image;
+  //       notifyListeners();
+  //     }
+  //   } catch (e) {
+  //     errorMessage = e.toString();
+  //     notifyListeners();
+  //   }
+  // }
+  Future<void> pickImageFromGallery() async {
+    final images = await _picker.pickMultiImage();
+
+    if (images.isNotEmpty) {
+      selectedImages.addAll(images);
       notifyListeners();
     }
   }

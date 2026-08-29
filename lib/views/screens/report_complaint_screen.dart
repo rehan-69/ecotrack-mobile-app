@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -67,58 +69,100 @@ class ReportComplaintScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(
                     horizontal: context.width * 0.05,
                   ),
-                  child: Container(
-                    width: double.infinity,
-                    height: context.height * 0.18,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFAFCFA),
-                      border: Border.all(color: Color(0xFFB5DEB7), width: 1),
-                      borderRadius: BorderRadius.circular(
-                        context.width * 0.050,
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(height: context.height * 0.025),
-
-                        Container(
-                          height: context.width * 0.12,
-                          width: context.width * 0.12,
-                          decoration: const BoxDecoration(
-                            color: AppColors.primaryColor,
-
-                            shape: BoxShape.circle,
+                  child: value.selectedImages.isEmpty
+                      ? Container(
+                          width: double.infinity,
+                          height: context.height * 0.18,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFAFCFA),
+                            border: Border.all(
+                              color: Color(0xFFB5DEB7),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(
+                              context.width * 0.050,
+                            ),
                           ),
-                          child: Icon(
-                            Icons.camera_alt_outlined,
-                            size: context.width * 0.055,
-                            color: Colors.white,
+                          child: Column(
+                            children: [
+                              SizedBox(height: context.height * 0.025),
+
+                              Container(
+                                height: context.width * 0.12,
+                                width: context.width * 0.12,
+                                decoration: const BoxDecoration(
+                                  color: AppColors.primaryColor,
+
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.camera_alt_outlined,
+                                  size: context.width * 0.055,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              SizedBox(height: context.height * 0.015),
+
+                              Text(
+                                'Add a photo of the waste',
+                                style: GoogleFonts.inter(
+                                  fontSize: context.width * 0.038,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color(0xFF1F2937),
+                                ),
+                              ),
+
+                              SizedBox(height: context.height * 0.005),
+
+                              Text(
+                                'JPG or PNG. max 5 MB',
+                                style: GoogleFonts.inter(
+                                  fontSize: context.width * 0.032,
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xFF9CA3AF),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(
+                          width: double.infinity,
+                          height: context.height * 0.18,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFAFCFA),
+                            border: Border.all(
+                              color: const Color(0xFFB5DEB7),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(
+                              context.width * 0.050,
+                            ),
+                          ),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: value.selectedImages.map((image) {
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                    left: context.width * 0.020,
+                                    right: context.width * 0.010,
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                      context.width * 0.040,
+                                    ),
+                                    child: Image.file(
+                                      File(image.path),
+                                      width: context.width * 0.40,
+                                      height: context.height * 0.16,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           ),
                         ),
-                        SizedBox(height: context.height * 0.015),
-
-                        Text(
-                          'Add a photo of the waste',
-                          style: GoogleFonts.inter(
-                            fontSize: context.width * 0.038,
-                            fontWeight: FontWeight.bold,
-                            color: const Color(0xFF1F2937),
-                          ),
-                        ),
-
-                        SizedBox(height: context.height * 0.005),
-
-                        Text(
-                          'JPG or PNG. max 5 MB',
-                          style: GoogleFonts.inter(
-                            fontSize: context.width * 0.032,
-                            fontWeight: FontWeight.w400,
-                            color: const Color(0xFF9CA3AF),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
 
                 SizedBox(height: context.height * 0.02),
@@ -127,7 +171,7 @@ class ReportComplaintScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CustomImagePickerButton(
-                      onTap: value.pickImageFromCamera,
+                      // onTap: value.pickImageFromCamera,
                       icon: Icons.camera_alt_outlined,
                       title: 'Camera',
                       backgroundColor: AppColors.primaryColor,
@@ -137,6 +181,7 @@ class ReportComplaintScreen extends StatelessWidget {
                     ),
 
                     CustomImagePickerButton(
+                      onTap: value.pickImageFromGallery,
                       icon: Icons.photo_library_outlined,
                       title: 'Gallery',
                       backgroundColor: const Color(0xFFF2F3F5),
@@ -223,7 +268,7 @@ class ReportComplaintScreen extends StatelessWidget {
                 ),
 
                 Padding(
-                   padding: EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: context.width * 0.040,
                     vertical: context.height * 0.010,
                   ),

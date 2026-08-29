@@ -8,7 +8,7 @@ class ComplaintService {
   Future<void> createComplaint({
     required String complaintId,
     required String description,
-    String? image,
+    List<String>? image,
     required String title,
     required String wasteType,
     required String location,

@@ -13,7 +13,9 @@ class HomeModel {
     return HomeModel(
       user: UserData.fromJson(json["user"]),
       overview: OverViewData.fromJson(json["overview"]),
-      recentComplaints: (json["recentComplaints"] as List).map((item)=> RecentComplaint.fromJson(item)).toList()
+      recentComplaints: (json["recentComplaints"] as List)
+          .map((item) => RecentComplaint.fromJson(item))
+          .toList(),
     );
   }
 }
@@ -55,7 +57,7 @@ class OverViewData {
 
 class RecentComplaint {
   final String complaintId;
-  final String? image;
+  final List<String>? image;
   final String wasteType;
   final String location;
   final String status;
@@ -73,7 +75,7 @@ class RecentComplaint {
   factory RecentComplaint.fromJson(Map<String, dynamic> json) {
     return RecentComplaint(
       complaintId: json["complaint_id"].toString(),
-      image: json["image"],
+      image: (json['image'] as List?)?.map((e) => e.toString()).toList(),
       wasteType: json["waste_type"],
       location: json["location"],
       status: json["status"],
