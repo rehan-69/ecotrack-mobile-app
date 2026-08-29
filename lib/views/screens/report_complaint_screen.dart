@@ -7,6 +7,7 @@ import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/widgets/custom_button.dart';
 import 'package:project/viewmodel/complaint_provider.dart';
 import 'package:project/views/widgets/custom_text_field.dart';
+import 'package:project/views/widgets/dropdown_button_field.dart';
 import 'package:project/views/widgets/custom_image_picker_button.dart';
 
 class ReportComplaintScreen extends StatelessWidget {
@@ -220,22 +221,7 @@ class ReportComplaintScreen extends StatelessWidget {
                   ),
                 ),
 
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.width * 0.040,
-                    vertical: context.height * 0.010,
-                  ),
-                  child: CustomTextField(
-                    controller: value.wasteTypeController,
-                    height: context.height * 0.072,
-                    color: Color(0xFFFFFFFF),
-                    borderRadius: context.width * 0.04,
-                    fontSize: context.width * 0.041,
-                    title: 'Select waste type',
-                    suffixIcon: Icons.keyboard_arrow_down_rounded,
-                    borderColor: const Color(0xFFE5E7EB),
-                  ),
-                ),
+                DropdownButtonField(),
 
                 SizedBox(height: context.height * 0.001),
 

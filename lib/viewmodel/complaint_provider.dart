@@ -5,11 +5,10 @@ class ComplaintProvider extends ChangeNotifier {
   final ComplaintService _complaintService = ComplaintService();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController wasteTypeController = TextEditingController();
 
   bool isLoading = false;
-
   String? errorMessage;
+  String? selectedWaste;
 
   Future<void> createComplaint({
     required String complaintId,
