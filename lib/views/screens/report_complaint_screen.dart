@@ -127,6 +127,7 @@ class ReportComplaintScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CustomImagePickerButton(
+                      onTap: value.pickImageFromCamera,
                       icon: Icons.camera_alt_outlined,
                       title: 'Camera',
                       backgroundColor: AppColors.primaryColor,

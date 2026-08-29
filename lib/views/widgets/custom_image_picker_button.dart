@@ -5,6 +5,7 @@ import 'package:project/constants/mediaquery.dart';
 class CustomImagePickerButton extends StatelessWidget {
   final IconData icon;
   final String title;
+  final VoidCallback? onTap;
   final Color backgroundColor;
   final Color borderColor;
   final Color iconColor;
@@ -14,6 +15,7 @@ class CustomImagePickerButton extends StatelessWidget {
     super.key,
     required this.icon,
     required this.title,
+    this.onTap,
     required this.backgroundColor,
     required this.borderColor,
     required this.iconColor,
@@ -22,32 +24,35 @@ class CustomImagePickerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: context.height * 0.020,
-        horizontal: context.width * 0.11,
-      ),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: borderColor),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: context.width * 0.045, color: iconColor),
-
-          SizedBox(width: context.width * 0.030),
-
-          Text(
-            title,
-            style: GoogleFonts.inter(
-              fontSize: context.width * 0.035,
-              fontWeight: FontWeight.bold,
-              color: textColor,
+    return GestureDetector(
+      onTap:onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: context.height * 0.020,
+          horizontal: context.width * 0.11,
+        ),
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: borderColor),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: context.width * 0.045, color: iconColor),
+      
+            SizedBox(width: context.width * 0.030),
+      
+            Text(
+              title,
+              style: GoogleFonts.inter(
+                fontSize: context.width * 0.035,
+                fontWeight: FontWeight.bold,
+                color: textColor,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
