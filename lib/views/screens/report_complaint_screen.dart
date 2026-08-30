@@ -176,18 +176,8 @@ class ReportComplaintScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CustomImagePickerButton(
-                      onTap: () async {
-                        final image = await Navigator.push<XFile>(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const CameraScreen(),
-                          ),
-                        );
-
-                        if (image != null) {
-                          value.selectedImages.add(image);
-                          value.notifyListeners();
-                        }
+                      onTap: () {
+                        value.pickImageFromCamera();
                       },
                       icon: Icons.camera_alt_outlined,
                       title: 'Camera',
