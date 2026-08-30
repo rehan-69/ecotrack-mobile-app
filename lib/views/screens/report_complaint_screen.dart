@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
+import 'package:project/views/screens/camera_screen.dart';
 import 'package:project/views/widgets/custom_button.dart';
 import 'package:project/viewmodel/complaint_provider.dart';
 import 'package:project/views/widgets/custom_text_field.dart';
@@ -149,11 +151,16 @@ class ReportComplaintScreen extends StatelessWidget {
                                   right: context.width * 0.025,
                                 ),
                                 child: Center(
-                                  child: Text(
-                                    'Image ${index + 1}',
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                      context.width * 0.035,
+                                    ),
+                                    child: Image.file(
+                                      File(value.selectedImages[index].path),
+                                      width: context.width * 0.42,
+                                      height: context.height * 0.165,
+                                      fit: BoxFit.cover,
+                                      cacheWidth: 500,
                                     ),
                                   ),
                                 ),
@@ -169,7 +176,19 @@ class ReportComplaintScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CustomImagePickerButton(
-                      onTap: value.pickImageFromCamera,
+                      onTap: () async {
+                        final image = await Navigator.push<XFile>(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CameraScreen(),
+                          ),
+                        );
+
+                        if (image != null) {
+                          value.selectedImages.add(image);
+                          value.notifyListeners();
+                        }
+                      },
                       icon: Icons.camera_alt_outlined,
                       title: 'Camera',
                       backgroundColor: AppColors.primaryColor,
@@ -177,7 +196,6 @@ class ReportComplaintScreen extends StatelessWidget {
                       iconColor: Colors.white,
                       textColor: Colors.white,
                     ),
-
                     CustomImagePickerButton(
                       onTap: value.pickImageFromGallery,
                       icon: Icons.photo_library_outlined,

@@ -57,39 +57,6 @@ class ComplaintProvider extends ChangeNotifier {
   //   }
   // }
 
-  // Future<void> pickImageFromCamera() async {
-  //   try {
-  //     final image = await _picker.pickImage(source: ImageSource.camera);
-
-  //     if (image != null) {
-  //       selectedImages.add(image);
-  //       notifyListeners();
-  //     }
-  //   } catch (e) {
-  //     errorMessage = e.toString();
-  //     notifyListeners();
-  //   }
-  // }
-
-  Future<void> pickImageFromCamera() async {
-    try {
-      final image = await _picker.pickImage(
-        source: ImageSource.camera,
-        imageQuality: 70,
-        maxWidth: 1280,
-        maxHeight: 1280,
-      );
-
-      if (image != null) {
-        selectedImages.add(image);
-        notifyListeners();
-      }
-    } catch (e) {
-      errorMessage = e.toString();
-      notifyListeners();
-    }
-  }
-
   Future<void> pickImageFromGallery() async {
     final images = await _picker.pickMultiImage(
       imageQuality: 70,

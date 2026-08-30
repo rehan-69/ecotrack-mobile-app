@@ -54,11 +54,9 @@ class _CameraScreenState extends State<CameraScreen> {
         _isInitializing = false;
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Camera error: $e'),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Camera error: $e')));
     }
   }
 
@@ -86,11 +84,9 @@ class _CameraScreenState extends State<CameraScreen> {
         _isTakingPicture = false;
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to take picture: $e'),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to take picture: $e')));
     }
   }
 
@@ -105,14 +101,11 @@ class _CameraScreenState extends State<CameraScreen> {
     if (_isInitializing) {
       return const Scaffold(
         backgroundColor: Colors.black,
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
+        body: Center(child: CircularProgressIndicator()),
       );
     }
 
-    if (_controller == null ||
-        !_controller!.value.isInitialized) {
+    if (_controller == null || !_controller!.value.isInitialized) {
       return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
@@ -122,9 +115,7 @@ class _CameraScreenState extends State<CameraScreen> {
         body: const Center(
           child: Text(
             'Camera could not be initialized',
-            style: TextStyle(
-              color: Colors.white,
-            ),
+            style: TextStyle(color: Colors.white),
           ),
         ),
       );
@@ -136,7 +127,14 @@ class _CameraScreenState extends State<CameraScreen> {
         child: Stack(
           children: [
             Positioned.fill(
-              child: CameraPreview(_controller!),
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: SizedBox(
+                  width: _controller!.value.previewSize!.height,
+                  height: _controller!.value.previewSize!.width,
+                  child: CameraPreview(_controller!),
+                ),
+              ),
             ),
 
             Positioned(
@@ -146,11 +144,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: const Icon(
-                  Icons.close,
-                  color: Colors.white,
-                  size: 30,
-                ),
+                icon: const Icon(Icons.close, color: Colors.white, size: 30),
               ),
             ),
 
@@ -167,10 +161,7 @@ class _CameraScreenState extends State<CameraScreen> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.white,
-                      border: Border.all(
-                        color: Colors.grey.shade400,
-                        width: 4,
-                      ),
+                      border: Border.all(color: Colors.grey.shade400, width: 4),
                     ),
                     child: _isTakingPicture
                         ? const Padding(
