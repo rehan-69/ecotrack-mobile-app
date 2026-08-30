@@ -21,10 +21,11 @@ class EcoApp extends StatelessWidget {
         ),
 
         ChangeNotifierProvider<ComplaintProvider>(
-          create: (context){
-            final provider = ComplaintProvider();
-            provider.retrieveLostImage();
-            return provider;
+          create: (context) {
+            // final provider = ComplaintProvider();
+            // provider.retrieveLostImage();
+            // return provider;
+            return ComplaintProvider();
           },
         ),
       ],

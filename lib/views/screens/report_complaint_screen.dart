@@ -138,29 +138,27 @@ class ReportComplaintScreen extends StatelessWidget {
                               context.width * 0.050,
                             ),
                           ),
-                          child: SingleChildScrollView(
+                          child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: value.selectedImages.map((image) {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                    left: context.width * 0.020,
-                                    right: context.width * 0.010,
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(
-                                      context.width * 0.040,
-                                    ),
-                                    child: Image.file(
-                                      File(image.path),
-                                      width: context.width * 0.40,
-                                      height: context.height * 0.16,
-                                      fit: BoxFit.cover,
+                            itemCount: value.selectedImages.length,
+                            itemBuilder: (context, index) {
+                              final image = value.selectedImages[index];
+
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  right: context.width * 0.025,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Image ${index + 1}',
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                );
-                              }).toList(),
-                            ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                 ),
