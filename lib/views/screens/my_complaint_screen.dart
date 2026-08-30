@@ -16,7 +16,9 @@ class MyComplaintScreen extends StatelessWidget {
     return Consumer<ProductProvider>(
       builder: (context, value, child) {
         return Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
+          backgroundColor: Colors.white,
             title: Text(
               'My Complaints',
               style: TextStyle(

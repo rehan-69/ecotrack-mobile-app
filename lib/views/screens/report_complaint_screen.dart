@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -20,13 +19,14 @@ class ReportComplaintScreen extends StatelessWidget {
     return Consumer<ComplaintProvider>(
       builder: (context, value, child) {
         return Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: const Color(0xFFFEF7FF),
+            backgroundColor: Colors.white,
             surfaceTintColor: Colors.transparent,
             scrolledUnderElevation: 0,
             elevation: 0,
             systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: Color(0xFFFEF7FF),
+              statusBarColor: Colors.white,
               statusBarIconBrightness: Brightness.dark,
               statusBarBrightness: Brightness.light,
             ),
@@ -171,7 +171,7 @@ class ReportComplaintScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CustomImagePickerButton(
-                      // onTap: value.pickImageFromCamera,
+                      onTap: value.pickImageFromCamera,
                       icon: Icons.camera_alt_outlined,
                       title: 'Camera',
                       backgroundColor: AppColors.primaryColor,

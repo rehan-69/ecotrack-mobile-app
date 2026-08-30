@@ -41,12 +41,28 @@ class ComplaintProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> retrieveLostImage() async {
+    final response = await _picker.retrieveLostData();
+
+    if (response.isEmpty) {
+      return;
+    }
+
+    if (response.files != null) {
+      selectedImages.addAll(response.files!);
+      notifyListeners();
+    } else if (response.exception != null) {
+      errorMessage = response.exception.toString();
+      notifyListeners();
+    }
+  }
+
   // Future<void> pickImageFromCamera() async {
   //   try {
   //     final image = await _picker.pickImage(source: ImageSource.camera);
 
   //     if (image != null) {
-  //       selectedImage = image;
+  //       selectedImages.add(image);
   //       notifyListeners();
   //     }
   //   } catch (e) {
@@ -54,6 +70,26 @@ class ComplaintProvider extends ChangeNotifier {
   //     notifyListeners();
   //   }
   // }
+
+  Future<void> pickImageFromCamera() async {
+    try {
+      final image = await _picker.pickImage(
+        source: ImageSource.camera,
+        imageQuality: 70,
+        maxWidth: 1280,
+        maxHeight: 1280,
+      );
+
+      if (image != null) {
+        selectedImages.add(image);
+        notifyListeners();
+      }
+    } catch (e) {
+      errorMessage = e.toString();
+      notifyListeners();
+    }
+  }
+
   Future<void> pickImageFromGallery() async {
     final images = await _picker.pickMultiImage();
 
