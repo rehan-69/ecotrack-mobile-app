@@ -62,6 +62,8 @@ class RecentComplaint {
   final String location;
   final String status;
   final DateTime createdAt;
+  final double? latitude;
+  final double? longitude;
 
   RecentComplaint({
     required this.complaintId,
@@ -70,6 +72,8 @@ class RecentComplaint {
     required this.location,
     required this.status,
     required this.createdAt,
+    this.latitude,
+    this.longitude,
   });
 
   factory RecentComplaint.fromJson(Map<String, dynamic> json) {
@@ -80,6 +84,12 @@ class RecentComplaint {
       location: json["location"],
       status: json["status"],
       createdAt: DateTime.parse(json["created_at"]),
+      latitude: json["latitude"] != null
+          ? (json["latitude"] as num).toDouble()
+          : null,
+      longitude: json["longitude"] != null
+          ? (json["longitude"] as num).toDouble()
+          : null,
     );
   }
 }

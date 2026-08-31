@@ -72,39 +72,41 @@ class RecentComplaint extends StatelessWidget {
 
               SizedBox(width: context.width * 0.040),
 
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: GoogleFonts.inter(
-                      fontSize: context.width * 0.040,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF1F2937),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: GoogleFonts.inter(
+                        fontSize: context.width * 0.040,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF1F2937),
+                      ),
                     ),
-                  ),
-
-                  Text(
-                    subTitle1,
-                    style: GoogleFonts.inter(
-                      fontSize: context.width * 0.035,
-                      fontWeight: FontWeight.w300,
-                      color: const Color(0xFF6B7280),
+                
+                    Text(
+                      subTitle1,
+                      style: GoogleFonts.inter(
+                        fontSize: context.width * 0.035,
+                        fontWeight: FontWeight.w300,
+                        color: const Color(0xFF6B7280),
+                      ),
                     ),
-                  ),
-
-                  SizedBox(height: context.height * 0.005),
-
-                  if (infoRow != null) ?infoRow,
-
-                  Text(
-                    subTitle2 ?? '',
-                    style: GoogleFonts.inter(
-                      fontSize: context.width * 0.032,
-                      color: Color.fromARGB(255, 199, 197, 197),
+                
+                    SizedBox(height: context.height * 0.005),
+                
+                    if (infoRow != null) infoRow!,
+                
+                    Text(
+                      subTitle2 ?? '',
+                      style: GoogleFonts.inter(
+                        fontSize: context.width * 0.032,
+                        color: Color.fromARGB(255, 199, 197, 197),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
 
               const Spacer(),

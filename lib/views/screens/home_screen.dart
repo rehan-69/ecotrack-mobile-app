@@ -423,7 +423,13 @@ class HomeScreen extends StatelessWidget {
                         return Column(
                           children: [
                             RecentComplaint(
-                              image: complaint.image?.isNotEmpty == true ?complaint.image!.first:'assets/waste1.png',
+                              image:
+                                  complaint.image?.isNotEmpty == true &&
+                                      !complaint.image!.first.startsWith(
+                                        '/data/',
+                                      )
+                                  ? complaint.image!.first
+                                  : 'assets/waste1.png',
                               title: complaint.complaintId,
                               subTitle1: complaint.wasteType,
                               subTitle2:

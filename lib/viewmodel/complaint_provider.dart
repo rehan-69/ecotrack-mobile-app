@@ -134,6 +134,27 @@ class ComplaintProvider extends ChangeNotifier {
       ].where((e) => e != null && e.isNotEmpty).join(', ');
     }
 
+    if (placemarks.isNotEmpty) {
+      final place = placemarks.first;
+
+      print('--- GEOCODING RESULT ---');
+      print('Name: ${place.name}');
+      print('Street: ${place.street}');
+      print('SubLocality: ${place.subLocality}');
+      print('Locality: ${place.locality}');
+      print('SubAdministrativeArea: ${place.subAdministrativeArea}');
+      print('AdministrativeArea: ${place.administrativeArea}');
+      print('PostalCode: ${place.postalCode}');
+      print('Country: ${place.country}');
+
+      selectedLocation = [
+        place.subLocality,
+        place.locality,
+      ].where((e) => e != null && e.isNotEmpty).join(', ');
+
+      print('Selected Location: $selectedLocation');
+    }
+
     notifyListeners();
   }
 }
