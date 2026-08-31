@@ -22,22 +22,37 @@ class ComplaintService {
       throw Exception('JWT token not found');
     }
 
-    final response = await http.post(
+    final request = http.MultipartRequest(
+      'POST',
       Uri.parse('$baseUrl/complaints'),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token",
-      },
-      body: jsonEncode({
-        "description": description,
-        "image": image,
-        "title": title,
-        "wasteType": wasteType,
-        "location": location,
-        "latitude": latitude,
-        "longitude": longitude,
-      }),
     );
+
+    request.headers['Authorization'] = 'Bearer $token';
+
+    request.fields['description'] = description;
+    request.fields['title'] = title;
+    request.fields['wasteType'] = wasteType;
+    request.fields['location'] = location;
+    request.fields['latitude'] = latitude.toString();
+    request.fields['longitude'] = longitude.toString();
+
+    if (image != null) {
+      for (final imagePath in image) {
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'images',
+            imagePath,
+          ),
+        );
+      }
+    }
+
+    final streamedResponse = await request.send();
+
+    final response = await http.Response.fromStream(
+      streamedResponse,
+    );
+
     final data = jsonDecode(response.body);
 
     if (response.statusCode == 201) {
@@ -45,9 +60,15 @@ class ComplaintService {
     }
 
     if (response.statusCode == 401) {
-      throw Exception(data['message'] ?? 'Session expired. Please login again');
+      throw Exception(
+        data['message'] ??
+            'Session expired. Please login again',
+      );
     }
 
-    throw Exception(data['message'] ?? 'Failed to create complaint');
+    throw Exception(
+      data['message'] ??
+          'Failed to create complaint',
+    );
   }
 }

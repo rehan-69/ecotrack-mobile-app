@@ -435,7 +435,7 @@ class HomeScreen extends StatelessWidget {
                               subTitle2:
                                   '${_formatDate(complaint.createdAt)} ${complaint.location}',
                               progress: complaint.status,
-                              height: context.width * 0.15,
+                              height: context.width * 0.20,
                               width: context.width * 0.15,
                               progressColor: _getStatusColor(complaint.status),
                             ),
