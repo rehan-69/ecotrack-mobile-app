@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project/services/complaint_service.dart';
 
@@ -12,6 +13,9 @@ class ComplaintProvider extends ChangeNotifier {
   String? errorMessage;
   String? selectedWaste;
   List<XFile> selectedImages = [];
+  double? latitude;
+  double? longitude;
+  String? selectedLocation;
 
   Future<void> createComplaint({
     required String complaintId,
@@ -41,15 +45,14 @@ class ComplaintProvider extends ChangeNotifier {
     }
   }
 
-//  Future<void> retrieveLostImage() async {
-//   final response = await _picker.retrieveLostData();
+  //  Future<void> retrieveLostImage() async {
+  //   final response = await _picker.retrieveLostData();
 
-//   if (response.files != null) {
-//     selectedImages.addAll(response.files!);
-//     notifyListeners();
-//   }
-// }
-  
+  //   if (response.files != null) {
+  //     selectedImages.addAll(response.files!);
+  //     notifyListeners();
+  //   }
+  // }
 
   Future<void> pickImageFromCamera() async {
     final image = await _picker.pickImage(source: ImageSource.camera);
@@ -67,5 +70,42 @@ class ComplaintProvider extends ChangeNotifier {
       selectedImages.addAll(images);
       notifyListeners();
     }
+  }
+
+  Future<void> getCurrentLocation() async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+    if (!serviceEnabled) {
+      errorMessage = 'Please turn on location service';
+      notifyListeners();
+      return;
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    if (permission == LocationPermission.denied) {
+      errorMessage = 'Location permission denied';
+      notifyListeners();
+      return;
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      errorMessage = 'Location permission permanently denied';
+      notifyListeners();
+      return;
+    }
+
+    final position = await Geolocator.getCurrentPosition();
+
+    latitude = position.latitude;
+    longitude = position.longitude;
+
+    selectedLocation = '${position.latitude}, ${position.longitude}';
+
+    notifyListeners();
   }
 }

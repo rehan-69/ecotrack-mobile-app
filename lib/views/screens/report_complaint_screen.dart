@@ -300,57 +300,62 @@ class ReportComplaintScreen extends StatelessWidget {
                     horizontal: context.width * 0.040,
                     vertical: context.height * 0.010,
                   ),
-                  child: Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: context.width * 0.040,
-                      vertical: context.height * 0.018,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF1F7F1),
-                      borderRadius: BorderRadius.circular(
-                        context.width * 0.045,
+                  child: GestureDetector(
+                    onTap: () {
+                      value.getCurrentLocation();
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.width * 0.040,
+                        vertical: context.height * 0.018,
                       ),
-                      border: Border.all(
-                        color: const Color(0xFFB5DEB7),
-                        width: 1.5,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF1F7F1),
+                        borderRadius: BorderRadius.circular(
+                          context.width * 0.045,
+                        ),
+                        border: Border.all(
+                          color: const Color(0xFFB5DEB7),
+                          width: 1.5,
+                        ),
                       ),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.location_on_outlined,
-                          size: context.width * 0.065,
-                          color: AppColors.primaryColor,
-                        ),
-
-                        SizedBox(width: context.width * 0.035),
-
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Use Current Location',
-                              style: GoogleFonts.inter(
-                                fontSize: context.width * 0.038,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.primaryColor,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.location_on_outlined,
+                            size: context.width * 0.065,
+                            color: AppColors.primaryColor,
+                          ),
+                    
+                          SizedBox(width: context.width * 0.035),
+                    
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Use Current Location',
+                                style: GoogleFonts.inter(
+                                  fontSize: context.width * 0.038,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.primaryColor,
+                                ),
                               ),
-                            ),
-
-                            SizedBox(height: context.height * 0.003),
-
-                            Text(
-                              'GPS accuracy within 8 m',
-                              style: GoogleFonts.inter(
-                                fontSize: context.width * 0.032,
-                                fontWeight: FontWeight.w400,
-                                color: const Color(0xFF79808C),
+                    
+                              SizedBox(height: context.height * 0.003),
+                    
+                              Text(
+                                'GPS accuracy within 8 m',
+                                style: GoogleFonts.inter(
+                                  fontSize: context.width * 0.032,
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xFF79808C),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
