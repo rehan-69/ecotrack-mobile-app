@@ -118,7 +118,7 @@ class ComplaintProvider extends ChangeNotifier {
     latitude = position.latitude;
     longitude = position.longitude;
 
-    selectedLocation = '${position.latitude}, ${position.longitude}';
+    selectedLocation = 'Ward 07';
 
     notifyListeners();
   }
