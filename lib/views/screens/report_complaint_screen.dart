@@ -327,9 +327,9 @@ class ReportComplaintScreen extends StatelessWidget {
                             size: context.width * 0.065,
                             color: AppColors.primaryColor,
                           ),
-                    
+
                           SizedBox(width: context.width * 0.035),
-                    
+
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -341,9 +341,9 @@ class ReportComplaintScreen extends StatelessWidget {
                                   color: AppColors.primaryColor,
                                 ),
                               ),
-                    
+
                               SizedBox(height: context.height * 0.003),
-                    
+
                               Text(
                                 'GPS accuracy within 8 m',
                                 style: GoogleFonts.inter(
@@ -364,7 +364,28 @@ class ReportComplaintScreen extends StatelessWidget {
 
                 CustomButton(
                   text: 'Submit Complaint',
-                  onPressed: () {},
+                  onPressed: () async {
+                    if (value.latitude == null || value.longitude == null) {
+                      value.errorMessage =
+                          'Please select your current location';
+                      value.notifyListeners();
+                      return;
+                    }
+
+                    final images = value.selectedImages
+                        .map((image) => image.path)
+                        .toList();
+
+                    await value.createComplaint(
+                      description: value.descriptionController.text,
+                      image: images,
+                      title: value.titleController.text,
+                      wasteType: value.selectedWaste!,
+                      location: value.selectedLocation ?? '',
+                      latitude: value.latitude!,
+                      longitude: value.longitude!,
+                    );
+                  },
                   width: context.width * 0.93,
                   height: context.height * 0.065,
                   borderRadius: context.width * 0.035,

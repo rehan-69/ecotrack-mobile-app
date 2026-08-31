@@ -18,24 +18,27 @@ class ComplaintProvider extends ChangeNotifier {
   String? selectedLocation;
 
   Future<void> createComplaint({
-    required String complaintId,
     required String description,
     List<String>? image,
     required String title,
     required String wasteType,
     required String location,
+    required double latitude,
+    required double longitude,
   }) async {
     isLoading = true;
     errorMessage = null;
     notifyListeners();
     try {
       await _complaintService.createComplaint(
-        complaintId: complaintId,
         description: description,
         image: image,
         title: title,
         wasteType: wasteType,
         location: location,
+        latitude:latitude,
+        longitude:longitude,
+
       );
     } catch (e) {
       errorMessage = e.toString();
@@ -73,7 +76,11 @@ class ComplaintProvider extends ChangeNotifier {
   }
 
   Future<void> getCurrentLocation() async {
+    print('LOCATION BUTTON CLICKED');
+
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+    print('Location service: $serviceEnabled');
 
     if (!serviceEnabled) {
       errorMessage = 'Please turn on location service';
@@ -83,9 +90,13 @@ class ComplaintProvider extends ChangeNotifier {
 
     LocationPermission permission = await Geolocator.checkPermission();
 
+    print('Permission before request: $permission');
+
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
     }
+
+    print('Permission after request: $permission');
 
     if (permission == LocationPermission.denied) {
       errorMessage = 'Location permission denied';
@@ -100,6 +111,9 @@ class ComplaintProvider extends ChangeNotifier {
     }
 
     final position = await Geolocator.getCurrentPosition();
+
+    print('Latitude: ${position.latitude}');
+    print('Longitude: ${position.longitude}');
 
     latitude = position.latitude;
     longitude = position.longitude;

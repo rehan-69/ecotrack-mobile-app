@@ -6,12 +6,13 @@ class ComplaintService {
   final String baseUrl = 'http://127.0.0.1:3000';
 
   Future<void> createComplaint({
-    required String complaintId,
     required String description,
     List<String>? image,
     required String title,
     required String wasteType,
     required String location,
+    required double latitude,
+    required double longitude,
   }) async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -28,18 +29,19 @@ class ComplaintService {
         "Authorization": "Bearer $token",
       },
       body: jsonEncode({
-        "complaintId": complaintId,
         "description": description,
         "image": image,
         "title": title,
         "wasteType": wasteType,
         "location": location,
+        "latitude": latitude,
+        "longitude": longitude,
       }),
     );
     final data = jsonDecode(response.body);
 
     if (response.statusCode == 201) {
-      return; 
+      return;
     }
 
     if (response.statusCode == 401) {
