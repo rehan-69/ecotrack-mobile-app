@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project/services/complaint_service.dart';
@@ -36,9 +37,8 @@ class ComplaintProvider extends ChangeNotifier {
         title: title,
         wasteType: wasteType,
         location: location,
-        latitude:latitude,
-        longitude:longitude,
-
+        latitude: latitude,
+        longitude: longitude,
       );
     } catch (e) {
       errorMessage = e.toString();
@@ -118,7 +118,21 @@ class ComplaintProvider extends ChangeNotifier {
     latitude = position.latitude;
     longitude = position.longitude;
 
-    selectedLocation = 'Ward 07';
+    final geocoding = Geocoding();
+
+    final placemarks = await geocoding.placemarkFromCoordinates(
+      position.latitude,
+      position.longitude,
+    );
+
+    if (placemarks.isNotEmpty) {
+      final place = placemarks.first;
+
+      selectedLocation = [
+        place.subLocality,
+        place.locality,
+      ].where((e) => e != null && e.isNotEmpty).join(', ');
+    }
 
     notifyListeners();
   }
