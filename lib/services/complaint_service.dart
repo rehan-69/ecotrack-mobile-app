@@ -22,6 +22,16 @@ class ComplaintService {
       throw Exception('JWT token not found');
     }
 
+    print('--- CREATE COMPLAINT REQUEST ---');
+    print('Title: $title');
+    print('Description: $description');
+    print('Waste Type: $wasteType');
+    print('Location: $location');
+    print('Latitude: $latitude');
+    print('Longitude: $longitude');
+    print('Images: ${image?.length ?? 0}');
+    print('Base URL: $baseUrl');
+
     final request = http.MultipartRequest(
       'POST',
       Uri.parse('$baseUrl/complaints'),
@@ -38,6 +48,8 @@ class ComplaintService {
 
     if (image != null) {
       for (final imagePath in image) {
+        print('Adding image: $imagePath');
+
         request.files.add(
           await http.MultipartFile.fromPath(
             'images',
@@ -47,15 +59,23 @@ class ComplaintService {
       }
     }
 
+    print('Sending request...');
+
     final streamedResponse = await request.send();
+
+    print('Response received');
 
     final response = await http.Response.fromStream(
       streamedResponse,
     );
 
+    print('Status Code: ${response.statusCode}');
+    print('Response Body: ${response.body}');
+
     final data = jsonDecode(response.body);
 
     if (response.statusCode == 201) {
+      print('Complaint created successfully');
       return;
     }
 
