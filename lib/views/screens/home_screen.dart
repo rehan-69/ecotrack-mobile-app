@@ -428,7 +428,7 @@ class HomeScreen extends StatelessWidget {
                                       !complaint.image!.first.startsWith(
                                         '/data/',
                                       )
-                                  ? 'http://10.0.2.2:3000${complaint.image!.first}'
+                                  ? complaint.image!.first
                                   : 'assets/waste1.png',
                               title: complaint.complaintId,
                               subTitle1: complaint.wasteType,

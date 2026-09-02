@@ -63,11 +63,13 @@ class RecentComplaint extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Image.network(
-                  'http://127.0.0.1:3000$image',
+                  'http://192.168.0.106:3000$image',
                   height: height,
                   width: width,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
+                    print('IMAGE ERROR: $error');
+                    print('IMAGE URL: $image');
                     return const Icon(Icons.image_not_supported);
                   },
                 ),
