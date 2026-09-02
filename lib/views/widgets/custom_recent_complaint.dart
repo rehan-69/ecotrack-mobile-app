@@ -62,11 +62,14 @@ class RecentComplaint extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
-                  image,
+                child: Image.network(
+                  'http://127.0.0.1:3000$image',
                   height: height,
                   width: width,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(Icons.image_not_supported);
+                  },
                 ),
               ),
 
@@ -78,28 +81,34 @@ class RecentComplaint extends StatelessWidget {
                   children: [
                     Text(
                       title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.inter(
                         fontSize: context.width * 0.040,
                         fontWeight: FontWeight.w600,
                         color: const Color(0xFF1F2937),
                       ),
                     ),
-                
+
                     Text(
                       subTitle1,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.inter(
                         fontSize: context.width * 0.035,
                         fontWeight: FontWeight.w300,
                         color: const Color(0xFF6B7280),
                       ),
                     ),
-                
+
                     SizedBox(height: context.height * 0.005),
-                
+
                     if (infoRow != null) infoRow!,
-                
+
                     Text(
                       subTitle2 ?? '',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.inter(
                         fontSize: context.width * 0.032,
                         color: Color.fromARGB(255, 199, 197, 197),
@@ -108,8 +117,6 @@ class RecentComplaint extends StatelessWidget {
                   ],
                 ),
               ),
-
-              const Spacer(),
 
               Container(
                 padding: EdgeInsets.symmetric(
