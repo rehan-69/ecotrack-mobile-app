@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/viewmodel/home_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:project/viewmodel/provider.dart';
 import 'package:project/constants/mediaquery.dart';
@@ -10,15 +11,49 @@ import 'package:project/views/widgets/custom_complaint_filter_chip.dart';
 class MyComplaintScreen extends StatelessWidget {
   const MyComplaintScreen({super.key});
 
+  String _formatDate(DateTime date) {
+    final months = const [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    return '${date.day} ${months[date.month - 1]} ${date.year}';
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'Completed':
+        return const Color(0xFF28BF5E);
+
+      case 'In Progress':
+        return const Color(0xFFFF9701);
+
+      case 'Pending':
+        return const Color(0xFFFFA000);
+
+      default:
+        return Colors.grey;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-
+    final homeProvider = context.watch<HomeProvider>();
     return Consumer<ProductProvider>(
       builder: (context, value, child) {
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-          backgroundColor: Colors.white,
+            backgroundColor: Colors.white,
             title: Text(
               'My Complaints',
               style: TextStyle(
@@ -80,71 +115,30 @@ class MyComplaintScreen extends StatelessWidget {
 
                 SizedBox(height: context.height * 0.020),
 
-                RecentComplaint(
-                  image: 'assets/waste1.png',
-                  title: 'ECO-1042',
-                  subTitle1: 'Household Waste',
-                  infoRow: InfoRow(
-                    icon: Icons.calendar_today_outlined,
-                    text: '12 Mar 2026',
-                  ),
-                  progress: 'In Progress',
-                  height: context.width * 0.20,
-                  width: context.width * 0.20,
-                  progressColor: const Color.fromARGB(255, 238, 151, 1),
-                ),
-
-                SizedBox(height: context.height * 0.020),
-
-                RecentComplaint(
-                  image: 'assets/waste2.png',
-                  title: 'ECO-1038',
-                  subTitle1: 'Construction Debris',
-                  infoRow: InfoRow(
-                    icon: Icons.calendar_today_outlined,
-                    text: '08 Mar 2026',
-                  ),
-                  progress: 'Completed',
-                  height: context.width * 0.20,
-                  width: context.width * 0.20,
-                  progressColor: Color(0xFF28BF5E),
-                ),
-
-                SizedBox(height: context.height * 0.020),
-
-                RecentComplaint(
-                  image: 'assets/waste3.png',
-                  title: 'ECO-1031',
-                  subTitle1: 'Garden Waste',
-                  infoRow: InfoRow(
-                    icon: Icons.calendar_today_outlined,
-                    text: '02 Mar 2026',
-                  ),
-                  progress: 'Completed',
-                  height: context.width * 0.20,
-                  width: context.width * 0.20,
-                  progressColor: Color(0xFF28BF5E),
-                ),
-
-                SizedBox(height: context.height * 0.020),
-
-                RecentComplaint(
-                  image: 'assets/waste1.png',
-                  title: 'ECO-1031',
-                  subTitle1: 'Plastic Waste',
-                  infoRow: InfoRow(
-                    icon: Icons.calendar_today_outlined,
-                    text: '27 Feb 2026',
-                  ),
-                  progress: 'Pending',
-                  height: context.width * 0.20,
-                  width: context.width * 0.20,
-                  progressColor: Colors.red,
-                ),
+                ...homeProvider.homeData!.recentComplaints.map((complaint) {
+                  return Column(
+                    children: [
+                      RecentComplaint(
+                        image:
+                            complaint.image?.isNotEmpty == true &&
+                                !complaint.image!.first.startsWith('/data')
+                            ? complaint.image!.first
+                            : 'assets/waste1.png',
+                        title: complaint.wasteType,
+                        subTitle1: complaint.location,
+                        subTitle2:
+                            '${_formatDate(complaint.createdAt)} ${complaint.location}',
+                        progress: complaint.status,
+                        height: context.width * 0.20,
+                        width: context.width * 0.20,
+                        progressColor: _getStatusColor(complaint.status),
+                      ),
+                    ],
+                  );
+                }).toList(),
               ],
             ),
           ),
-        
         );
       },
     );
