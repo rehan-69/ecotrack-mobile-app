@@ -133,6 +133,8 @@ class MyComplaintScreen extends StatelessWidget {
                         width: context.width * 0.20,
                         progressColor: _getStatusColor(complaint.status),
                       ),
+                      
+                      SizedBox(height: context.height * 0.020),
                     ],
                   );
                 }).toList(),
