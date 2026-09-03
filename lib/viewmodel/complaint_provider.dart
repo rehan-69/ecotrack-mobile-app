@@ -17,48 +17,54 @@ class ComplaintProvider extends ChangeNotifier {
   double? latitude;
   double? longitude;
   String? selectedLocation;
+  String camera = 'Camera';
 
   Future<void> createComplaint({
-  required String description,
-  List<String>? image,
-  required String title,
-  required String wasteType,
-  required String location,
-  required double latitude,
-  required double longitude,
-}) async {
-  print('CREATE COMPLAINT STARTED');
-  print('Title: $title');
-  print('Waste Type: $wasteType');
-  print('Location: $location');
-  print('Latitude: $latitude');
-  print('Longitude: $longitude');
-  print('Images: ${image?.length ?? 0}');
+    required String description,
+    List<String>? image,
+    required String title,
+    required String wasteType,
+    required String location,
+    required double latitude,
+    required double longitude,
+  }) async {
+    print('CREATE COMPLAINT STARTED');
+    print('Title: $title');
+    print('Waste Type: $wasteType');
+    print('Location: $location');
+    print('Latitude: $latitude');
+    print('Longitude: $longitude');
+    print('Images: ${image?.length ?? 0}');
 
-  isLoading = true;
-  errorMessage = null;
-  notifyListeners();
+    isLoading = true;
+    errorMessage = null;
+    notifyListeners();
 
-  try {
-    await _complaintService.createComplaint(
-      description: description,
-      image: image,
-      title: title,
-      wasteType: wasteType,
-      location: location,
-      latitude: latitude,
-      longitude: longitude,
-    );
+    try {
+      await _complaintService.createComplaint(
+        description: description,
+        image: image,
+        title: title,
+        wasteType: wasteType,
+        location: location,
+        latitude: latitude,
+        longitude: longitude,
+      );
 
-    print('CREATE COMPLAINT SUCCESS');
-  } catch (e) {
-    print('CREATE COMPLAINT ERROR: $e');
-    errorMessage = e.toString();
-  } finally {
-    isLoading = false;
+      print('CREATE COMPLAINT SUCCESS');
+    } catch (e) {
+      print('CREATE COMPLAINT ERROR: $e');
+      errorMessage = e.toString();
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  void selectCameraFeature(String feature) {
+    camera = feature;
     notifyListeners();
   }
-}
   //  Future<void> retrieveLostImage() async {
   //   final response = await _picker.retrieveLostData();
 

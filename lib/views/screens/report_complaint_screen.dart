@@ -176,22 +176,49 @@ class ReportComplaintScreen extends StatelessWidget {
                     CustomImagePickerButton(
                       onTap: () {
                         value.pickImageFromCamera();
+                        value.selectCameraFeature('Camera');
                       },
                       icon: Icons.camera_alt_outlined,
                       title: 'Camera',
-                      backgroundColor: AppColors.primaryColor,
-                      borderColor: AppColors.primaryColor,
-                      iconColor: Colors.white,
-                      textColor: Colors.white,
+                      backgroundColor: value.camera == 'Camera'
+                          ? AppColors.primaryColor
+                          : Colors.white,
+
+                      borderColor: value.camera == 'Camera'
+                          ? AppColors.primaryColor
+                          : Colors.white,
+
+                      iconColor: value.camera == 'Camera'
+                          ? Colors.white
+                          : AppColors.primaryColor,
+
+                      textColor: value.camera == 'Camera'
+                          ? Colors.white
+                          : AppColors.primaryColor,
                     ),
                     CustomImagePickerButton(
-                      onTap: value.pickImageFromGallery,
+                      onTap: () {
+                        value.pickImageFromGallery();
+                        value.selectCameraFeature('Gallery');
+                      },
+
                       icon: Icons.photo_library_outlined,
                       title: 'Gallery',
-                      backgroundColor: const Color(0xFFF2F3F5),
-                      borderColor: const Color(0xFFE5E7EB),
-                      iconColor: Colors.black,
-                      textColor: Colors.black,
+                      backgroundColor: value.camera == 'Gallery'
+                          ? AppColors.primaryColor
+                          : Colors.white,
+
+                      borderColor: value.camera == 'Gallery'
+                          ? AppColors.primaryColor
+                          : Colors.white,
+
+                      iconColor: value.camera == 'Gallery'
+                          ? Colors.white
+                          : AppColors.primaryColor,
+
+                      textColor: value.camera == 'Gallery'
+                          ? Colors.white
+                          : AppColors.primaryColor,
                     ),
                   ],
                 ),
