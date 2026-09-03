@@ -29,6 +29,7 @@ class ProductProvider extends ChangeNotifier {
   Timer? otpTimer;
   int remainingSeconds = 120;
   int selectedIndex = 0;
+  String selectedFilter = 'All';
 
   @override
   void dispose() {
@@ -45,6 +46,11 @@ class ProductProvider extends ChangeNotifier {
     newPasswordController.dispose();
     confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  void selectFilter(String filter){
+    selectedFilter = filter;
+    notifyListeners();
   }
 
   void checkBoxTap() {
