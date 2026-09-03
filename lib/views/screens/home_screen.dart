@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project/views/screens/my_complaint_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/viewmodel/provider.dart';
@@ -405,12 +406,22 @@ class HomeScreen extends StatelessWidget {
 
                           SizedBox(width: context.width * 0.13),
 
-                          Text(
-                            'View all',
-                            style: GoogleFonts.inter(
-                              fontSize: context.width * 0.038,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primaryColor,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MyComplaintScreen(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'View all',
+                              style: GoogleFonts.inter(
+                                fontSize: context.width * 0.038,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.primaryColor,
+                              ),
                             ),
                           ),
                         ],
