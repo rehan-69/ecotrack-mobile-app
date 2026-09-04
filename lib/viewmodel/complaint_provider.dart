@@ -19,6 +19,7 @@ class ComplaintProvider extends ChangeNotifier {
   double? latitude;
   double? longitude;
   String? selectedLocation;
+  String? selectedWard;
   String camera = 'Camera';
   String selectedFilter = 'All';
 
@@ -32,6 +33,7 @@ class ComplaintProvider extends ChangeNotifier {
     required String title,
     required String wasteType,
     required String location,
+    required String ward,
     required double latitude,
     required double longitude,
   }) async {
@@ -40,6 +42,7 @@ class ComplaintProvider extends ChangeNotifier {
     print('Waste Type: $wasteType');
     print('Location: $location');
     print('Latitude: $latitude');
+    print('Ward: $ward');
     print('Longitude: $longitude');
     print('Images: ${image?.length ?? 0}');
 
@@ -54,6 +57,7 @@ class ComplaintProvider extends ChangeNotifier {
         title: title,
         wasteType: wasteType,
         location: location,
+        ward: ward,
         latitude: latitude,
         longitude: longitude,
       );

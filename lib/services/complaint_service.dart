@@ -11,6 +11,7 @@ class ComplaintService {
     required String title,
     required String wasteType,
     required String location,
+    required String ward,
     required double latitude,
     required double longitude,
   }) async {
@@ -27,6 +28,7 @@ class ComplaintService {
     print('Description: $description');
     print('Waste Type: $wasteType');
     print('Location: $location');
+    print('ward: $ward');
     print('Latitude: $latitude');
     print('Longitude: $longitude');
     print('Images: ${image?.length ?? 0}');
@@ -43,6 +45,7 @@ class ComplaintService {
     request.fields['title'] = title;
     request.fields['wasteType'] = wasteType;
     request.fields['location'] = location;
+    request.fields['ward'] = ward;
     request.fields['latitude'] = latitude.toString();
     request.fields['longitude'] = longitude.toString();
 
@@ -51,10 +54,7 @@ class ComplaintService {
         print('Adding image: $imagePath');
 
         request.files.add(
-          await http.MultipartFile.fromPath(
-            'images',
-            imagePath,
-          ),
+          await http.MultipartFile.fromPath('images', imagePath),
         );
       }
     }
@@ -65,9 +65,7 @@ class ComplaintService {
 
     print('Response received');
 
-    final response = await http.Response.fromStream(
-      streamedResponse,
-    );
+    final response = await http.Response.fromStream(streamedResponse);
 
     print('Status Code: ${response.statusCode}');
     print('Response Body: ${response.body}');
@@ -80,15 +78,9 @@ class ComplaintService {
     }
 
     if (response.statusCode == 401) {
-      throw Exception(
-        data['message'] ??
-            'Session expired. Please login again',
-      );
+      throw Exception(data['message'] ?? 'Session expired. Please login again');
     }
 
-    throw Exception(
-      data['message'] ??
-          'Failed to create complaint',
-    );
+    throw Exception(data['message'] ?? 'Failed to create complaint');
   }
 }

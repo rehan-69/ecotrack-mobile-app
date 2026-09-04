@@ -409,6 +409,7 @@ class ReportComplaintScreen extends StatelessWidget {
                       title: value.titleController.text,
                       wasteType: value.selectedWaste!,
                       location: value.selectedLocation ?? '',
+                      ward: value.selectedWard ?? '',
                       latitude: value.latitude!,
                       longitude: value.longitude!,
                     );
