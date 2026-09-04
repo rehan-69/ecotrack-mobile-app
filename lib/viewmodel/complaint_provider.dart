@@ -200,10 +200,10 @@ class ComplaintProvider extends ChangeNotifier {
               complaint.complaintId.toLowerCase().contains(
                 searchController.text.toLowerCase(),
               ) ||
-              complaint.ward.toLowerCase().contains(
+              complaint.wasteType.toLowerCase().contains(
                 searchController.text.toLowerCase(),
               ) ||
-              complaint.wasteType.toLowerCase().contains(
+              (complaint.ward ?? '').toLowerCase().contains(
                 searchController.text.toLowerCase(),
               ),
         )
