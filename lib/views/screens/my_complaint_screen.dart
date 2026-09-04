@@ -46,7 +46,15 @@ class MyComplaintScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final homeProvider = context.watch<HomeProvider>();
+    final homeProvider = context.watch<HomeProvider>();
+    final complaintProvider = context.watch<ComplaintProvider>();
+
+    if (homeProvider.homeData != null &&
+        complaintProvider.searchSource.isEmpty) {
+      complaintProvider.setSearchSource(
+        homeProvider.homeData!.recentComplaints,
+      );
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -113,10 +121,10 @@ class MyComplaintScreen extends StatelessWidget {
 
             SizedBox(height: context.height * 0.020),
 
-            Consumer<HomeProvider>(
+            Consumer<ComplaintProvider>(
               builder: (context, value, child) {
                 return Column(
-                  children: value.homeData!.recentComplaints.map((complaint) {
+                  children: value.filteredComplaints.map((complaint) {
                     return Column(
                       children: [
                         RecentComplaint(

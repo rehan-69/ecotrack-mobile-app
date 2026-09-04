@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project/views/screens/my_complaint_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/viewmodel/provider.dart';
@@ -8,8 +7,10 @@ import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/viewmodel/home_provider.dart';
 import 'package:project/views/widgets/custom_statuscard.dart';
+import 'package:project/views/screens/my_complaint_screen.dart';
 import 'package:project/views/screens/report_complaint_screen.dart';
 import 'package:project/views/widgets/custom_recent_complaint.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -55,7 +56,7 @@ class HomeScreen extends StatelessWidget {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (homeProvider.homeData == null && !homeProvider.isLoading) {
-        context.read<HomeProvider>().getHomeData();
+        context.read<HomeProvider>().getHomeDatas();
       }
     });
     return AnnotatedRegion<SystemUiOverlayStyle>(

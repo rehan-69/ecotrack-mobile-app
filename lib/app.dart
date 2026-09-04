@@ -17,7 +17,7 @@ class EcoApp extends StatelessWidget {
         ),
 
         ChangeNotifierProvider<HomeProvider>(
-          create: (context) => HomeProvider()..getHomeData(),
+          create: (context) => HomeProvider()..getHomeDatas(),
         ),
 
         ChangeNotifierProvider<ComplaintProvider>(
