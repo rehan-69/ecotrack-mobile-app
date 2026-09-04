@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:project/models/home_models.dart';
 import 'package:project/services/complaint_service.dart';
 
 class ComplaintProvider extends ChangeNotifier {
@@ -9,6 +10,7 @@ class ComplaintProvider extends ChangeNotifier {
   final ComplaintService _complaintService = ComplaintService();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
 
   bool isLoading = false;
   String? errorMessage;
@@ -18,6 +20,10 @@ class ComplaintProvider extends ChangeNotifier {
   double? longitude;
   String? selectedLocation;
   String camera = 'Camera';
+
+  //My Complaint Variables
+  List<RecentComplaint> searchSource = [];
+  List<RecentComplaint> filteredComplaints = [];
 
   Future<void> createComplaint({
     required String description,
@@ -61,10 +67,6 @@ class ComplaintProvider extends ChangeNotifier {
     }
   }
 
-  void selectCameraFeature(String feature) {
-    camera = feature;
-    notifyListeners();
-  }
   //  Future<void> retrieveLostImage() async {
   //   final response = await _picker.retrieveLostData();
 
@@ -73,6 +75,11 @@ class ComplaintProvider extends ChangeNotifier {
   //     notifyListeners();
   //   }
   // }
+
+    void selectCameraFeature(String feature) {
+    camera = feature;
+    notifyListeners();
+  }
 
   Future<void> pickImageFromCamera() async {
     final image = await _picker.pickImage(source: ImageSource.camera);
@@ -172,6 +179,24 @@ class ComplaintProvider extends ChangeNotifier {
       print('Selected Location: $selectedLocation');
     }
 
+    notifyListeners();
+  }
+
+
+  //My Complaint Functions
+   void setSearchSource(List<RecentComplaint> complaints) {
+    searchSource = complaints;
+    filteredComplaints = complaints;
+  }
+
+  void searchComplaints() {
+    filteredComplaints = searchSource
+        .where(
+          (complaint) => complaint.complaintId.toLowerCase().contains(
+            searchController.text.toLowerCase(),
+          ),
+        )
+        .toList();
     notifyListeners();
   }
 }

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project/viewmodel/home_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:project/viewmodel/provider.dart';
 import 'package:project/constants/mediaquery.dart';
-import 'package:project/views/widgets/info_row.dart';
+import 'package:project/viewmodel/home_provider.dart';
+import 'package:project/viewmodel/complaint_provider.dart';
 import 'package:project/views/widgets/custom_text_field.dart';
 import 'package:project/views/widgets/custom_recent_complaint.dart';
 import 'package:project/views/widgets/custom_complaint_filter_chip.dart';
@@ -47,42 +46,44 @@ class MyComplaintScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeProvider = context.watch<HomeProvider>();
-    return Consumer<ProductProvider>(
-      builder: (context, value, child) {
-        return Scaffold(
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            title: Text(
-              'My Complaints',
-              style: TextStyle(
-                fontSize: context.width * 0.060,
-                fontWeight: FontWeight.w700,
-                color: const Color(0xFF1F2937),
-              ),
-            ),
-            centerTitle: true,
+    // final homeProvider = context.watch<HomeProvider>();
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(
+          'My Complaints',
+          style: TextStyle(
+            fontSize: context.width * 0.060,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xFF1F2937),
           ),
-          body: SingleChildScrollView(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                Divider(
-                  color: const Color(0xFFE5E7EB),
-                  thickness: 1,
-                  height: context.height * 0.025,
-                ),
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            Divider(
+              color: const Color(0xFFE5E7EB),
+              thickness: 1,
+              height: context.height * 0.025,
+            ),
 
-                Padding(
+            Consumer<ComplaintProvider>(
+              builder: (context, value, child) {
+                return Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: context.width * 0.040,
                     vertical: context.height * 0.010,
                   ),
                   child: CustomTextField(
-                    controller: value.complaintController,
-                    onChanged: (value) {},
+                    controller: value.searchController,
+                    onChanged: (val) {
+                      value.searchComplaints();
+                    },
                     height: context.height * 0.072,
                     color: Color.fromARGB(255, 247, 247, 252),
                     borderRadius: context.width * 0.040,
@@ -92,57 +93,58 @@ class MyComplaintScreen extends StatelessWidget {
                     iconColor: Colors.grey.shade600,
                     borderColor: const Color(0xFFE5E7EB),
                   ),
-                ),
+                );
+              },
+            ),
 
-                SizedBox(height: context.height * .010),
+            SizedBox(height: context.height * .010),
 
-                Row(
-                  children: [
-                    SizedBox(width: context.width * 0.035),
+            Row(
+              children: [
+                SizedBox(width: context.width * 0.035),
 
-                    for (String title in [
-                      'All',
-                      'Pending',
-                      'In Progress',
-                      'Done',
-                    ])
-                      Padding(
-                        padding: EdgeInsets.only(right: context.width * 0.010),
-                        child: ComplaintFilterChip(title: title),
-                      ),
-                  ],
-                ),
-
-                SizedBox(height: context.height * 0.020),
-
-                ...homeProvider.homeData!.recentComplaints.map((complaint) {
-                  return Column(
-                    children: [
-                      RecentComplaint(
-                        image:
-                            complaint.image?.isNotEmpty == true &&
-                                !complaint.image!.first.startsWith('/data')
-                            ? complaint.image!.first
-                            : 'assets/waste1.png',
-                        title: complaint.wasteType,
-                        subTitle1: complaint.location,
-                        subTitle2:
-                            '${_formatDate(complaint.createdAt)} ${complaint.location}',
-                        progress: complaint.status,
-                        height: context.width * 0.20,
-                        width: context.width * 0.20,
-                        progressColor: _getStatusColor(complaint.status),
-                      ),
-                      
-                      SizedBox(height: context.height * 0.020),
-                    ],
-                  );
-                }).toList(),
+                for (String title in ['All', 'Pending', 'In Progress', 'Done'])
+                  Padding(
+                    padding: EdgeInsets.only(right: context.width * 0.010),
+                    child: ComplaintFilterChip(title: title),
+                  ),
               ],
             ),
-          ),
-        );
-      },
+
+            SizedBox(height: context.height * 0.020),
+
+            Consumer<HomeProvider>(
+              builder: (context, value, child) {
+                return Column(
+                  children: value.homeData!.recentComplaints.map((complaint) {
+                    return Column(
+                      children: [
+                        RecentComplaint(
+                          image:
+                              complaint.image?.isNotEmpty == true &&
+                                  !complaint.image!.first.startsWith('/data')
+                              ? complaint.image!.first
+                              : 'assets/waste1.png',
+                          title: complaint.complaintId,
+                          subTitle1: complaint.wasteType,
+                          subTitle2:
+                              '${_formatDate(complaint.createdAt)} ${complaint.location}',
+                          progress: complaint.status,
+                          height: context.width * 0.20,
+                          width: context.width * 0.20,
+                          progressColor: _getStatusColor(complaint.status),
+                        ),
+
+                        SizedBox(height: context.height * 0.020),
+                      ],
+                    );
+                  }).toList(),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

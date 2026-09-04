@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:project/models/home_models.dart';
 import 'package:project/services/google_auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,7 +31,7 @@ class ProductProvider extends ChangeNotifier {
   int remainingSeconds = 120;
   int selectedIndex = 0;
   String selectedFilter = 'All';
-
+  
   @override
   void dispose() {
     otpTimer?.cancel();
@@ -48,7 +49,8 @@ class ProductProvider extends ChangeNotifier {
     super.dispose();
   }
 
-  void selectFilter(String filter){
+  
+  void selectFilter(String filter) {
     selectedFilter = filter;
     notifyListeners();
   }
