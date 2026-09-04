@@ -123,31 +123,48 @@ class MyComplaintScreen extends StatelessWidget {
 
             Consumer<ComplaintProvider>(
               builder: (context, value, child) {
-                return Column(
-                  children: value.filteredComplaints.map((complaint) {
-                    return Column(
-                      children: [
-                        RecentComplaint(
-                          image:
-                              complaint.image?.isNotEmpty == true &&
-                                  !complaint.image!.first.startsWith('/data')
-                              ? complaint.image!.first
-                              : 'assets/waste1.png',
-                          title: complaint.complaintId,
-                          subTitle1: complaint.wasteType,
-                          subTitle2:
-                              '${_formatDate(complaint.createdAt)} ${complaint.location}',
-                          progress: complaint.status,
-                          height: context.width * 0.20,
-                          width: context.width * 0.20,
-                          progressColor: _getStatusColor(complaint.status),
+                return value.filteredComplaints.isEmpty
+                    ? SizedBox(
+                        height: context.height * 0.55,
+                        child: Center(
+                          child: Text(
+                            'No complaints found',
+                            style: TextStyle(
+                              fontSize: context.width * 0.040,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
+                      )
+                    : Column(
+                        children: value.filteredComplaints.map((complaint) {
+                          return Column(
+                            children: [
+                              RecentComplaint(
+                                image:
+                                    complaint.image?.isNotEmpty == true &&
+                                        !complaint.image!.first.startsWith(
+                                          '/data',
+                                        )
+                                    ? complaint.image!.first
+                                    : 'assets/waste1.png',
+                                title: complaint.complaintId,
+                                subTitle1: complaint.wasteType,
+                                subTitle2:
+                                    '${_formatDate(complaint.createdAt)} ${complaint.location}',
+                                progress: complaint.status,
+                                height: context.width * 0.20,
+                                width: context.width * 0.20,
+                                progressColor: _getStatusColor(
+                                  complaint.status,
+                                ),
+                              ),
 
-                        SizedBox(height: context.height * 0.020),
-                      ],
-                    );
-                  }).toList(),
-                );
+                              SizedBox(height: context.height * 0.020),
+                            ],
+                          );
+                        }).toList(),
+                      );
               },
             ),
           ],

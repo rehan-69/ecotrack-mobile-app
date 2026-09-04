@@ -76,7 +76,7 @@ class ComplaintProvider extends ChangeNotifier {
   //   }
   // }
 
-    void selectCameraFeature(String feature) {
+  void selectCameraFeature(String feature) {
     camera = feature;
     notifyListeners();
   }
@@ -182,21 +182,25 @@ class ComplaintProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   //My Complaint Functions
-   void setSearchSource(List<RecentComplaint> complaints) {
+  void setSearchSource(List<RecentComplaint> complaints) {
     searchSource = complaints;
     filteredComplaints = complaints;
   }
 
   void searchComplaints() {
-    filteredComplaints = searchSource
-        .where(
-          (complaint) => complaint.complaintId.toLowerCase().contains(
-            searchController.text.toLowerCase(),
-          ),
-        )
-        .toList();
-    notifyListeners();
+  
+      filteredComplaints = searchSource
+          .where(
+            (complaint) => complaint.complaintId.toLowerCase().contains(
+              searchController.text.toLowerCase(),
+            ),
+          )
+          .toList();
+
+      
+
+      notifyListeners();
+
   }
 }
