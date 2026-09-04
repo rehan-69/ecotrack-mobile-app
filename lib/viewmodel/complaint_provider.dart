@@ -189,18 +189,14 @@ class ComplaintProvider extends ChangeNotifier {
   }
 
   void searchComplaints() {
-  
-      filteredComplaints = searchSource
-          .where(
-            (complaint) => complaint.complaintId.toLowerCase().contains(
-              searchController.text.toLowerCase(),
-            ),
-          )
-          .toList();
+    filteredComplaints = searchSource
+        .where(
+          (complaint) => complaint.complaintId.toLowerCase().contains(
+            searchController.text.toLowerCase(),
+          ),
+        )
+        .toList();
 
-      
-
-      notifyListeners();
-
+    notifyListeners();
   }
 }
