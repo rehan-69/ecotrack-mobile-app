@@ -21,7 +21,7 @@ class ComplaintFilterChip extends StatelessWidget {
           },
           child: Container(
             padding: EdgeInsets.symmetric(
-              horizontal: context.width * 0.050,
+              horizontal: context.width * 0.045,
               vertical: context.height * 0.015,
             ),
             decoration: BoxDecoration(

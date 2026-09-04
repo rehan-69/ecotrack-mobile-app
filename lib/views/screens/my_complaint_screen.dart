@@ -110,8 +110,8 @@ class MyComplaintScreen extends StatelessWidget {
             Row(
               children: [
                 SizedBox(width: context.width * 0.035),
-
-                for (String title in ['All', 'Pending', 'In Progress', 'Done'])
+            
+                for (String title in ['All', 'Pending', 'In Progress', 'Completed'])
                   Padding(
                     padding: EdgeInsets.only(right: context.width * 0.010),
                     child: ComplaintFilterChip(title: title),
