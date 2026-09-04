@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
-import 'package:project/viewmodel/provider.dart';
+import 'package:project/viewmodel/complaint_provider.dart';
 import 'package:provider/provider.dart';
 
 class ComplaintFilterChip extends StatelessWidget {
@@ -12,11 +12,12 @@ class ComplaintFilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductProvider>(
+    return Consumer<ComplaintProvider>(
       builder: (context, value, child) {
         return GestureDetector(
           onTap: () {
             value.selectFilter(title);
+            value.filterComplaintsByStatus();
           },
           child: Container(
             padding: EdgeInsets.symmetric(

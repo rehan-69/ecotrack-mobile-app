@@ -20,6 +20,7 @@ class ComplaintProvider extends ChangeNotifier {
   double? longitude;
   String? selectedLocation;
   String camera = 'Camera';
+  String selectedFilter = 'All';
 
   //My Complaint Variables
   List<RecentComplaint> searchSource = [];
@@ -197,6 +198,30 @@ class ComplaintProvider extends ChangeNotifier {
         )
         .toList();
 
+    notifyListeners();
+  }
+
+  void selectFilter(String filter) {
+    selectedFilter = filter;
+    notifyListeners();
+  }
+
+  void filterComplaintsByStatus() {
+    if (selectedFilter == 'All') {
+      filteredComplaints = searchSource;
+    } else if (selectedFilter == 'Pending') {
+      filteredComplaints = searchSource
+          .where((complaint) => complaint.status == 'Pending')
+          .toList();
+    } else if (selectedFilter == 'In Progress') {
+      filteredComplaints = searchSource
+          .where((complaint) => complaint.status == 'In Progress')
+          .toList();
+    } else if (selectedFilter == 'Completed') {
+      filteredComplaints = searchSource
+          .where((complaint) => complaint.status == 'Completed')
+          .toList();
+    }
     notifyListeners();
   }
 }
