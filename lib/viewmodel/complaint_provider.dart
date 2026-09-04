@@ -196,9 +196,16 @@ class ComplaintProvider extends ChangeNotifier {
   void searchComplaints() {
     filteredComplaints = searchSource
         .where(
-          (complaint) => complaint.complaintId.toLowerCase().contains(
-            searchController.text.toLowerCase(),
-          ),
+          (complaint) =>
+              complaint.complaintId.toLowerCase().contains(
+                searchController.text.toLowerCase(),
+              ) ||
+              complaint.ward.toLowerCase().contains(
+                searchController.text.toLowerCase(),
+              ) ||
+              complaint.wasteType.toLowerCase().contains(
+                searchController.text.toLowerCase(),
+              ),
         )
         .toList();
 
