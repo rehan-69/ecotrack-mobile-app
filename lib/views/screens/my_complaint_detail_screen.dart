@@ -5,7 +5,8 @@ import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 
 class ComplaintDetailScreen extends StatelessWidget {
-  const ComplaintDetailScreen({super.key});
+  final String image;
+  const ComplaintDetailScreen({super.key,required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +38,14 @@ class ComplaintDetailScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(context.width * 0.05),
               child: Stack(
                 children: [
-                  Image.asset(
-                    'assets/waste1.png',
-                    width: double.infinity,
-                    height: context.height * 0.23,
-                    fit: BoxFit.cover,
+                  AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Image.network(
+                      'http://127.0.0.1:3000$image',
+                      width: double.infinity,
+                      height: context.height * 0.23,
+                      fit: BoxFit.cover,
+                    ),
                   ),
 
                   Positioned(
