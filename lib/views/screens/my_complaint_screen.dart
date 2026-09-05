@@ -9,24 +9,6 @@ import 'package:project/views/widgets/custom_complaint_filter_chip.dart';
 class MyComplaintScreen extends StatelessWidget {
   const MyComplaintScreen({super.key});
 
-  String _formatDate(DateTime date) {
-    final months = const [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return '${date.day} ${months[date.month - 1]} ${date.year}';
-  }
-
   Color _getStatusColor(String status) {
     switch (status) {
       case 'Completed':

@@ -14,25 +14,6 @@ import 'package:project/views/widgets/custom_recent_complaint.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  String _formatDate(DateTime date) {
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-
-    return '${date.day} ${months[date.month - 1]} ${date.year}';
-  }
-
   Color _getStatusColor(String status) {
     switch (status) {
       case 'Completed':
