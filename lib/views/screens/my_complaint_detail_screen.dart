@@ -6,7 +6,7 @@ import 'package:project/constants/mediaquery.dart';
 
 class ComplaintDetailScreen extends StatelessWidget {
   final String image;
-  const ComplaintDetailScreen({super.key,required this.image});
+  const ComplaintDetailScreen({super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -38,16 +38,17 @@ class ComplaintDetailScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(context.width * 0.05),
               child: Stack(
                 children: [
-                  AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: Image.network(
-                      'http://127.0.0.1:3000$image',
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(context.width * 0.05),
+                    child: SizedBox(
                       width: double.infinity,
                       height: context.height * 0.23,
-                      fit: BoxFit.cover,
+                      child: Image.network(
+                        'http://127.0.0.1:3000$image',
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-
                   Positioned(
                     top: context.height * 0.015,
                     left: context.width * 0.025,
