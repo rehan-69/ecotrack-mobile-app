@@ -57,7 +57,6 @@ class ComplaintProvider extends ChangeNotifier {
         title: title,
         wasteType: wasteType,
         location: location,
-        ward: ward,
         latitude: latitude,
         longitude: longitude,
       );
@@ -206,10 +205,7 @@ class ComplaintProvider extends ChangeNotifier {
               ) ||
               complaint.wasteType.toLowerCase().contains(
                 searchController.text.toLowerCase(),
-              ) ||
-              (complaint.ward ?? '').toLowerCase().contains(
-                searchController.text.toLowerCase(),
-              ),
+              ) 
         )
         .toList();
 

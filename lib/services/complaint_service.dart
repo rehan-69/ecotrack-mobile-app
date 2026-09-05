@@ -11,7 +11,6 @@ class ComplaintService {
     required String title,
     required String wasteType,
     required String location,
-    required String ward,
     required double latitude,
     required double longitude,
   }) async {
@@ -28,7 +27,6 @@ class ComplaintService {
     print('Description: $description');
     print('Waste Type: $wasteType');
     print('Location: $location');
-    print('ward: $ward');
     print('Latitude: $latitude');
     print('Longitude: $longitude');
     print('Images: ${image?.length ?? 0}');
@@ -45,7 +43,6 @@ class ComplaintService {
     request.fields['title'] = title;
     request.fields['wasteType'] = wasteType;
     request.fields['location'] = location;
-    request.fields['ward'] = ward;
     request.fields['latitude'] = latitude.toString();
     request.fields['longitude'] = longitude.toString();
 
