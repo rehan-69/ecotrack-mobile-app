@@ -33,7 +33,6 @@ class ComplaintProvider extends ChangeNotifier {
     required String title,
     required String wasteType,
     required String location,
-    required String ward,
     required double latitude,
     required double longitude,
   }) async {
@@ -42,7 +41,6 @@ class ComplaintProvider extends ChangeNotifier {
     print('Waste Type: $wasteType');
     print('Location: $location');
     print('Latitude: $latitude');
-    print('Ward: $ward');
     print('Longitude: $longitude');
     print('Images: ${image?.length ?? 0}');
 
