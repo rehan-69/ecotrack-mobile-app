@@ -86,7 +86,7 @@ class RecentComplaint {
       location: json["location"],
       status: json["status"],
       createdAt: DateTime.parse(json["created_at"]),
-      description: json["description"],
+      description: json["description"]?.toString() ?? '',
       latitude: json["latitude"] != null
           ? (json["latitude"] as num).toDouble()
           : null,
