@@ -97,14 +97,6 @@ class ComplaintProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-  //  Future<void> retrieveLostImage() async {
-  //   final response = await _picker.retrieveLostData();
-
-  //   if (response.files != null) {
-  //     selectedImages.addAll(response.files!);
-  //     notifyListeners();
-  //   }
-  // }
 
   void selectCameraFeature(String feature) {
     camera = feature;

@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ComplaintService {
   final String baseUrl = "http://127.0.0.1:3000";
 
+// createComplaint method to create a new complaint
+
   Future<void> createComplaint({
     required String description,
     List<String>? image,
@@ -82,6 +84,8 @@ class ComplaintService {
     throw Exception(data['message'] ?? 'Failed to create complaint');
   }
 
+  // getMyComplaints method to fetch complaints for the Logged-in user
+  
   Future<List<RecentComplaint>> getMyComplaints() async {
     final prefs = await SharedPreferences.getInstance();
 
