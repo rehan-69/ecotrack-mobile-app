@@ -62,6 +62,7 @@ class RecentComplaint {
   final String location;
   final String status;
   final DateTime createdAt;
+   final String description;
   final double? latitude;
   final double? longitude;
 
@@ -72,6 +73,7 @@ class RecentComplaint {
     required this.location,
     required this.status,
     required this.createdAt,
+    required this.description,
     this.latitude,
     this.longitude,
   });
@@ -84,6 +86,7 @@ class RecentComplaint {
       location: json["location"],
       status: json["status"],
       createdAt: DateTime.parse(json["created_at"]),
+      description: json["description"],
       latitude: json["latitude"] != null
           ? (json["latitude"] as num).toDouble()
           : null,

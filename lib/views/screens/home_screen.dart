@@ -11,7 +11,6 @@ import 'package:project/views/screens/my_complaint_screen.dart';
 import 'package:project/views/screens/report_complaint_screen.dart';
 import 'package:project/views/widgets/custom_recent_complaint.dart';
 
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -434,24 +433,12 @@ class HomeScreen extends StatelessWidget {
                       ) {
                         return Column(
                           children: [
-                            RecentComplaint(
-                              image:
-                                  complaint.image?.isNotEmpty == true &&
-                                      !complaint.image!.first.startsWith(
-                                        '/data/',
-                                      )
-                                  ? complaint.image!.first
-                                  : 'assets/waste1.png',
-                              title: complaint.complaintId,
-                              subTitle1: complaint.wasteType,
-                              subTitle2:
-                                  '${_formatDate(complaint.createdAt)} ${complaint.location}',
-                              progress: complaint.status,
+                            CustomRecentComplaint(
+                              complaint: complaint,
                               height: context.width * 0.20,
                               width: context.width * 0.20,
                               progressColor: _getStatusColor(complaint.status),
                             ),
-
                             SizedBox(height: context.height * 0.020),
                           ],
                         );

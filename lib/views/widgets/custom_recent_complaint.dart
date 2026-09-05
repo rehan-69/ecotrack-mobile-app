@@ -2,29 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/constants/mediaquery.dart';
+import 'package:project/models/home_models.dart';
 import 'package:project/views/screens/my_complaint_detail_screen.dart';
 
-class RecentComplaint extends StatelessWidget {
-  final String title;
-  final String image;
+class CustomRecentComplaint extends StatelessWidget {
+  final RecentComplaint complaint;
   final double? width;
   final double? height;
-  final String progress;
+
   final Widget? infoRow;
-  final String subTitle1;
-  final String? subTitle2;
+
   final Color progressColor;
 
-  const RecentComplaint({
+  const CustomRecentComplaint({
     super.key,
     this.infoRow,
-    this.subTitle2,
-    required this.title,
-    required this.image,
+    required this.complaint,
     required this.width,
     required this.height,
-    required this.progress,
-    required this.subTitle1,
     required this.progressColor,
   });
 
@@ -39,7 +34,7 @@ class RecentComplaint extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ComplaintDetailScreen(image: image,)),
+            MaterialPageRoute(builder: (context) => ComplaintDetailScreen(complaint: complaint,)),
           );
         },
         child: Container(
@@ -73,9 +68,11 @@ class RecentComplaint extends StatelessWidget {
                           iconTheme: IconThemeData(color: Colors.white),
                         ),
                         body: PhotoView(
-                          imageProvider: image.startsWith('assets/')
-                              ? AssetImage(image)
-                              : NetworkImage('http://127.0.0.1:3000$image'),
+                          imageProvider: complaint.image?.isNotEmpty == true
+                              ? NetworkImage(
+                                  'http://127.0.0.1:3000${complaint.image!.first}',
+                                )
+                              : const AssetImage('assets/waste1.png'),
                         ),
                       ),
                     ),
@@ -83,23 +80,23 @@ class RecentComplaint extends StatelessWidget {
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: image.startsWith('assets/')
-                      ? Image.asset(
-                          image,
-                          height: height,
-                          width: width,
-                          fit: BoxFit.cover,
-                        )
-                      : Image.network(
-                          'http://127.0.0.1:3000$image',
+                  child: complaint.image?.isNotEmpty == true
+                      ? Image.network(
+                          'http://127.0.0.1:3000${complaint.image!.first}',
                           height: height,
                           width: width,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                             print('IMAGE ERROR: $error');
-                            print('IMAGE URL: $image');
+                            print('IMAGE URL: ${complaint.image!.first}');
                             return const Icon(Icons.image_not_supported);
                           },
+                        )
+                      : Image.asset(
+                          'assets/waste1.png',
+                          height: height,
+                          width: width,
+                          fit: BoxFit.cover,
                         ),
                 ),
               ),
@@ -111,7 +108,7 @@ class RecentComplaint extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      complaint.complaintId,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.inter(
@@ -122,7 +119,7 @@ class RecentComplaint extends StatelessWidget {
                     ),
 
                     Text(
-                      subTitle1,
+                      complaint.wasteType,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.inter(
@@ -137,7 +134,7 @@ class RecentComplaint extends StatelessWidget {
                     if (infoRow != null) infoRow!,
 
                     Text(
-                      subTitle2 ?? '',
+                      complaint.location,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.inter(
@@ -159,7 +156,7 @@ class RecentComplaint extends StatelessWidget {
                   borderRadius: BorderRadius.circular(context.width * 0.025),
                 ),
                 child: Text(
-                  progress,
+                  complaint.status,
                   style: GoogleFonts.inter(
                     fontSize: context.width * 0.032,
                     fontWeight: FontWeight.bold,

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/models/home_models.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 
 class ComplaintDetailScreen extends StatelessWidget {
-  final String image;
-  const ComplaintDetailScreen({super.key, required this.image});
+  final RecentComplaint complaint;
+  const ComplaintDetailScreen({super.key, required this.complaint});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class ComplaintDetailScreen extends StatelessWidget {
                       width: double.infinity,
                       height: context.height * 0.23,
                       child: Image.network(
-                        'http://127.0.0.1:3000$image',
+                        'http://127.0.0.1:3000${complaint.image!.first}',
                         fit: BoxFit.cover,
                       ),
                     ),
