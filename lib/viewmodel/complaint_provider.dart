@@ -71,6 +71,27 @@ class ComplaintProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> getMyComplaints() async {
+    try {
+      isLoading = true;
+      errorMessage = null;
+      notifyListeners();
+
+      final complaints = await _complaintService.getMyComplaints();
+
+      searchSource = complaints;
+      filteredComplaints = complaints;
+
+      print('MY COMPLAINTS COUNT: ${complaints.length}');
+    } catch (e) {
+      print('GET MY COMPLAINTS ERROR: $e');
+      errorMessage = e.toString();
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
   //  Future<void> retrieveLostImage() async {
   //   final response = await _picker.retrieveLostData();
 
@@ -203,7 +224,7 @@ class ComplaintProvider extends ChangeNotifier {
               ) ||
               complaint.wasteType.toLowerCase().contains(
                 searchController.text.toLowerCase(),
-              ) 
+              ),
         )
         .toList();
 

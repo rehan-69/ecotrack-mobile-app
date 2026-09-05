@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:project/models/home_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ComplaintService {
@@ -79,5 +80,38 @@ class ComplaintService {
     }
 
     throw Exception(data['message'] ?? 'Failed to create complaint');
+  }
+
+  Future<List<RecentComplaint>> getMyComplaints() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final token = prefs.getString('jwt_token');
+
+    if (token == null || token.isEmpty) {
+      throw Exception('JWT token not found');
+    }
+
+    final response = await http.get(
+      Uri.parse('$baseUrl/complaints/my'),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    print('--- GET MY COMPLAINTS ---');
+    print('Status Code: ${response.statusCode}');
+    print('Response Body: ${response.body}');
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return (data['complaints'] as List)
+          .map((item) => RecentComplaint.fromJson(item))
+          .toList();
+    }
+
+    if (response.statusCode == 401) {
+      throw Exception(data['message'] ?? 'Session expired. Please login again');
+    }
+
+    throw Exception(data['message'] ?? 'Failed to fetch complaints');
   }
 }

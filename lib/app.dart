@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/viewmodel/complaint_provider.dart';
 import 'package:project/viewmodel/home_provider.dart';
+import 'package:project/views/screens/my_complaint_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:project/viewmodel/provider.dart';
 import 'package:project/views/screens/splash_screen.dart';
@@ -21,12 +22,8 @@ class EcoApp extends StatelessWidget {
         ),
 
         ChangeNotifierProvider<ComplaintProvider>(
-          create: (context) {
-            // final provider = ComplaintProvider();
-            // provider.retrieveLostImage();
-            // return provider;
-            return ComplaintProvider();
-          },
+          create: (_) => ComplaintProvider()..getMyComplaints(),
+          child: MyComplaintScreen(),
         ),
       ],
       child: MaterialApp(

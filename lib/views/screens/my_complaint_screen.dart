@@ -46,15 +46,6 @@ class MyComplaintScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeProvider = context.watch<HomeProvider>();
-    final complaintProvider = context.watch<ComplaintProvider>();
-
-    if (homeProvider.homeData != null &&
-        complaintProvider.searchSource.isEmpty) {
-      complaintProvider.setSearchSource(
-        homeProvider.homeData!.recentComplaints,
-      );
-    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
