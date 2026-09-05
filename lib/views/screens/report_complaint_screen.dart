@@ -403,7 +403,7 @@ class ReportComplaintScreen extends StatelessWidget {
                         .map((image) => image.path)
                         .toList();
 
-                    await value.createComplaint(
+                    final success = await value.createComplaint(
                       description: value.descriptionController.text,
                       image: images,
                       title: value.titleController.text,
@@ -413,6 +413,12 @@ class ReportComplaintScreen extends StatelessWidget {
                       latitude: value.latitude!,
                       longitude: value.longitude!,
                     );
+                    if (success) {
+                      print('CLEARING FORM NOW');
+                      value.clearReportDetailed();
+                    } else {
+                      print('COMPLAINT FAILED - FORM NOT CLEARED');
+                    }
                   },
                   width: context.width * 0.93,
                   height: context.height * 0.065,

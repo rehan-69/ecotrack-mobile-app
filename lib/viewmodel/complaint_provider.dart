@@ -27,7 +27,7 @@ class ComplaintProvider extends ChangeNotifier {
   List<RecentComplaint> searchSource = [];
   List<RecentComplaint> filteredComplaints = [];
 
-  Future<void> createComplaint({
+  Future<bool> createComplaint({
     required String description,
     List<String>? image,
     required String title,
@@ -63,9 +63,11 @@ class ComplaintProvider extends ChangeNotifier {
       );
 
       print('CREATE COMPLAINT SUCCESS');
+      return true;
     } catch (e) {
       print('CREATE COMPLAINT ERROR: $e');
       errorMessage = e.toString();
+      return false;
     } finally {
       isLoading = false;
       notifyListeners();
@@ -139,52 +141,54 @@ class ComplaintProvider extends ChangeNotifier {
       return;
     }
 
-    final position = await Geolocator.getCurrentPosition();
+    try {
+      final position = await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+        ),
+      );
 
-    print('Latitude: ${position.latitude}');
-    print('Longitude: ${position.longitude}');
+      print('Latitude: ${position.latitude}');
+      print('Longitude: ${position.longitude}');
 
-    latitude = position.latitude;
-    longitude = position.longitude;
+      latitude = position.latitude;
+      longitude = position.longitude;
 
-    final geocoding = Geocoding();
+      final geocoding = Geocoding();
 
-    final placemarks = await geocoding.placemarkFromCoordinates(
-      position.latitude,
-      position.longitude,
-    );
+      final placemarks = await geocoding.placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
 
-    if (placemarks.isNotEmpty) {
-      final place = placemarks.first;
+      if (placemarks.isNotEmpty) {
+        final place = placemarks.first;
 
-      selectedLocation = [
-        place.subLocality,
-        place.locality,
-      ].where((e) => e != null && e.isNotEmpty).join(', ');
+        print('--- GEOCODING RESULT ---');
+        print('Name: ${place.name}');
+        print('Street: ${place.street}');
+        print('SubLocality: ${place.subLocality}');
+        print('Locality: ${place.locality}');
+        print('SubAdministrativeArea: ${place.subAdministrativeArea}');
+        print('AdministrativeArea: ${place.administrativeArea}');
+        print('PostalCode: ${place.postalCode}');
+        print('Country: ${place.country}');
+
+        selectedLocation = [
+          place.subLocality,
+          place.locality,
+        ].where((e) => e != null && e.isNotEmpty).join(', ');
+
+        print('Selected Location: $selectedLocation');
+      }
+
+      notifyListeners();
+    } catch (e) {
+      print('LOCATION ERROR: $e');
+
+      errorMessage = 'Unable to get current location';
+      notifyListeners();
     }
-
-    if (placemarks.isNotEmpty) {
-      final place = placemarks.first;
-
-      print('--- GEOCODING RESULT ---');
-      print('Name: ${place.name}');
-      print('Street: ${place.street}');
-      print('SubLocality: ${place.subLocality}');
-      print('Locality: ${place.locality}');
-      print('SubAdministrativeArea: ${place.subAdministrativeArea}');
-      print('AdministrativeArea: ${place.administrativeArea}');
-      print('PostalCode: ${place.postalCode}');
-      print('Country: ${place.country}');
-
-      selectedLocation = [
-        place.subLocality,
-        place.locality,
-      ].where((e) => e != null && e.isNotEmpty).join(', ');
-
-      print('Selected Location: $selectedLocation');
-    }
-
-    notifyListeners();
   }
 
   //My Complaint Functions
@@ -233,6 +237,17 @@ class ComplaintProvider extends ChangeNotifier {
           .where((complaint) => complaint.status == 'Completed')
           .toList();
     }
+    notifyListeners();
+  }
+
+  void clearReportDetailed() {
+    selectedImages.clear();
+    titleController.clear();
+    descriptionController.clear();
+    selectedWaste = null;
+    selectedLocation = null;
+    latitude = null;
+    longitude = null;
     notifyListeners();
   }
 }
