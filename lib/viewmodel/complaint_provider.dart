@@ -73,8 +73,6 @@ class ComplaintProvider extends ChangeNotifier {
   }
 
   Future<void> getMyComplaints() async {
-    if (myComplaintsLoaded) return;
-
     myComplaintsLoaded = true;
 
     try {

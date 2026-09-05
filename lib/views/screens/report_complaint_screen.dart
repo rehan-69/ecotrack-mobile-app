@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project/viewmodel/home_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/constants/app_colors.dart';
@@ -413,10 +414,9 @@ class ReportComplaintScreen extends StatelessWidget {
                       longitude: value.longitude!,
                     );
                     if (success) {
-                      print('CLEARING FORM NOW');
+                      await value.getMyComplaints();
+                      await context.read<HomeProvider>().getHomeDatas();
                       value.clearReportDetailed();
-                    } else {
-                      print('COMPLAINT FAILED - FORM NOT CLEARED');
                     }
                   },
                   width: context.width * 0.93,
