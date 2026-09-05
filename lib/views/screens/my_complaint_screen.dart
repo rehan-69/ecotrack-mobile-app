@@ -46,6 +46,13 @@ class MyComplaintScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final complaintProvider = context.watch<ComplaintProvider>();
+
+    if (!complaintProvider.myComplaintsLoaded) {
+      Future.microtask(() {
+        context.read<ComplaintProvider>().getMyComplaints();
+      });
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -101,8 +108,13 @@ class MyComplaintScreen extends StatelessWidget {
             Row(
               children: [
                 SizedBox(width: context.width * 0.035),
-            
-                for (String title in ['All', 'Pending', 'In Progress', 'Completed'])
+
+                for (String title in [
+                  'All',
+                  'Pending',
+                  'In Progress',
+                  'Completed',
+                ])
                   Padding(
                     padding: EdgeInsets.only(right: context.width * 0.010),
                     child: ComplaintFilterChip(title: title),

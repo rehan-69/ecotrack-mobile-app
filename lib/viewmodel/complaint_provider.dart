@@ -22,6 +22,7 @@ class ComplaintProvider extends ChangeNotifier {
   String? selectedWard;
   String camera = 'Camera';
   String selectedFilter = 'All';
+  bool myComplaintsLoaded = false;
 
   //My Complaint Variables
   List<RecentComplaint> searchSource = [];
@@ -72,6 +73,10 @@ class ComplaintProvider extends ChangeNotifier {
   }
 
   Future<void> getMyComplaints() async {
+    if (myComplaintsLoaded) return;
+
+    myComplaintsLoaded = true;
+
     try {
       isLoading = true;
       errorMessage = null;
@@ -86,12 +91,12 @@ class ComplaintProvider extends ChangeNotifier {
     } catch (e) {
       print('GET MY COMPLAINTS ERROR: $e');
       errorMessage = e.toString();
+      myComplaintsLoaded = false;
     } finally {
       isLoading = false;
       notifyListeners();
     }
   }
-
   //  Future<void> retrieveLostImage() async {
   //   final response = await _picker.retrieveLostData();
 
