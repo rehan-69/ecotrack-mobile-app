@@ -62,7 +62,7 @@ class RecentComplaint {
   final String location;
   final String status;
   final DateTime createdAt;
-   final String description;
+  final String description;
   final double? latitude;
   final double? longitude;
 
