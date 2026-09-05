@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/screens/my_complaint_detail_screen.dart';
 
@@ -60,26 +61,47 @@ class RecentComplaint extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: image.startsWith('assets/')
-                    ? Image.asset(
-                        image,
-                        height: height,
-                        width: width,
-                        fit: BoxFit.cover,
-                      )
-                    : Image.network(
-                        'http://127.0.0.1:3000$image',
-                        height: height,
-                        width: width,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          print('IMAGE ERROR: $error');
-                          print('IMAGE URL: $image');
-                          return const Icon(Icons.image_not_supported);
-                        },
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => Scaffold(
+                        backgroundColor: Colors.black,
+                        appBar: AppBar(
+                          backgroundColor: Colors.black,
+                          iconTheme: IconThemeData(color: Colors.white),
+                        ),
+                        body: PhotoView(
+                          imageProvider: image.startsWith('assets/')
+                              ? AssetImage(image)
+                              : NetworkImage('http://127.0.0.1:3000$image'),
+                        ),
                       ),
+                    ),
+                  );
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: image.startsWith('assets/')
+                      ? Image.asset(
+                          image,
+                          height: height,
+                          width: width,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network(
+                          'http://127.0.0.1:3000$image',
+                          height: height,
+                          width: width,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            print('IMAGE ERROR: $error');
+                            print('IMAGE URL: $image');
+                            return const Icon(Icons.image_not_supported);
+                          },
+                        ),
+                ),
               ),
 
               SizedBox(width: context.width * 0.040),
