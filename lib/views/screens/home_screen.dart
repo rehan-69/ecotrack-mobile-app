@@ -59,13 +59,7 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 16, color: Color(0xFF9CA3AF)),
                 ),
               )
-            : homeProvider.homeData!.recentComplaints.isEmpty
-            ? Center(
-                child: Text(
-                  'No complaints yet',
-                  style: TextStyle(color: Color(0xFF9CA3AF), fontSize: 16),
-                ),
-              )
+            
             : SafeArea(
                 child: SingleChildScrollView(
                   child: Column(
