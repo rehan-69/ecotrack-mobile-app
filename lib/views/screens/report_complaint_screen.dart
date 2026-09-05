@@ -142,7 +142,7 @@ class ReportComplaintScreen extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             itemCount: value.selectedImages.length,
                             itemBuilder: (context, index) {
-                              final image = value.selectedImages[index];
+                              // final image = value.selectedImages[index];
 
                               return Padding(
                                 padding: EdgeInsets.only(
