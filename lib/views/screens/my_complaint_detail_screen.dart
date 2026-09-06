@@ -29,6 +29,14 @@ class ComplaintDetailScreen extends StatelessWidget {
       return '${date.day} ${months[date.month - 1]} ${date.year}';
     }
 
+    String _formatTime(DateTime date) {
+      final hour = date.hour % 12 == 0 ? 12 : date.hour % 12;
+      final minute = date.minute.toString().padLeft(2, '0');
+      final period = date.hour >= 12 ? 'PM' : 'AM';
+
+      return '$hour:$minute $period';
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -260,7 +268,7 @@ class ComplaintDetailScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '12 Mar · 09:12 AM',
+                          '${_formatDate(complaint.createdAt)} · ${_formatTime(complaint.createdAt)}',
                           style: GoogleFonts.inter(
                             fontSize: context.width * 0.030,
                             fontWeight: FontWeight.w400,
