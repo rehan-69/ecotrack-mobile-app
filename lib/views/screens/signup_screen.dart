@@ -226,10 +226,6 @@ class Signupscreen extends StatelessWidget {
                         if (formKeySignup.currentState!.validate()) {
                           await complaintValue.getCurrentLocation();
 
-                          print(
-                            "SIGNUP LOCATION: ${complaintValue.selectedLocation}",
-                          );
-
                           if (complaintValue.selectedLocation == null ||
                               complaintValue.selectedLocation!.isEmpty) {
                             Fluttertoast.showToast(
@@ -256,9 +252,7 @@ class Signupscreen extends StatelessWidget {
                               textColor: Colors.white,
                               fontSize: 14,
                             );
-
                             productValue.clearControllers();
-                            complaintValue.clearReportDetailed();
 
                             Navigator.pushReplacement(
                               context,
