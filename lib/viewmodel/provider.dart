@@ -29,7 +29,7 @@ class ProductProvider extends ChangeNotifier {
   Timer? otpTimer;
   int remainingSeconds = 120;
   int selectedIndex = 0;
-  
+
   @override
   void dispose() {
     otpTimer?.cancel();
@@ -46,9 +46,6 @@ class ProductProvider extends ChangeNotifier {
     confirmPasswordController.dispose();
     super.dispose();
   }
-
-  
-  
 
   void checkBoxTap() {
     checkBox = !checkBox;
@@ -160,7 +157,7 @@ class ProductProvider extends ChangeNotifier {
           "email": signupEmailController.text.trim(),
           "mobile": mobileController.text.trim(),
           "password": signupPasswordController.text.trim(),
-          "location" : location,
+          "location": location,
         }),
       );
 
@@ -217,6 +214,23 @@ class ProductProvider extends ChangeNotifier {
     } catch (e) {
       debugPrint("Login Error: $e");
       return false;
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> logout() async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove('jwt_token');
+      await Future.delayed(const Duration(milliseconds: 500));
+      debugPrint("JWT Token Removed Successfully");
+    } catch (e) {
+      debugPrint("Logout Error: $e");
     } finally {
       isLoading = false;
       notifyListeners();

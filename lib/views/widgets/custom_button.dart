@@ -65,7 +65,7 @@ class CustomButton extends StatelessWidget {
                 width: context.width * 0.047,
               ),
 
-            if (icon != null)
+            if (icon != null && !isLoading)
               Icon(
                 icon,
                 size: context.width * 0.055,

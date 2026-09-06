@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/views/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/viewmodel/provider.dart';
@@ -10,7 +11,7 @@ import 'package:project/views/widgets/custom_contact_info_card.dart';
 
 class ProfileScreen extends StatelessWidget {
   final UserData user;
-  const ProfileScreen({super.key, required this.user,});
+  const ProfileScreen({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +71,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
 
-            CustomContactInfoCard(
-              email: user.email,
-              phone: user.mobile ?? '',
-            ),
+            CustomContactInfoCard(email: user.email, phone: user.mobile ?? ''),
 
             Padding(
               padding: EdgeInsets.only(right: context.width * 0.70),
@@ -104,7 +102,15 @@ class ProfileScreen extends StatelessWidget {
                   color: Color(0xFFFEF2F2),
                   text: "Logout",
                   isLoading: value.isLoading,
-                  onPressed: () {},
+                  onPressed: () async {
+                    await value.logout();
+                    if (context.mounted) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    }
+                  },
                   width: context.width * 0.92,
                   height: context.height * 0.065,
                   borderRadius: context.width * 0.040,
