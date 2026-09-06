@@ -160,6 +160,7 @@ class ProductProvider extends ChangeNotifier {
           "email": signupEmailController.text.trim(),
           "mobile": mobileController.text.trim(),
           "password": signupPasswordController.text.trim(),
+          "location" : location,
         }),
       );
 
