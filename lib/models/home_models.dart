@@ -24,7 +24,7 @@ class UserData {
   final int id;
   final String name;
   final String email;
-  final String mobile;
+  final String? mobile;
 
   UserData({
     required this.id,
@@ -39,7 +39,7 @@ class UserData {
     id: json["id"],
     name: json["name"],
     email: json["email"],
-    mobile: json["mobile"]
+    mobile: json["mobile"]?.toString()
   );
 }
 }

@@ -72,7 +72,7 @@ class ProfileScreen extends StatelessWidget {
 
             CustomContactInfoCard(
               email: user.email,
-              phone: user.mobile,
+              phone: user.mobile ?? '',
             ),
 
             Padding(
