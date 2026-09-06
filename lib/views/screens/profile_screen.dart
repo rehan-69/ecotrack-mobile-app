@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/viewmodel/provider.dart';
+import 'package:project/models/home_models.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/widgets/custom_button.dart';
 import 'package:project/views/widgets/custom_profile_option.dart';
 import 'package:project/views/widgets/custom_contact_info_card.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  final UserData user;
+  const ProfileScreen({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
                   SizedBox(height: context.height * 0.015),
 
                   Text(
-                    'Rahul Sharma',
+                    user.name,
                     style: GoogleFonts.inter(
                       fontSize: context.width * 0.045,
                       fontWeight: FontWeight.bold,
@@ -69,7 +71,7 @@ class ProfileScreen extends StatelessWidget {
             ),
 
             CustomContactInfoCard(
-              email: 'rahul.sharma@gmail.com',
+              email: user.email ,
               phone: '+917304079950',
             ),
 
@@ -126,7 +128,6 @@ class ProfileScreen extends StatelessWidget {
           ],
         ),
       ),
-     
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project/viewmodel/home_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:project/viewmodel/provider.dart';
 import 'package:project/views/screens/home_screen.dart';
@@ -12,18 +13,19 @@ class MainNavigationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navigationProvider = Provider.of<ProductProvider>(context);
+    final homeProvider = Provider.of<HomeProvider>(context);
 
     final screens = [
       const HomeScreen(),
       const MyComplaintScreen(),
-      const ProfileScreen(),
+      ProfileScreen(user: homeProvider.homeData!.user),
     ];
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value:
           navigationProvider.selectedIndex == 0 ||
-          navigationProvider.selectedIndex == 1 ||
-          navigationProvider.selectedIndex == 2
+              navigationProvider.selectedIndex == 1 ||
+              navigationProvider.selectedIndex == 2
           ? const SystemUiOverlayStyle(
               statusBarColor: Color(0xFFF1F7F1),
               statusBarIconBrightness: Brightness.dark,
