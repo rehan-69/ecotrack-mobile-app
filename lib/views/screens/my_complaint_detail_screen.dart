@@ -11,6 +11,24 @@ class ComplaintDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String _formatDate(DateTime date) {
+      final months = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ];
+      return '${date.day} ${months[date.month - 1]} ${date.year}';
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -121,7 +139,7 @@ class ComplaintDetailScreen extends StatelessWidget {
               SizedBox(width: context.width * 0.03),
 
               Text(
-                complaint.createdAt.toString(),
+                'Submitted ${_formatDate(complaint.createdAt)}',
                 style: GoogleFonts.inter(
                   fontSize: context.width * 0.032,
                   fontWeight: FontWeight.w400,
