@@ -25,12 +25,14 @@ class UserData {
   final String name;
   final String email;
   final String? mobile;
+  final String? location;
 
   UserData({
     required this.id,
     required this.name,
     required this.email,
     required this.mobile,
+    required this.location,
   });
 
 
@@ -39,7 +41,8 @@ class UserData {
     id: json["id"],
     name: json["name"],
     email: json["email"],
-    mobile: json["mobile"]?.toString()
+    mobile: json["mobile"]?.toString(),
+    location: json["location"]?.toString(),
   );
 }
 }

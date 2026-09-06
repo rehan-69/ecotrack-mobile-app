@@ -10,7 +10,7 @@ import 'package:project/views/widgets/custom_contact_info_card.dart';
 
 class ProfileScreen extends StatelessWidget {
   final UserData user;
-  const ProfileScreen({super.key, required this.user});
+  const ProfileScreen({super.key, required this.user,});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class ProfileScreen extends StatelessWidget {
                   SizedBox(height: context.height * 0.004),
 
                   Text(
-                    'Citizen Ward 07 Nashik',
+                    user.location ?? '',
                     style: GoogleFonts.inter(
                       fontSize: context.width * 0.032,
                       fontWeight: FontWeight.w400,
