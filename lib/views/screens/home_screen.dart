@@ -59,7 +59,6 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 16, color: Color(0xFF9CA3AF)),
                 ),
               )
-            
             : SafeArea(
                 child: SingleChildScrollView(
                   child: Column(
@@ -403,21 +402,41 @@ class HomeScreen extends StatelessWidget {
                       ),
                       SizedBox(height: context.height * 0.015),
 
-                      ...homeProvider.homeData!.recentComplaints.map((
-                        complaint,
-                      ) {
-                        return Column(
-                          children: [
-                            CustomRecentComplaint(
-                              complaint: complaint,
-                              height: context.width * 0.20,
-                              width: context.width * 0.20,
-                              progressColor: _getStatusColor(complaint.status),
+                      homeProvider.homeData!.recentComplaints.isEmpty
+                          ? SizedBox(
+                              height: context.height * 0.28,
+                              width: double.infinity,
+                              child: Center(
+                                child: Text(
+                                  'No recent complaint',
+                                  style: TextStyle(
+                                    fontSize: context.width * 0.040,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Column(
+                              children: [
+                                ...homeProvider.homeData!.recentComplaints.map((
+                                  complaint,
+                                ) {
+                                  return Column(
+                                    children: [
+                                      CustomRecentComplaint(
+                                        complaint: complaint,
+                                        height: context.width * 0.20,
+                                        width: context.width * 0.20,
+                                        progressColor: _getStatusColor(
+                                          complaint.status,
+                                        ),
+                                      ),
+                                      SizedBox(height: context.height * 0.020),
+                                    ],
+                                  );
+                                }).toList(),
+                              ],
                             ),
-                            SizedBox(height: context.height * 0.020),
-                          ],
-                        );
-                      }).toList(),
                     ],
                   ),
                 ),

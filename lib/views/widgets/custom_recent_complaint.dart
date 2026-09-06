@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/constants/mediaquery.dart';
 import 'package:project/models/home_models.dart';
+import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/screens/my_complaint_detail_screen.dart';
 
 class CustomRecentComplaint extends StatelessWidget {
@@ -34,7 +34,9 @@ class CustomRecentComplaint extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ComplaintDetailScreen(complaint: complaint,)),
+            MaterialPageRoute(
+              builder: (context) => ComplaintDetailScreen(complaint: complaint),
+            ),
           );
         },
         child: Container(
