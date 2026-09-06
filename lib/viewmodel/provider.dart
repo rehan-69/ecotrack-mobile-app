@@ -147,7 +147,7 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String?> signUp() async {
+  Future<String?> signUp({required String location}) async {
     isLoading = true;
     notifyListeners();
 

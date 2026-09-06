@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/viewmodel/complaint_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/viewmodel/provider.dart';
@@ -15,8 +16,8 @@ class Signupscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductProvider>(
-      builder: (context, value, child) {
+    return Consumer2<ProductProvider, ComplaintProvider>(
+      builder: (context, productValue, complaintValue, child) {
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
@@ -71,7 +72,7 @@ class Signupscreen extends StatelessWidget {
                       child: Column(
                         children: [
                           CustomTextField(
-                            controller: value.nameController,
+                            controller: productValue.nameController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your name';
@@ -98,7 +99,7 @@ class Signupscreen extends StatelessWidget {
                           SizedBox(height: context.height * .016),
 
                           CustomTextField(
-                            controller: value.signupEmailController,
+                            controller: productValue.signupEmailController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your email';
@@ -122,7 +123,7 @@ class Signupscreen extends StatelessWidget {
                           SizedBox(height: context.height * .016),
 
                           CustomTextField(
-                            controller: value.mobileController,
+                            controller: productValue.mobileController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your mobile number';
@@ -147,7 +148,7 @@ class Signupscreen extends StatelessWidget {
                           SizedBox(height: context.height * .016),
 
                           CustomTextField(
-                            controller: value.signupPasswordController,
+                            controller: productValue.signupPasswordController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your password';
@@ -163,11 +164,11 @@ class Signupscreen extends StatelessWidget {
                             borderRadius: context.width * .04,
                             prefixIcon: Icons.lock_outline,
                             fontSize: context.width * 0.041,
-                            suffixIcon: value.newPasswordObscure
+                            suffixIcon: productValue.newPasswordObscure
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            onSuffixTap: value.toggleNewPassword,
-                            obscureText: value.newPasswordObscure,
+                            onSuffixTap: productValue.toggleNewPassword,
+                            obscureText: productValue.newPasswordObscure,
                             title: "Password",
                             labelText: "Password",
                             iconColor: Colors.grey.shade600,
@@ -177,12 +178,13 @@ class Signupscreen extends StatelessWidget {
                           SizedBox(height: context.height * .016),
 
                           CustomTextField(
-                            controller: value.confirmPasswordController,
+                            controller: productValue.confirmPasswordController,
                             validator: (val) {
                               if (val == null || val.isEmpty) {
                                 return 'Please enter confirm password';
                               }
-                              if (val != value.signupPasswordController.text) {
+                              if (val !=
+                                  productValue.signupPasswordController.text) {
                                 return 'Password does not match';
                               }
                               return null;
@@ -193,11 +195,11 @@ class Signupscreen extends StatelessWidget {
                             borderRadius: context.width * .04,
                             fontSize: context.width * 0.041,
                             prefixIcon: Icons.lock_outline,
-                            suffixIcon: value.confirmPasswordObscure
+                            suffixIcon: productValue.confirmPasswordObscure
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            onSuffixTap: value.toggleConfirmPassword,
-                            obscureText: value.confirmPasswordObscure,
+                            onSuffixTap: productValue.toggleConfirmPassword,
+                            obscureText: productValue.confirmPasswordObscure,
                             title: "Confirm Password",
                             labelText: "Confirm Password",
                             iconColor: Colors.grey.shade600,
@@ -211,7 +213,7 @@ class Signupscreen extends StatelessWidget {
 
                     CustomButton(
                       text: "Sign Up",
-                      isLoading: value.isLoading,
+                      isLoading: productValue.isLoading,
                       color: AppColors.primaryColor,
                       textColor: Theme.of(context).scaffoldBackgroundColor,
                       border: Border.all(
@@ -222,7 +224,24 @@ class Signupscreen extends StatelessWidget {
                         FocusManager.instance.primaryFocus?.unfocus();
 
                         if (formKeySignup.currentState!.validate()) {
-                          String? error = await value.signUp();
+                          await complaintValue.getCurrentLocation();
+
+                          if (complaintValue.selectedLocation == null ||
+                              complaintValue.selectedLocation!.isEmpty) {
+                            Fluttertoast.showToast(
+                              msg: "Unable to get current location",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              backgroundColor: const Color(0xFFB91C1C),
+                              textColor: Colors.white,
+                              fontSize: 14,
+                            );
+                            return;
+                          }
+
+                          String? error = await productValue.signUp(
+                            location: complaintValue.selectedLocation!,
+                          );
 
                           if (error == null) {
                             Fluttertoast.showToast(
@@ -233,7 +252,7 @@ class Signupscreen extends StatelessWidget {
                               textColor: Colors.white,
                               fontSize: 14,
                             );
-                            value.clearControllers();
+                            productValue.clearControllers();
 
                             Navigator.pushReplacement(
                               context,
