@@ -10,6 +10,13 @@ class HomeModel {
   });
 
   factory HomeModel.fromJson(Map<String, dynamic> json) {
+    print("========== HOME JSON ==========");
+    print(json);
+
+    print("USER JSON: ${json["user"]}");
+    print("OVERVIEW JSON: ${json["overview"]}");
+    print("RECENT JSON: ${json["recentComplaints"]}");
+
     return HomeModel(
       user: UserData.fromJson(json["user"]),
       overview: OverViewData.fromJson(json["overview"]),
@@ -24,11 +31,24 @@ class UserData {
   final int id;
   final String name;
   final String email;
+  final String? mobile;
 
-  UserData({required this.id, required this.name, required this.email});
+  UserData({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.mobile,
+  });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
-    return UserData(id: json["id"], name: json["name"], email: json["email"]);
+    print("USER JSON: $json");
+
+    return UserData(
+      id: json["id"],
+      name: json["name"],
+      email: json["email"],
+      mobile: json["mobile"]?.toString(),
+    );
   }
 }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project/constants/app_colors.dart';
 import 'package:project/viewmodel/home_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:project/viewmodel/provider.dart';
@@ -18,7 +19,11 @@ class MainNavigationScreen extends StatelessWidget {
     final screens = [
       const HomeScreen(),
       const MyComplaintScreen(),
-      ProfileScreen(user: homeProvider.homeData!.user),
+      homeProvider.homeData == null
+          ? Center(
+              child: CircularProgressIndicator(color: AppColors.primaryColor),
+            )
+          : ProfileScreen(user: homeProvider.homeData!.user),
     ];
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
