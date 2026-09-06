@@ -79,14 +79,17 @@ class ComplaintDetailScreen extends StatelessWidget {
             ),
           ),
 
-          Padding(
-            padding: EdgeInsets.only(right: context.width * 0.44),
-            child: Text(
-              'Household Waste',
-              style: GoogleFonts.inter(
-                fontSize: context.width * 0.050,
-                fontWeight: FontWeight.w700,
-                color: const Color(0xFF1F2937),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(left: context.width * 0.06),
+              child: Text(
+                complaint.wasteType,
+                style: GoogleFonts.inter(
+                  fontSize: context.width * 0.050,
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0xFF1F2937),
+                ),
               ),
             ),
           ),
@@ -106,7 +109,7 @@ class ComplaintDetailScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(context.width * 0.025),
                 ),
                 child: Text(
-                  'In Progress',
+                  complaint.status,
                   style: GoogleFonts.inter(
                     fontSize: context.width * 0.032,
                     fontWeight: FontWeight.bold,
@@ -118,7 +121,7 @@ class ComplaintDetailScreen extends StatelessWidget {
               SizedBox(width: context.width * 0.03),
 
               Text(
-                'Submitted 12 Mar 2026',
+                complaint.createdAt.toString(),
                 style: GoogleFonts.inter(
                   fontSize: context.width * 0.032,
                   fontWeight: FontWeight.w400,
@@ -144,7 +147,7 @@ class ComplaintDetailScreen extends StatelessWidget {
                   SizedBox(width: context.width * 0.015),
 
                   Text(
-                    'Ward 07, MG Road, Nashik 422001',
+                    complaint.location,
                     style: GoogleFonts.inter(
                       fontSize: context.width * 0.035,
                       fontWeight: FontWeight.w400,
@@ -158,17 +161,18 @@ class ComplaintDetailScreen extends StatelessWidget {
 
           SizedBox(height: context.height * 0.015),
 
-          Padding(
-            // padding: EdgeInsets.only(left: context.width * 0.055,right: context.width * 0.050),
-            padding: EdgeInsets.symmetric(horizontal: context.width * 0.060),
-            child: Text(
-              'Garbage bin near the bus stop has been overflowing for three '
-              'days. Strong smell and stray animals around it.',
-              style: GoogleFonts.inter(
-                fontSize: context.width * 0.037,
-                fontWeight: FontWeight.w400,
-                color: const Color(0xFF6B7280),
-                height: 1.4,
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(left: context.width * 0.07),
+              child: Text(
+                complaint.description,
+                style: GoogleFonts.inter(
+                  fontSize: context.width * 0.037,
+                  fontWeight: FontWeight.w400,
+                  color: const Color(0xFF6B7280),
+                  height: 1.4,
+                ),
               ),
             ),
           ),
