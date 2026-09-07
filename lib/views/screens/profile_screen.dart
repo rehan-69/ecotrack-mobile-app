@@ -110,6 +110,7 @@ class ProfileScreen extends StatelessWidget {
                   text: "Logout",
                   isLoading: value.isLoading,
                   onPressed: () async {
+                    value.dispose();
                     await value.logout();
                     if (context.mounted) {
                       Navigator.pushReplacement(

@@ -46,6 +46,7 @@ class CustomProfileOption extends StatelessWidget {
           children: [
             // Help & Support
             GestureDetector(
+              behavior: HitTestBehavior.opaque,
               onTap: onHelpSupport,
               child: Row(
                 children: [
@@ -101,6 +102,7 @@ class CustomProfileOption extends StatelessWidget {
 
             // About EcoTrack
             GestureDetector(
+              behavior: HitTestBehavior.opaque,
               onTap: onAboutEcoTrack,
               child: Row(
                 children: [
