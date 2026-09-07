@@ -86,9 +86,6 @@ class ProfileScreen extends StatelessWidget {
             ),
 
             CustomProfileOption(
-              onEditProfile: () {
-                // Edit Profile
-              },
               onHelpSupport: () {
                 // Help & Support
               },

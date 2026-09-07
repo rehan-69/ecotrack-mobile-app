@@ -4,13 +4,11 @@ import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 
 class CustomProfileOption extends StatelessWidget {
-  final VoidCallback? onEditProfile;
   final VoidCallback? onHelpSupport;
   final VoidCallback? onAboutEcoTrack;
 
   const CustomProfileOption({
     super.key,
-    this.onEditProfile,
     this.onHelpSupport,
     this.onAboutEcoTrack,
   });
