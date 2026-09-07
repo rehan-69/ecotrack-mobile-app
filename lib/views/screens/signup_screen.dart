@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project/viewmodel/complaint_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/viewmodel/provider.dart';
@@ -7,6 +6,7 @@ import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/screens/login_screen.dart';
 import 'package:project/views/widgets/custom_button.dart';
+import 'package:project/viewmodel/complaint_provider.dart';
 import 'package:project/views/widgets/custom_text_field.dart';
 
 class Signupscreen extends StatelessWidget {
