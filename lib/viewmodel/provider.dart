@@ -349,6 +349,11 @@ class ProductProvider extends ChangeNotifier {
       debugPrint(response.body);
 
       if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final token = data['token'];
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('jwt_token', token);
+        debugPrint("Google JWT Token Saved Successfully");
         return true;
       }
 
