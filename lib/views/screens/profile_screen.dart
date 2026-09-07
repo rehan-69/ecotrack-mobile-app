@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/views/screens/help_support_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/viewmodel/provider.dart';
@@ -87,7 +88,10 @@ class ProfileScreen extends StatelessWidget {
 
             CustomProfileOption(
               onHelpSupport: () {
-                // Help & Support
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const HelpSupportScreen()),
+                );
               },
               onAboutEcoTrack: () {
                 // About EcoTrack
