@@ -99,12 +99,8 @@ class HelpSupportScreen extends StatelessWidget {
               padding: EdgeInsets.all(context.width * 0.045),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(
-                  context.width * 0.035,
-                ),
-                border: Border.all(
-                  color: const Color(0xFFE5E7EB),
-                ),
+                borderRadius: BorderRadius.circular(context.width * 0.035),
+                border: Border.all(color: const Color(0xFFE5E7EB)),
               ),
               child: Row(
                 children: [
@@ -155,22 +151,14 @@ class HelpSupportScreen extends StatelessWidget {
     required String answer,
   }) {
     return Container(
-      margin: EdgeInsets.only(
-        bottom: context.height * 0.012,
-      ),
+      margin: EdgeInsets.only(bottom: context.height * 0.012),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(
-          context.width * 0.035,
-        ),
-        border: Border.all(
-          color: const Color(0xFFE5E7EB),
-        ),
+        borderRadius: BorderRadius.circular(context.width * 0.035),
+        border: Border.all(color: const Color(0xFFE5E7EB)),
       ),
       child: ExpansionTile(
-        tilePadding: EdgeInsets.symmetric(
-          horizontal: context.width * 0.040,
-        ),
+        tilePadding: EdgeInsets.symmetric(horizontal: context.width * 0.040),
         childrenPadding: EdgeInsets.only(
           left: context.width * 0.040,
           right: context.width * 0.040,

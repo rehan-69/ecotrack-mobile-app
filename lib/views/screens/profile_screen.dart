@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project/views/screens/help_support_screen.dart';
+import 'package:project/views/screens/about_ecotrack_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/viewmodel/provider.dart';
@@ -7,6 +7,7 @@ import 'package:project/models/home_models.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/screens/login_screen.dart';
 import 'package:project/views/widgets/custom_button.dart';
+import 'package:project/views/screens/help_support_screen.dart';
 import 'package:project/views/widgets/custom_profile_option.dart';
 import 'package:project/views/widgets/custom_contact_info_card.dart';
 
@@ -94,7 +95,12 @@ class ProfileScreen extends StatelessWidget {
                 );
               },
               onAboutEcoTrack: () {
-                // About EcoTrack
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const AboutEcoTrackScreen(),
+                  ),
+                );
               },
             ),
             Consumer<ProductProvider>(
