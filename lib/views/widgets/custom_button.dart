@@ -5,34 +5,35 @@ import 'package:project/constants/mediaquery.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
   final Color color;
-  final Color textColor;
   final double width;
   final double height;
   final String? image;
-  final double borderRadius;
-  final double fontSize;
   final Border border;
-  final FontWeight fontWeight;
   final bool isLoading;
   final IconData? icon;
+  final double fontSize;
+  final Color textColor;
+  final double borderRadius;
+  final FontWeight fontWeight;
+  final VoidCallback onPressed;
+
 
   const CustomButton({
     super.key,
+    this.icon,
     this.image,
     required this.text,
-    required this.onPressed,
-    this.color = AppColors.primaryColor,
-    this.textColor = AppColors.appWhiteColor,
-    this.border = const Border(),
     required this.width,
     required this.height,
-    required this.borderRadius,
     required this.fontSize,
-    required this.fontWeight,
     this.isLoading = false,
-    this.icon,
+    required this.onPressed,
+    required this.fontWeight,
+    required this.borderRadius,
+    this.border = const Border(),
+    this.color = AppColors.primaryColor,
+    this.textColor = AppColors.appWhiteColor,
   });
 
   @override
