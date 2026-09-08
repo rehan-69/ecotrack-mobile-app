@@ -84,4 +84,23 @@ class AuthService {
       return false;
     }
   }
+
+  //Verify OTP
+  Future<bool> verifyOTP({required String email, required String otp}) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://127.0.0.1:3000/verify-otp'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"email": email, "otp": otp}),
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        debugPrint("Message : ${data["message"]}");
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
 }

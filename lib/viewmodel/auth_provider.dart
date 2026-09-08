@@ -79,4 +79,25 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  //Verify OTP
+
+  Future<bool> verifyOTP() async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      final result = await _authService.verifyOTP(
+        email: forgetPasswordEmailController.text.trim(),
+        otp: otpController.text.trim(),
+      );
+
+      return result;
+    } catch (e) {
+      return false;
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
 }
