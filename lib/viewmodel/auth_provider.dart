@@ -60,4 +60,23 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  //Forgot Password
+  Future<bool> forgetPassword() async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      final result = await _authService.forgetPassword(
+        email: forgetPasswordEmailController.text.trim(),
+      );
+
+      return result;
+    } catch (e) {
+      return false;
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
 }
