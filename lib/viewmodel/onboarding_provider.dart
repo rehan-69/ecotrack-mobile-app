@@ -18,7 +18,11 @@ class OnboardingProvider extends ChangeNotifier {
   }
 
   void skipPage() {
-    pageController.jumpToPage(2);
+    pageController.animateToPage(
+      2,
+      duration: Duration(microseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
