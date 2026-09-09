@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:project/viewmodel/provider.dart';
 import 'package:project/viewmodel/home_provider.dart';
+import 'package:project/viewmodel/auth_provider.dart';
 import 'package:project/views/screens/splash_screen.dart';
 import 'package:project/viewmodel/complaint_provider.dart';
-
 
 class EcoApp extends StatelessWidget {
   const EcoApp({super.key});
@@ -16,6 +16,8 @@ class EcoApp extends StatelessWidget {
         ChangeNotifierProvider<ProductProvider>(
           create: (context) => ProductProvider(),
         ),
+
+        ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
 
         ChangeNotifierProvider<HomeProvider>(
           create: (context) => HomeProvider()..getHomeDatas(),

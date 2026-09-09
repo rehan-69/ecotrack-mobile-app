@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project/services/auth_service.dart';
-import 'package:project/services/google_auth_service.dart';
 
 class AuthProvider extends ChangeNotifier {
   TextEditingController nameController = TextEditingController();
-  final GoogleAuthService _googleAuthService = GoogleAuthService();
   TextEditingController mobileController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
   TextEditingController loginEmailController = TextEditingController();
