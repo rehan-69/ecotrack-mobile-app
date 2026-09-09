@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:project/viewmodel/provider.dart';
+import 'package:project/viewmodel/auth_provider.dart';
+import 'package:project/viewmodel/google_auth_provider.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/views/screens/signup_screen.dart';
@@ -15,11 +16,12 @@ class LoginScreen extends StatelessWidget {
   final formKeyLogin = GlobalKey<FormState>();
 
   LoginScreen({super.key});
+
   final RegExp emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductProvider>(
+    return Consumer<AuthProvider>(
       builder: (context, value, child) {
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle(
@@ -79,6 +81,7 @@ class LoginScreen extends StatelessWidget {
                       ),
 
                       SizedBox(height: context.height * .050),
+
                       Form(
                         key: formKeyLogin,
                         child: Column(
@@ -93,9 +96,11 @@ class LoginScreen extends StatelessWidget {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter your email';
                                   }
+
                                   if (!emailRegex.hasMatch(value)) {
                                     return 'Please enter a valid email';
                                   }
+
                                   return null;
                                 },
                                 onChanged: (value) {},
@@ -122,9 +127,11 @@ class LoginScreen extends StatelessWidget {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter your password';
                                   }
+
                                   if (value.length < 6) {
                                     return 'Please enter a valid password';
                                   }
+
                                   return null;
                                 },
                                 onChanged: (value) {},
@@ -149,6 +156,7 @@ class LoginScreen extends StatelessWidget {
                       ),
 
                       SizedBox(height: context.height * .015),
+
                       Padding(
                         padding: EdgeInsets.only(right: context.width * 0.020),
                         child: Align(
@@ -185,16 +193,16 @@ class LoginScreen extends StatelessWidget {
                           isLoading: value.isLoading,
                           onPressed: () async {
                             FocusManager.instance.primaryFocus?.unfocus();
+
                             if (formKeyLogin.currentState!.validate()) {
                               bool success = await value.login();
+
                               if (success) {
                                 Fluttertoast.showToast(
                                   msg: "Welcome back!",
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.BOTTOM,
-                                  backgroundColor: const Color(
-                                    0xFF33A444,
-                                  ), // Primary Indigo/Purple
+                                  backgroundColor: const Color(0xFF33A444),
                                   textColor: Colors.white,
                                   fontSize: 14,
                                 );
@@ -225,6 +233,7 @@ class LoginScreen extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
+
                       Padding(
                         padding: EdgeInsets.symmetric(
                           vertical: context.height * .035,
@@ -266,7 +275,9 @@ class LoginScreen extends StatelessWidget {
                       CustomButton(
                         text: "Login with Google",
                         onPressed: () async {
-                          final success = await value.googleLogin();
+                          final success = await context
+                              .read<GoogleAuthProvider>()
+                              .googleLogin();
 
                           if (success) {
                             Fluttertoast.showToast(
@@ -277,7 +288,9 @@ class LoginScreen extends StatelessWidget {
 
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (_) => MainNavigationScreen()),
+                              MaterialPageRoute(
+                                builder: (_) => MainNavigationScreen(),
+                              ),
                             );
                           } else {
                             Fluttertoast.showToast(
@@ -326,7 +339,6 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               );
                             },
-
                             child: Text(
                               "Sign Up",
                               style: TextStyle(
