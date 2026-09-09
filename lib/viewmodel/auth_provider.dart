@@ -81,7 +81,6 @@ class AuthProvider extends ChangeNotifier {
   }
 
   //Verify OTP
-
   Future<bool> verifyOTP() async {
     isLoading = true;
     notifyListeners();
@@ -100,4 +99,6 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+
 }
