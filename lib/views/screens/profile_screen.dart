@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/viewmodel/auth_provider.dart';
+import 'package:project/viewmodel/navigation_provider.dart';
 import 'package:project/viewmodel/otp_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,6 +22,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     final otpProvider = Provider.of<OtpProvider>(context);
+    final navigationProvider = Provider.of<NavigationProvider>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -116,6 +118,7 @@ class ProfileScreen extends StatelessWidget {
               onPressed: () async {
                 authProvider.clearControllers();
                 otpProvider.resetTimer();
+                navigationProvider.changeIndex(0);
 
                 await authProvider.logout();
 
