@@ -14,20 +14,41 @@ class AuthProvider extends ChangeNotifier {
   TextEditingController forgetPasswordEmailController = TextEditingController();
 
   final AuthService _authService = AuthService();
+  
   bool isLoading = false;
+  bool newPasswordObscure = true;
+  bool confirmPasswordObscure = true;
+  bool checkBox = false;
+  bool password = true;
 
   void clearControllers() {
-  nameController.clear();
-  signupEmailController.clear();
-  forgetPasswordEmailController.clear();
-  loginEmailController.clear();
-  loginPasswordController.clear();
-  mobileController.clear();
-  signupPasswordController.clear();
-  otpController.clear();
-  newPasswordController.clear();
-  confirmPasswordController.clear();
-}
+    // Signup
+    nameController.clear();
+    signupEmailController.clear();
+    mobileController.clear();
+    signupPasswordController.clear();
+    confirmPasswordController.clear();
+
+    // Login
+    loginEmailController.clear();
+    loginPasswordController.clear();
+
+    // Forgot Password
+    forgetPasswordEmailController.clear();
+
+    // OTP
+    otpController.clear();
+
+    // Reset Password
+    newPasswordController.clear();
+
+    // Reset UI States
+    password = true;
+    newPasswordObscure = true;
+    confirmPasswordObscure = true;
+    checkBox = false;
+    notifyListeners();
+  }
 
   // Sign Up
   Future<String?> signUp({required String location}) async {

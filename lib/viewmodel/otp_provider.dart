@@ -9,7 +9,7 @@ class OtpProvider extends ChangeNotifier {
   void startOtpTimer() {
     _timer?.cancel();
 
-    remainingSeconds = 60;
+    remainingSeconds = 120;
     notifyListeners();
 
     _timer = Timer.periodic(
@@ -30,4 +30,11 @@ class OtpProvider extends ChangeNotifier {
     _timer?.cancel();
     super.dispose();
   }
+
+
+  void resetTimer() {
+  _timer?.cancel();
+  remainingSeconds = 120;
+  notifyListeners();
+}
 }
