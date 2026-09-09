@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project/viewmodel/navigation_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/viewmodel/provider.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/viewmodel/home_provider.dart';
@@ -80,7 +80,7 @@ class HomeScreen extends StatelessWidget {
                                   GestureDetector(
                                     onTap: () {
                                       context
-                                          .read<ProductProvider>()
+                                          .read<NavigationProvider>()
                                           .changeIndex(2);
                                     },
                                     child: CircleAvatar(
