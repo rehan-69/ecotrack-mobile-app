@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project/viewmodel/navigation_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/viewmodel/auth_provider.dart';
@@ -21,6 +22,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navigationProvider = Provider.of<NavigationProvider>(context);
     return Consumer<AuthProvider>(
       builder: (context, value, child) {
         return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -207,13 +209,16 @@ class LoginScreen extends StatelessWidget {
                                   fontSize: 14,
                                 );
 
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        MainNavigationScreen(),
-                                  ),
-                                );
+                                if (success) {
+                                  navigationProvider.changeIndex(0);
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          MainNavigationScreen(),
+                                    ),
+                                  );
+                                }
                               } else {
                                 Fluttertoast.showToast(
                                   msg: "Invalid email or password.",
