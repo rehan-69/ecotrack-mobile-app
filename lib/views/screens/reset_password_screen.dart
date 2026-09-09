@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/viewmodel/provider.dart';
+import 'package:project/viewmodel/auth_provider.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/widgets/custom_button.dart';
 import 'package:project/views/widgets/custom_text_field.dart';
-
 
 class ResetPasswordScreen extends StatelessWidget {
   final formKeyReset = GlobalKey<FormState>();
@@ -17,7 +16,7 @@ class ResetPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductProvider>(
+    return Consumer<AuthProvider>(
       builder: (context, value, child) {
         return Scaffold(
           backgroundColor: AppColors.scaffoldColor,
@@ -165,9 +164,7 @@ class ResetPasswordScreen extends StatelessWidget {
                               msg: "Password updated successfully.",
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
-                              backgroundColor: const Color(
-                                0xFF33A444,
-                              ), // Primary Purple
+                              backgroundColor: const Color(0xFF33A444),
                               textColor: Colors.white,
                               fontSize: 14,
                             );
@@ -181,9 +178,7 @@ class ResetPasswordScreen extends StatelessWidget {
                               msg: "Unable to update password.",
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
-                              backgroundColor: const Color(
-                                0xFFB91C1C,
-                              ), // Soft Dark Red
+                              backgroundColor: const Color(0xFFB91C1C),
                               textColor: Colors.white,
                               fontSize: 14,
                             );
