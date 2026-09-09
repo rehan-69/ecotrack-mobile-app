@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:project/viewmodel/provider.dart';
+import 'package:project/viewmodel/onboarding_provider.dart';
 import 'package:project/views/onboarding/onboarding_page1.dart';
 import 'package:project/views/onboarding/onboarding_page2.dart';
 import 'package:project/views/onboarding/onboarding_page3.dart';
@@ -11,7 +11,7 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductProvider>(
+    return Consumer<OnboardingProvider>(
       builder: (context, value, child) {
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: const SystemUiOverlayStyle(
@@ -23,11 +23,9 @@ class OnboardingScreen extends StatelessWidget {
             backgroundColor: Colors.white,
             body: PageView(
               controller: value.pageController,
-
               onPageChanged: (index) {
                 value.changePage(index);
               },
-
               children: const [
                 OnboardingPage1(),
                 OnboardingPage2(),

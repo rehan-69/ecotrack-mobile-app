@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/viewmodel/provider.dart';
+import 'package:project/viewmodel/onboarding_provider.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/widgets/custom_button.dart';
 import 'package:project/views/widgets/custom_page_indicator.dart';
@@ -12,7 +12,7 @@ class OnboardingPage1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductProvider>(
+    return Consumer<OnboardingProvider>(
       builder: (context, value, child) {
         return SafeArea(
           child: Padding(

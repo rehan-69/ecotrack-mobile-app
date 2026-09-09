@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/viewmodel/provider.dart';
+import 'package:project/viewmodel/onboarding_provider.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/widgets/custom_button.dart';
 import 'package:project/views/widgets/custom_page_indicator.dart';
@@ -12,14 +12,13 @@ class OnboardingPage2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductProvider>(
+    return Consumer<OnboardingProvider>(
       builder: (context, value, child) {
         return SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: context.width * 0.06),
             child: Column(
               children: [
-                
                 SizedBox(height: context.height * 0.10),
 
                 Expanded(
@@ -66,7 +65,6 @@ class OnboardingPage2 extends StatelessWidget {
 
                     SizedBox(height: context.height * 0.02),
 
-                    
                     GestureDetector(
                       onTap: () {
                         value.skipPage();
