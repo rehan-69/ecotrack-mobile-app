@@ -104,6 +104,33 @@ class AuthService {
     }
   }
 
-  
+  //Reset Password
+  Future<bool> resetPassword({
+    required String email,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://127.0.0.1:3000/reset-password'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "email": email,
+          "password": password,
+          "confirmPassword": confirmPassword,
+        }),
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        debugPrint('Message : ${data["message"]}');
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  //
 
 }

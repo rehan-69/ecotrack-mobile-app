@@ -100,5 +100,24 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  //Reset Password
+  Future<bool> resetPassword() async {
+    isLoading = true;
+    notifyListeners();
 
+    try {
+      final result = await _authService.resetPassword(
+        email: forgetPasswordEmailController.text.trim(),
+        password: newPasswordController.text.trim(),
+        confirmPassword: confirmPasswordController.text.trim(),
+      );
+
+      return result;
+    } catch (e) {
+      return false;
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
 }
