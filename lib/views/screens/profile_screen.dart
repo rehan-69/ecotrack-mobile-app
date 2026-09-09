@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/viewmodel/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/viewmodel/provider.dart';
@@ -17,6 +18,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -108,10 +110,10 @@ class ProfileScreen extends StatelessWidget {
                 return CustomButton(
                   color: Color(0xFFFEF2F2),
                   text: "Logout",
-                  isLoading: value.isLoading,
+                  isLoading: authProvider.isLoading,
                   onPressed: () async {
-                    value.clearControllers();
-                    await value.logout();
+                    authProvider.clearControllers();
+                    await authProvider.logout();
                     if (context.mounted) {
                       Navigator.pushReplacement(
                         context,

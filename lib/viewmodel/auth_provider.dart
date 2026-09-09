@@ -16,6 +16,19 @@ class AuthProvider extends ChangeNotifier {
   final AuthService _authService = AuthService();
   bool isLoading = false;
 
+  void clearControllers() {
+  nameController.clear();
+  signupEmailController.clear();
+  forgetPasswordEmailController.clear();
+  loginEmailController.clear();
+  loginPasswordController.clear();
+  mobileController.clear();
+  signupPasswordController.clear();
+  otpController.clear();
+  newPasswordController.clear();
+  confirmPasswordController.clear();
+}
+
   // Sign Up
   Future<String?> signUp({required String location}) async {
     isLoading = true;
