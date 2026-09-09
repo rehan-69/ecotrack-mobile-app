@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:project/viewmodel/provider.dart';
+import 'package:project/viewmodel/auth_provider.dart';
+import 'package:project/viewmodel/otp_provider.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/widgets/custom_button.dart';
@@ -23,13 +24,14 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     super.initState();
 
     Future.microtask(() {
-      context.read<ProductProvider>().startOtpTimer();
+      context.read<OtpProvider>().startOtpTimer();
     });
   }
 
+  @override
   Widget build(BuildContext context) {
-    return Consumer<ProductProvider>(
-      builder: (context, value, child) {
+    return Consumer2<AuthProvider, OtpProvider>(
+      builder: (context, authValue, otpValue, child) {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: AppColors.scaffoldColor,
@@ -65,7 +67,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               ),
             ),
           ),
+
           backgroundColor: AppColors.scaffoldColor,
+
           body: SafeArea(
             child: SingleChildScrollView(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -104,7 +108,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     SizedBox(height: context.height * .012),
 
                     Text(
-                      "We sent a 4-digit code to ${value.forgetPasswordEmailController.text}",
+                      "We sent a 4-digit code to ${authValue.forgetPasswordEmailController.text}",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
                         fontSize: context.width * .036,
@@ -120,7 +124,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       keyboardType: TextInputType.number,
                       closeKeyboardWhenCompleted: true,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      controller: value.otpController,
+                      controller: authValue.otpController,
                       length: 4,
                       defaultPinTheme: PinTheme(
                         width: context.width * .15,
@@ -160,7 +164,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
                     SizedBox(height: context.height * .04),
 
-                    value.remainingSeconds > 0
+                    otpValue.remainingSeconds > 0
                         ? RichText(
                             text: TextSpan(
                               children: [
@@ -173,7 +177,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                 ),
                                 TextSpan(
                                   text:
-                                      "${(value.remainingSeconds ~/ 60).toString().padLeft(2, '0')}:${(value.remainingSeconds % 60).toString().padLeft(2, '0')}",
+                                      "${(otpValue.remainingSeconds ~/ 60).toString().padLeft(2, '0')}:${(otpValue.remainingSeconds % 60).toString().padLeft(2, '0')}",
                                   style: const TextStyle(
                                     color: AppColors.primaryColor,
                                     fontWeight: FontWeight.w700,
@@ -184,10 +188,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                           )
                         : GestureDetector(
                             onTap: () async {
-                              bool success = await value.forgetPassword();
+                              bool success = await authValue.forgetPassword();
 
                               if (success) {
-                                value.startOtpTimer();
+                                otpValue.startOtpTimer();
                               }
                             },
                             child: const Text(
@@ -203,18 +207,16 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
                     CustomButton(
                       text: "Verify",
-                      isLoading: value.isLoading,
+                      isLoading: authValue.isLoading,
                       onPressed: () async {
-                        bool success = await value.verifyOTP();
+                        bool success = await authValue.verifyOTP();
 
                         if (success) {
                           Fluttertoast.showToast(
                             msg: "OTP verified successfully.",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
-                            backgroundColor: const Color(
-                              0xFF33A444,
-                            ), // Primary Purple
+                            backgroundColor: const Color(0xFF33A444),
                             textColor: Colors.white,
                             fontSize: 14,
                           );
@@ -223,7 +225,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (_) => ResetPasswordScreen(
-                                email: value.forgetPasswordEmailController.text.trim(),
+                                email: authValue
+                                    .forgetPasswordEmailController
+                                    .text
+                                    .trim(),
                               ),
                             ),
                           );
@@ -232,9 +237,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             msg: "Invalid or expired verification code.",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
-                            backgroundColor: const Color(
-                              0xFFB91C1C,
-                            ), // Soft Dark Red
+                            backgroundColor: const Color(0xFFB91C1C),
                             textColor: Colors.white,
                             fontSize: 14,
                           );
