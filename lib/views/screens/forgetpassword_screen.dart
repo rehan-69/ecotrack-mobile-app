@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:project/viewmodel/provider.dart';
+import 'package:project/viewmodel/auth_provider.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/screens/otp_screen.dart';
@@ -17,7 +17,7 @@ class ForgetPasswordscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductProvider>(
+    return Consumer<AuthProvider>(
       builder: (context, value, child) {
         return Scaffold(
           backgroundColor: Colors.white,
@@ -77,15 +77,16 @@ class ForgetPasswordscreen extends StatelessWidget {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your email';
                           }
+
                           if (!emailRegex.hasMatch(value)) {
                             return 'Please enter a valid email';
                           }
+
                           return null;
                         },
-
                         height: context.height * .072,
                         color: AppColors.appWhiteColor,
-                        fontSize:  context.width * 0.041,
+                        fontSize: context.width * 0.041,
                         borderRadius: context.width * .03,
                         prefixIcon: Icons.email_outlined,
                         title: "Email Id",
@@ -107,16 +108,16 @@ class ForgetPasswordscreen extends StatelessWidget {
                       ),
                       onPressed: () async {
                         FocusManager.instance.primaryFocus?.unfocus();
+
                         if (formKeyForgetPassword.currentState!.validate()) {
                           bool success = await value.forgetPassword();
+
                           if (success) {
                             Fluttertoast.showToast(
                               msg: "Verification code sent to your email.",
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
-                              backgroundColor: const Color(
-                                0xFF33A444,
-                              ), // Primary Purple
+                              backgroundColor: const Color(0xFF33A444),
                               textColor: Colors.white,
                               fontSize: 14,
                             );
@@ -132,9 +133,7 @@ class ForgetPasswordscreen extends StatelessWidget {
                               msg: "Email address not found.",
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
-                              backgroundColor: const Color(
-                                0xFFB91C1C,
-                              ), // Soft Dark Red
+                              backgroundColor: const Color(0xFFB91C1C),
                               textColor: Colors.white,
                               fontSize: 14,
                             );

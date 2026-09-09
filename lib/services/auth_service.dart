@@ -93,13 +93,19 @@ class AuthService {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"email": email, "otp": otp}),
       );
+
+      debugPrint("Verify OTP Status Code: ${response.statusCode}");
+      debugPrint("Verify OTP Body: ${response.body}");
+
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        debugPrint("Message : ${data["message"]}");
+        debugPrint('Message : ${data["message"]}');
         return true;
       }
+
       return false;
     } catch (e) {
+      debugPrint("Verify OTP Error: $e");
       return false;
     }
   }
