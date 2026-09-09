@@ -3,7 +3,6 @@ import 'package:project/viewmodel/auth_provider.dart';
 import 'package:project/viewmodel/otp_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/viewmodel/provider.dart';
 import 'package:project/models/home_models.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/screens/login_screen.dart';
@@ -15,12 +14,14 @@ import 'package:project/views/widgets/custom_contact_info_card.dart';
 
 class ProfileScreen extends StatelessWidget {
   final UserData user;
+
   const ProfileScreen({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     final otpProvider = Provider.of<OtpProvider>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -107,35 +108,36 @@ class ProfileScreen extends StatelessWidget {
                 );
               },
             ),
-            Consumer<ProductProvider>(
-              builder: (context, value, child) {
-                return CustomButton(
-                  color: Color(0xFFFEF2F2),
-                  text: "Logout",
-                  isLoading: authProvider.isLoading,
-                  onPressed: () async {
-                    authProvider.clearControllers();
-                    otpProvider.resetTimer();
-                    await authProvider.logout();
-                    if (context.mounted) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      );
-                    }
-                  },
-                  width: context.width * 0.92,
-                  height: context.height * 0.065,
-                  borderRadius: context.width * 0.040,
-                  fontSize: context.width * 0.043,
-                  fontWeight: FontWeight.w700,
-                  textColor: Color(0xFFF58585),
-                  icon: Icons.logout_outlined,
-                  border: Border.all(color: Color(0xFFFBD8D8)),
-                );
+
+            CustomButton(
+              color: const Color(0xFFFEF2F2),
+              text: "Logout",
+              isLoading: authProvider.isLoading,
+              onPressed: () async {
+                authProvider.clearControllers();
+                otpProvider.resetTimer();
+
+                await authProvider.logout();
+
+                if (context.mounted) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                }
               },
+              width: context.width * 0.92,
+              height: context.height * 0.065,
+              borderRadius: context.width * 0.040,
+              fontSize: context.width * 0.043,
+              fontWeight: FontWeight.w700,
+              textColor: const Color(0xFFF58585),
+              icon: Icons.logout_outlined,
+              border: Border.all(color: const Color(0xFFFBD8D8)),
             ),
+
             SizedBox(height: context.height * 0.020),
+
             Text(
               'EcoTrack v1.0.4 Municipal Corporation',
               style: GoogleFonts.inter(
