@@ -131,6 +131,35 @@ class AuthService {
     }
   }
 
-  //
+  //Google Login
+  Future<bool> googleLogin({required String? idToken}) async {
+    try {
+      final response = await http.post(
+        Uri.parse("http://127.0.0.1:3000/google-login"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"idToken": idToken}),
+      );
 
+      debugPrint(response.body);
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        final token = data["token"];
+
+        final prefs = await SharedPreferences.getInstance();
+
+        await prefs.setString("jwt_token", token);
+
+        debugPrint("Google JWT Token Saved Successfully");
+
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
 }
