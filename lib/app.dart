@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/viewmodel/navigation_provider.dart';
 import 'package:project/viewmodel/onboarding_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:project/viewmodel/provider.dart';
@@ -22,9 +23,13 @@ class EcoApp extends StatelessWidget {
         ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
 
         ChangeNotifierProvider<OtpProvider>(create: (_) => OtpProvider()),
-        
+
         ChangeNotifierProvider<OnboardingProvider>(
           create: (_) => OnboardingProvider(),
+        ),
+
+        ChangeNotifierProvider<NavigationProvider>(
+          create: (_) => NavigationProvider(),
         ),
 
         ChangeNotifierProvider<HomeProvider>(
