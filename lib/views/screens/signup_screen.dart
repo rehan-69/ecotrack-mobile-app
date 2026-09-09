@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:project/viewmodel/provider.dart';
+import 'package:project/viewmodel/auth_provider.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/screens/login_screen.dart';
@@ -11,13 +11,15 @@ import 'package:project/views/widgets/custom_text_field.dart';
 
 class Signupscreen extends StatelessWidget {
   final formKeySignup = GlobalKey<FormState>();
+
   Signupscreen({super.key});
+
   final RegExp emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<ProductProvider, ComplaintProvider>(
-      builder: (context, productValue, complaintValue, child) {
+    return Consumer2<AuthProvider, ComplaintProvider>(
+      builder: (context, authValue, complaintValue, child) {
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
@@ -72,17 +74,20 @@ class Signupscreen extends StatelessWidget {
                       child: Column(
                         children: [
                           CustomTextField(
-                            controller: productValue.nameController,
+                            controller: authValue.nameController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your name';
                               }
+
                               if (value.trim().length < 3) {
                                 return 'Name must be at least 3 characters';
                               }
+
                               if (!RegExp(r"^[a-zA-Z ]+$").hasMatch(value)) {
                                 return 'Name can contain only letters';
                               }
+
                               return null;
                             },
                             onChanged: (value) {},
@@ -99,14 +104,16 @@ class Signupscreen extends StatelessWidget {
                           SizedBox(height: context.height * .016),
 
                           CustomTextField(
-                            controller: productValue.signupEmailController,
+                            controller: authValue.signupEmailController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your email';
                               }
+
                               if (!emailRegex.hasMatch(value)) {
                                 return 'Please enter a valid email';
                               }
+
                               return null;
                             },
                             onChanged: (value) {},
@@ -123,14 +130,16 @@ class Signupscreen extends StatelessWidget {
                           SizedBox(height: context.height * .016),
 
                           CustomTextField(
-                            controller: productValue.mobileController,
+                            controller: authValue.mobileController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your mobile number';
                               }
+
                               if (value.length != 10) {
                                 return 'Please enter a valid mobile number';
                               }
+
                               return null;
                             },
                             onChanged: (value) {},
@@ -148,14 +157,16 @@ class Signupscreen extends StatelessWidget {
                           SizedBox(height: context.height * .016),
 
                           CustomTextField(
-                            controller: productValue.signupPasswordController,
+                            controller: authValue.signupPasswordController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your password';
                               }
+
                               if (value.length < 6) {
                                 return 'Password must be at least 6 characters';
                               }
+
                               return null;
                             },
                             onChanged: (value) {},
@@ -164,11 +175,11 @@ class Signupscreen extends StatelessWidget {
                             borderRadius: context.width * .04,
                             prefixIcon: Icons.lock_outline,
                             fontSize: context.width * 0.041,
-                            suffixIcon: productValue.newPasswordObscure
+                            suffixIcon: authValue.newPasswordObscure
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            onSuffixTap: productValue.toggleNewPassword,
-                            obscureText: productValue.newPasswordObscure,
+                            onSuffixTap: authValue.toggleNewPassword,
+                            obscureText: authValue.newPasswordObscure,
                             title: "Password",
                             labelText: "Password",
                             iconColor: Colors.grey.shade600,
@@ -178,15 +189,17 @@ class Signupscreen extends StatelessWidget {
                           SizedBox(height: context.height * .016),
 
                           CustomTextField(
-                            controller: productValue.confirmPasswordController,
+                            controller: authValue.confirmPasswordController,
                             validator: (val) {
                               if (val == null || val.isEmpty) {
                                 return 'Please enter confirm password';
                               }
+
                               if (val !=
-                                  productValue.signupPasswordController.text) {
+                                  authValue.signupPasswordController.text) {
                                 return 'Password does not match';
                               }
+
                               return null;
                             },
                             onChanged: (value) {},
@@ -195,11 +208,11 @@ class Signupscreen extends StatelessWidget {
                             borderRadius: context.width * .04,
                             fontSize: context.width * 0.041,
                             prefixIcon: Icons.lock_outline,
-                            suffixIcon: productValue.confirmPasswordObscure
+                            suffixIcon: authValue.confirmPasswordObscure
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            onSuffixTap: productValue.toggleConfirmPassword,
-                            obscureText: productValue.confirmPasswordObscure,
+                            onSuffixTap: authValue.toggleConfirmPassword,
+                            obscureText: authValue.confirmPasswordObscure,
                             title: "Confirm Password",
                             labelText: "Confirm Password",
                             iconColor: Colors.grey.shade600,
@@ -213,7 +226,7 @@ class Signupscreen extends StatelessWidget {
 
                     CustomButton(
                       text: "Sign Up",
-                      isLoading: productValue.isLoading,
+                      isLoading: authValue.isLoading,
                       color: AppColors.primaryColor,
                       textColor: Theme.of(context).scaffoldBackgroundColor,
                       border: Border.all(
@@ -239,7 +252,7 @@ class Signupscreen extends StatelessWidget {
                             return;
                           }
 
-                          String? error = await productValue.signUp(
+                          String? error = await authValue.signUp(
                             location: complaintValue.selectedLocation!,
                           );
 
@@ -252,7 +265,8 @@ class Signupscreen extends StatelessWidget {
                               textColor: Colors.white,
                               fontSize: 14,
                             );
-                            productValue.clearControllers();
+
+                            authValue.clearControllers();
 
                             Navigator.pushReplacement(
                               context,
@@ -276,6 +290,7 @@ class Signupscreen extends StatelessWidget {
                       fontSize: context.width * 0.043,
                       fontWeight: FontWeight.w700,
                     ),
+
                     SizedBox(height: context.height * .045),
 
                     Row(
