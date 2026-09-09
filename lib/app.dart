@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/viewmodel/google_auth_provider.dart';
 import 'package:project/viewmodel/navigation_provider.dart';
 import 'package:project/viewmodel/onboarding_provider.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,10 @@ class EcoApp extends StatelessWidget {
         ),
 
         ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
+
+        ChangeNotifierProvider<GoogleAuthProvider>(
+          create: (_) => GoogleAuthProvider(),
+        ),
 
         ChangeNotifierProvider<OtpProvider>(create: (_) => OtpProvider()),
 

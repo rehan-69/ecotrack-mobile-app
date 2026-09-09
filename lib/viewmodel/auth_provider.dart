@@ -2,55 +2,67 @@ import 'package:flutter/material.dart';
 import 'package:project/services/auth_service.dart';
 
 class AuthProvider extends ChangeNotifier {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
-  final TextEditingController otpController = TextEditingController();
-  TextEditingController loginEmailController = TextEditingController();
-  TextEditingController signupEmailController = TextEditingController();
-  TextEditingController newPasswordController = TextEditingController();
-  TextEditingController loginPasswordController = TextEditingController();
-  TextEditingController signupPasswordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
-  TextEditingController forgetPasswordEmailController = TextEditingController();
-
   final AuthService _authService = AuthService();
-  
+
+  // Controllers
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController mobileController = TextEditingController();
+
+  final TextEditingController signupEmailController = TextEditingController();
+
+  final TextEditingController signupPasswordController =
+      TextEditingController();
+
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
+  final TextEditingController loginEmailController = TextEditingController();
+
+  final TextEditingController loginPasswordController = TextEditingController();
+
+  final TextEditingController forgetPasswordEmailController =
+      TextEditingController();
+
+  final TextEditingController otpController = TextEditingController();
+
+  final TextEditingController newPasswordController = TextEditingController();
+
+  // UI State
   bool isLoading = false;
+
+  bool password = true;
   bool newPasswordObscure = true;
   bool confirmPasswordObscure = true;
   bool checkBox = false;
-  bool password = true;
 
-  void clearControllers() {
-    // Signup
-    nameController.clear();
-    signupEmailController.clear();
-    mobileController.clear();
-    signupPasswordController.clear();
-    confirmPasswordController.clear();
+  // ---------------------------
+  // Password / Checkbox
+  // ---------------------------
 
-    // Login
-    loginEmailController.clear();
-    loginPasswordController.clear();
-
-    // Forgot Password
-    forgetPasswordEmailController.clear();
-
-    // OTP
-    otpController.clear();
-
-    // Reset Password
-    newPasswordController.clear();
-
-    // Reset UI States
-    password = true;
-    newPasswordObscure = true;
-    confirmPasswordObscure = true;
-    checkBox = false;
+  void togglePassword() {
+    password = !password;
     notifyListeners();
   }
 
+  void toggleNewPassword() {
+    newPasswordObscure = !newPasswordObscure;
+    notifyListeners();
+  }
+
+  void toggleConfirmPassword() {
+    confirmPasswordObscure = !confirmPasswordObscure;
+    notifyListeners();
+  }
+
+  void checkBoxTap() {
+    checkBox = !checkBox;
+    notifyListeners();
+  }
+
+  // ---------------------------
   // Sign Up
+  // ---------------------------
+
   Future<String?> signUp({required String location}) async {
     isLoading = true;
     notifyListeners();
@@ -73,7 +85,10 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  //Login
+  // ---------------------------
+  // Login
+  // ---------------------------
+
   Future<bool> login() async {
     isLoading = true;
     notifyListeners();
@@ -93,7 +108,10 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  //Forgot Password
+  // ---------------------------
+  // Forgot Password
+  // ---------------------------
+
   Future<bool> forgetPassword() async {
     isLoading = true;
     notifyListeners();
@@ -112,7 +130,10 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  //Verify OTP
+  // ---------------------------
+  // Verify OTP
+  // ---------------------------
+
   Future<bool> verifyOTP() async {
     isLoading = true;
     notifyListeners();
@@ -132,14 +153,17 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  //Reset Password
-  Future<bool> resetPassword() async {
+  // ---------------------------
+  // Reset Password
+  // ---------------------------
+
+  Future<bool> resetPassword(String email) async {
     isLoading = true;
     notifyListeners();
 
     try {
       final result = await _authService.resetPassword(
-        email: forgetPasswordEmailController.text.trim(),
+        email: email,
         password: newPasswordController.text.trim(),
         confirmPassword: confirmPasswordController.text.trim(),
       );
@@ -153,8 +177,77 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  // ---------------------------
   // Logout
+  // ---------------------------
+
   Future<void> logout() async {
-    await _authService.logout();
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      await _authService.logout();
+
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      debugPrint("JWT Token Removed Successfully");
+    } catch (e) {
+      debugPrint("Logout Error: $e");
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  // ---------------------------
+  // Clear Controllers
+  // ---------------------------
+
+  void clearControllers() {
+    nameController.clear();
+    mobileController.clear();
+
+    signupEmailController.clear();
+    signupPasswordController.clear();
+    confirmPasswordController.clear();
+
+    loginEmailController.clear();
+    loginPasswordController.clear();
+
+    forgetPasswordEmailController.clear();
+    otpController.clear();
+
+    newPasswordController.clear();
+
+    password = true;
+    newPasswordObscure = true;
+    confirmPasswordObscure = true;
+    checkBox = false;
+
+    notifyListeners();
+  }
+
+  // ---------------------------
+  // Dispose
+  // ---------------------------
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    mobileController.dispose();
+
+    signupEmailController.dispose();
+    signupPasswordController.dispose();
+    confirmPasswordController.dispose();
+
+    loginEmailController.dispose();
+    loginPasswordController.dispose();
+
+    forgetPasswordEmailController.dispose();
+    otpController.dispose();
+
+    newPasswordController.dispose();
+
+    super.dispose();
   }
 }
