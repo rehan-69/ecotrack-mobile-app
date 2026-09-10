@@ -7,11 +7,11 @@ import 'package:project/viewmodel/otp_provider.dart';
 import 'package:project/viewmodel/auth_provider.dart';
 import 'package:project/views/screens/login_screen.dart';
 import 'package:project/views/widgets/custom_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:project/views/screens/help_support_screen.dart';
 import 'package:project/views/widgets/custom_profile_option.dart';
 import 'package:project/views/screens/about_ecotrack_screen.dart';
 import 'package:project/views/widgets/custom_contact_info_card.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatelessWidget {
   final UserData user;
