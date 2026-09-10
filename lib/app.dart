@@ -17,9 +17,9 @@ class EcoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ProductProvider>(
-          create: (context) => ProductProvider(),
-        ),
+        // ChangeNotifierProvider<ProductProvider>(
+        //   create: (context) => ProductProvider(),
+        // ),
 
         ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
 
