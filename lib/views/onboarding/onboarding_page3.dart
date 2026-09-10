@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:project/viewmodel/onboarding_provider.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/views/screens/login_screen.dart';
 import 'package:project/views/widgets/custom_button.dart';
+import 'package:project/viewmodel/onboarding_provider.dart';
 import 'package:project/views/widgets/custom_page_indicator.dart';
 import 'package:project/views/widgets/custom_onboarding_text.dart';
 

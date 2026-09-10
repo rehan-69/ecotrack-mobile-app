@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project/viewmodel/navigation_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:project/viewmodel/auth_provider.dart';
-import 'package:project/viewmodel/google_auth_provider.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/constants/app_colors.dart';
+import 'package:project/viewmodel/auth_provider.dart';
 import 'package:project/views/screens/signup_screen.dart';
 import 'package:project/views/widgets/custom_button.dart';
+import 'package:project/viewmodel/navigation_provider.dart';
+import 'package:project/viewmodel/google_auth_provider.dart';
 import 'package:project/views/widgets/custom_text_field.dart';
 import 'package:project/views/screens/forgetpassword_screen.dart';
 import 'package:project/views/widgets/main_navigation_screen.dart';
