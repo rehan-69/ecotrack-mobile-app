@@ -11,6 +11,7 @@ import 'package:project/views/screens/help_support_screen.dart';
 import 'package:project/views/widgets/custom_profile_option.dart';
 import 'package:project/views/screens/about_ecotrack_screen.dart';
 import 'package:project/views/widgets/custom_contact_info_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatelessWidget {
   final UserData user;
@@ -21,7 +22,6 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     final otpProvider = Provider.of<OtpProvider>(context);
-    
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -45,15 +45,25 @@ class ProfileScreen extends StatelessWidget {
 
                   SizedBox(height: context.height * 0.015),
 
-                  CircleAvatar(
-                    radius: context.width * 0.110,
-                    backgroundColor: Colors.white,
-                    child: CircleAvatar(
-                      radius: context.width * 0.100,
-                      backgroundImage: const AssetImage('assets/avatar.png'),
-                    ),
-                  ),
+                  FutureBuilder<SharedPreferences>(
+                    future: SharedPreferences.getInstance(),
+                    builder: (context, snapshot) {
+                      final photoUrl = snapshot.data?.getString(
+                        'profile_image_url',
+                      );
 
+                      return CircleAvatar(
+                        radius: context.width * 0.110,
+                        backgroundColor: Colors.white,
+                        child: CircleAvatar(
+                          radius: context.width * 0.100,
+                          backgroundImage: photoUrl != null
+                              ? NetworkImage(photoUrl)
+                              : const AssetImage('assets/avatar.png'),
+                        ),
+                      );
+                    },
+                  ),
                   SizedBox(height: context.height * 0.015),
 
                   Text(

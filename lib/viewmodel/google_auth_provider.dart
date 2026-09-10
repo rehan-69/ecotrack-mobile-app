@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/services/auth_service.dart';
 import 'package:project/services/google_auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GoogleAuthProvider extends ChangeNotifier {
   final GoogleAuthService _googleAuthService = GoogleAuthService();
@@ -13,12 +14,17 @@ class GoogleAuthProvider extends ChangeNotifier {
       if (credential == null) {
         return false;
       }
+      
+      final photoUrl = credential.user?.photoURL;
+
+      if (photoUrl != null) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('profile_image_url', photoUrl);
+      }
 
       final idToken = await credential.user?.getIdToken();
 
-      final result = await _authService.googleLogin(
-        idToken: idToken,
-      );
+      final result = await _authService.googleLogin(idToken: idToken);
 
       return result;
     } catch (e) {

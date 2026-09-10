@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/viewmodel/home_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:project/viewmodel/navigation_provider.dart';
 import 'package:project/views/widgets/custom_statuscard.dart';
 import 'package:project/views/screens/my_complaint_screen.dart';
@@ -96,15 +97,20 @@ class HomeScreen extends StatelessWidget {
                                           .read<NavigationProvider>()
                                           .changeIndex(2);
                                     },
-                                    child: CircleAvatar(
-                                      radius: context.width * 0.087,
-                                      backgroundColor: Colors.white,
-                                      child: CircleAvatar(
-                                        radius: context.width * 0.077,
-                                        backgroundImage: const AssetImage(
-                                          'assets/avatar.png',
-                                        ),
-                                      ),
+                                    child: FutureBuilder<SharedPreferences>(
+                                      future: SharedPreferences.getInstance(),
+                                      builder: (context, snapshot) {
+                                        final photoUrl = snapshot.data
+                                            ?.getString('profile_image_url');
+
+                                        return CircleAvatar(
+                                          backgroundImage: photoUrl != null
+                                              ? NetworkImage(photoUrl)
+                                              : const AssetImage(
+                                                  'assets/avatar.png',
+                                                ),
+                                        );
+                                      },
                                     ),
                                   ),
                                   SizedBox(width: context.width * 0.030),
