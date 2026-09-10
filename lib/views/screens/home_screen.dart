@@ -34,6 +34,19 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeProvider = context.watch<HomeProvider>();
 
+    final hour = DateTime.now().hour;
+    String greeting;
+
+    if (hour >= 5 && hour < 12) {
+      greeting = 'Good morning';
+    } else if (hour >= 12 && hour < 17) {
+      greeting = 'Good afternoon,';
+    } else if (hour >= 17 && hour < 21) {
+      greeting = 'Good evening,';
+    } else {
+      greeting = 'Good night,';
+    }
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (homeProvider.homeData == null && !homeProvider.isLoading) {
         context.read<HomeProvider>().getHomeDatas();
@@ -100,7 +113,7 @@ class HomeScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Good morning,',
+                                        greeting,
                                         style: GoogleFonts.inter(
                                           fontSize: context.width * 0.036,
                                           color: const Color(0xFF6B7280),
