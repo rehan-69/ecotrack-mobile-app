@@ -136,9 +136,10 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
+
                                   Padding(
                                     padding: EdgeInsets.only(
-                                      left: context.width * 0.2,
+                                      left: context.width * 0.3,
                                     ),
                                     child: Container(
                                       height: context.width * 0.115,
