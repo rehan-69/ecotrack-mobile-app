@@ -92,7 +92,7 @@ class ComplaintDetailScreen extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          'ECO-1042',
+                          complaint.complaintId,
                           style: GoogleFonts.inter(
                             fontSize: context.width * 0.030,
                             fontWeight: FontWeight.w500,
@@ -188,12 +188,13 @@ class ComplaintDetailScreen extends StatelessWidget {
 
             SizedBox(height: context.height * 0.015),
 
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.only(left: context.width * 0.07),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.width * 0.07),
+              child: SizedBox(
+                width: double.infinity,
                 child: Text(
                   complaint.description,
+                  textAlign: TextAlign.justify,
                   style: GoogleFonts.inter(
                     fontSize: context.width * 0.037,
                     fontWeight: FontWeight.w400,
@@ -234,24 +235,28 @@ class ComplaintDetailScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: context.width * 0.090),
               child: Column(
                 children: [
+                  // =========================
+                  // SUBMITTED
+                  // =========================
                   TimelineTile(
                     alignment: TimelineAlign.start,
                     isFirst: true,
+
                     indicatorStyle: IndicatorStyle(
                       width: context.width * 0.055,
                       color: AppColors.primaryColor,
-
                       iconStyle: IconStyle(
                         iconData: Icons.check,
                         color: Colors.white,
                         fontSize: context.width * 0.035,
                       ),
                     ),
+
                     afterLineStyle: const LineStyle(
                       color: AppColors.primaryColor,
-
                       thickness: 2,
                     ),
+
                     endChild: Padding(
                       padding: EdgeInsets.only(
                         left: context.width * 0.025,
@@ -269,10 +274,10 @@ class ComplaintDetailScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '${_formatDate(complaint.createdAt)} · ${_formatTime(complaint.createdAt)}',
+                            '${_formatDate(complaint.createdAt)} · '
+                            '${_formatTime(complaint.createdAt)}',
                             style: GoogleFonts.inter(
                               fontSize: context.width * 0.030,
-                              fontWeight: FontWeight.w400,
                               color: const Color(0xFF9CA3AF),
                             ),
                           ),
@@ -281,27 +286,124 @@ class ComplaintDetailScreen extends StatelessWidget {
                     ),
                   ),
 
+                  // =========================
+                  // PENDING
+                  // =========================
                   TimelineTile(
                     alignment: TimelineAlign.start,
+
                     indicatorStyle: IndicatorStyle(
                       width: context.width * 0.055,
                       color: AppColors.primaryColor,
-
                       iconStyle: IconStyle(
                         iconData: Icons.check,
                         color: Colors.white,
                         fontSize: context.width * 0.035,
                       ),
                     ),
+
                     beforeLineStyle: const LineStyle(
                       color: AppColors.primaryColor,
+                      thickness: 2,
+                    ),
 
+                    afterLineStyle: LineStyle(
+                      color: complaint.status == 'Pending'
+                          ? const Color(0xFFE5E7EB)
+                          : AppColors.primaryColor,
                       thickness: 2,
                     ),
-                    afterLineStyle: const LineStyle(
-                      color: Color(0xFFE5E7EB),
+
+                    endChild: Padding(
+                      padding: EdgeInsets.only(
+                        left: context.width * 0.025,
+                        bottom: context.height * 0.015,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Pending',
+                            style: GoogleFonts.inter(
+                              fontSize: context.width * 0.038,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFF1F2937),
+                            ),
+                          ),
+
+                          // Submitted aur Pending SAME time
+                          Text(
+                            '${_formatDate(complaint.createdAt)} · '
+                            '${_formatTime(complaint.createdAt)}',
+                            style: GoogleFonts.inter(
+                              fontSize: context.width * 0.030,
+                              color: const Color(0xFF9CA3AF),
+                            ),
+                          ),
+
+                          Text(
+                            'Awaiting municipal action',
+                            style: GoogleFonts.inter(
+                              fontSize: context.width * 0.030,
+                              color: const Color(0xFF9CA3AF),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  // =========================
+                  // IN PROGRESS
+                  // =========================
+                  TimelineTile(
+                    alignment: TimelineAlign.start,
+
+                    indicatorStyle: IndicatorStyle(
+                      width: context.width * 0.055,
+                      color:
+                          complaint.status == 'In Progress' ||
+                              complaint.status == 'Completed'
+                          ? AppColors.primaryColor
+                          : Colors.white,
+
+                      indicator:
+                          complaint.status == 'In Progress' ||
+                              complaint.status == 'Completed'
+                          ? null
+                          : Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: const Color(0xFFE5E7EB),
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+
+                      iconStyle:
+                          complaint.status == 'In Progress' ||
+                              complaint.status == 'Completed'
+                          ? IconStyle(
+                              iconData: Icons.check,
+                              color: Colors.white,
+                              fontSize: context.width * 0.035,
+                            )
+                          : null,
+                    ),
+
+                    beforeLineStyle: const LineStyle(
+                      color: AppColors.primaryColor,
                       thickness: 2,
                     ),
+
+                    afterLineStyle: LineStyle(
+                      color: complaint.status == 'Completed'
+                          ? AppColors.primaryColor
+                          : const Color(0xFFE5E7EB),
+                      thickness: 2,
+                    ),
+
                     endChild: Padding(
                       padding: EdgeInsets.only(
                         left: context.width * 0.025,
@@ -315,11 +417,30 @@ class ComplaintDetailScreen extends StatelessWidget {
                             style: GoogleFonts.inter(
                               fontSize: context.width * 0.038,
                               fontWeight: FontWeight.w700,
-                              color: const Color(0xFF1F2937),
+                              color:
+                                  complaint.status == 'In Progress' ||
+                                      complaint.status == 'Completed'
+                                  ? const Color(0xFF1F2937)
+                                  : const Color(0xFF6B7280),
                             ),
                           ),
+
+                          // DB se actual In Progress time
+                          if (complaint.statusHistory.any(
+                            (h) => h.status == 'In Progress',
+                          ))
+                            Text(
+                              '${_formatDate(complaint.statusHistory.lastWhere((h) => h.status == 'In Progress').createdAt)} · ${_formatTime(complaint.statusHistory.lastWhere((h) => h.status == 'In Progress').createdAt)}',
+                              style: GoogleFonts.inter(
+                                fontSize: context.width * 0.030,
+                                color: const Color(0xFF9CA3AF),
+                              ),
+                            ),
+
                           Text(
-                            '12 Mar · 02:40 PM',
+                            complaint.status == 'Pending'
+                                ? 'Waiting for municipal action'
+                                : 'Complaint is being handled',
                             style: GoogleFonts.inter(
                               fontSize: context.width * 0.030,
                               color: const Color(0xFF9CA3AF),
@@ -330,26 +451,47 @@ class ComplaintDetailScreen extends StatelessWidget {
                     ),
                   ),
 
+                  // =========================
+                  // COMPLETED
+                  // =========================
                   TimelineTile(
                     alignment: TimelineAlign.start,
                     isLast: true,
+
                     indicatorStyle: IndicatorStyle(
                       width: context.width * 0.055,
-                      color: Colors.white,
-                      indicator: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: const Color(0xFFE5E7EB),
-                            width: 2,
-                          ),
-                        ),
-                      ),
+                      color: complaint.status == 'Completed'
+                          ? AppColors.primaryColor
+                          : Colors.white,
+
+                      indicator: complaint.status == 'Completed'
+                          ? null
+                          : Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: const Color(0xFFE5E7EB),
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+
+                      iconStyle: complaint.status == 'Completed'
+                          ? IconStyle(
+                              iconData: Icons.check,
+                              color: Colors.white,
+                              fontSize: context.width * 0.035,
+                            )
+                          : null,
                     ),
-                    beforeLineStyle: const LineStyle(
-                      color: Color(0xFFE5E7EB),
+
+                    beforeLineStyle: LineStyle(
+                      color: complaint.status == 'Completed'
+                          ? AppColors.primaryColor
+                          : const Color(0xFFE5E7EB),
                       thickness: 2,
                     ),
+
                     endChild: Padding(
                       padding: EdgeInsets.only(left: context.width * 0.025),
                       child: Column(
@@ -360,11 +502,28 @@ class ComplaintDetailScreen extends StatelessWidget {
                             style: GoogleFonts.inter(
                               fontSize: context.width * 0.038,
                               fontWeight: FontWeight.w700,
-                              color: const Color(0xFF6B7280),
+                              color: complaint.status == 'Completed'
+                                  ? const Color(0xFF1F2937)
+                                  : const Color(0xFF6B7280),
                             ),
                           ),
+
+                          // DB se actual Completed time
+                          if (complaint.statusHistory.any(
+                            (h) => h.status == 'Completed',
+                          ))
+                            Text(
+                              '${_formatDate(complaint.statusHistory.lastWhere((h) => h.status == 'Completed').createdAt)} · ${_formatTime(complaint.statusHistory.lastWhere((h) => h.status == 'Completed').createdAt)}',
+                              style: GoogleFonts.inter(
+                                fontSize: context.width * 0.030,
+                                color: const Color(0xFF9CA3AF),
+                              ),
+                            ),
+
                           Text(
-                            'Awaiting confirmation',
+                            complaint.status == 'Completed'
+                                ? 'Complaint resolved successfully'
+                                : 'Awaiting confirmation',
                             style: GoogleFonts.inter(
                               fontSize: context.width * 0.030,
                               color: const Color(0xFF9CA3AF),

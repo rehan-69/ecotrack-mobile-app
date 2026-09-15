@@ -3,6 +3,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/models/home_models.dart';
 import 'package:project/constants/mediaquery.dart';
+import 'package:project/services/complaint_service.dart';
 import 'package:project/views/screens/my_complaint_detail_screen.dart';
 
 class CustomRecentComplaint extends StatelessWidget {
@@ -31,13 +32,31 @@ class CustomRecentComplaint extends StatelessWidget {
         right: context.width * 0.035,
       ),
       child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ComplaintDetailScreen(complaint: complaint),
-            ),
-          );
+        onTap: () async {
+          try {
+            final complaintService = ComplaintService();
+
+            // Backend se latest complaint + status history lao
+            final complaintDetail = await complaintService.getComplaintById(
+              complaint.id,
+            );
+
+            if (!context.mounted) return;
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ComplaintDetailScreen(complaint: complaintDetail),
+              ),
+            );
+          } catch (e) {
+            if (!context.mounted) return;
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Failed to load complaint details')),
+            );
+          }
         },
         child: Container(
           padding: EdgeInsets.all(10),

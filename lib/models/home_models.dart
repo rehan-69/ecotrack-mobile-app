@@ -35,16 +35,15 @@ class UserData {
     required this.location,
   });
 
-
   factory UserData.fromJson(Map<String, dynamic> json) {
-  return UserData(
-    id: json["id"],
-    name: json["name"],
-    email: json["email"],
-    mobile: json["mobile"]?.toString(),
-    location: json["location"]?.toString(),
-  );
-}
+    return UserData(
+      id: json["id"],
+      name: json["name"],
+      email: json["email"],
+      mobile: json["mobile"]?.toString(),
+      location: json["location"]?.toString(),
+    );
+  }
 }
 
 class OverViewData {
@@ -71,6 +70,7 @@ class OverViewData {
 }
 
 class RecentComplaint {
+  final int id;
   final String complaintId;
   final List<String>? image;
   final String wasteType;
@@ -80,8 +80,11 @@ class RecentComplaint {
   final String description;
   final double? latitude;
   final double? longitude;
+  final List<StatusHistory> statusHistory;
 
   RecentComplaint({
+    required this.id,
+
     required this.complaintId,
     this.image,
     required this.wasteType,
@@ -91,16 +94,18 @@ class RecentComplaint {
     required this.description,
     this.latitude,
     this.longitude,
+    required this.statusHistory,
   });
 
   factory RecentComplaint.fromJson(Map<String, dynamic> json) {
     return RecentComplaint(
+      id: json["id"],
       complaintId: json["complaint_id"].toString(),
       image: (json['image'] as List?)?.map((e) => e.toString()).toList(),
       wasteType: json["waste_type"],
       location: json["location"],
       status: json["status"],
-      createdAt: DateTime.parse(json["created_at"]),
+      createdAt: DateTime.parse(json["created_at"]).toLocal(),
       description: json["description"]?.toString() ?? '',
       latitude: json["latitude"] != null
           ? (json["latitude"] as num).toDouble()
@@ -108,6 +113,25 @@ class RecentComplaint {
       longitude: json["longitude"] != null
           ? (json["longitude"] as num).toDouble()
           : null,
+      statusHistory:
+          (json["statusHistory"] as List?)
+              ?.map((item) => StatusHistory.fromJson(item))
+              .toList() ??
+          [],
+    );
+  }
+}
+
+class StatusHistory {
+  final String status;
+  final DateTime createdAt;
+
+  StatusHistory({required this.status, required this.createdAt});
+
+  factory StatusHistory.fromJson(Map<String, dynamic> json) {
+    return StatusHistory(
+      status: json["status"].toString(),
+      createdAt: DateTime.parse(json["created_at"]).toLocal(),
     );
   }
 }

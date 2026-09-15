@@ -132,4 +132,39 @@ class ComplaintService {
 
     throw Exception(data['message'] ?? 'Failed to fetch waste types');
   }
+
+  Future<RecentComplaint> getComplaintById(int id) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final token = prefs.getString('jwt_token');
+
+    if (token == null || token.isEmpty) {
+      throw Exception('JWT token not found');
+    }
+
+    final response = await http.get(
+      Uri.parse('$baseUrl/complaints/$id'),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    print('--- GET COMPLAINT DETAIL ---');
+    print('Status Code: ${response.statusCode}');
+    print('Response Body: ${response.body}');
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      final complaint = Map<String, dynamic>.from(data['complaint']);
+
+      complaint['statusHistory'] = data['statusHistory'] ?? [];
+
+      return RecentComplaint.fromJson(complaint);
+    }
+
+    if (response.statusCode == 401) {
+      throw Exception(data['message'] ?? 'Session expired. Please login again');
+    }
+
+    throw Exception(data['message'] ?? 'Failed to fetch complaint details');
+  }
 }
