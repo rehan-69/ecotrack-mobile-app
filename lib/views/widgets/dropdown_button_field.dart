@@ -10,6 +10,13 @@ class DropdownButtonField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ComplaintProvider>(
       builder: (context, value, child) {
+        // Load waste types when dropdown is first shown
+        if (!value.wasteTypesLoaded && value.wasteTypes.isEmpty) {
+          Future.microtask(() {
+            context.read<ComplaintProvider>().getWasteTypes();
+          });
+        }
+
         return DropdownButtonFormField<String>(
           value: value.selectedWaste,
 
@@ -39,17 +46,27 @@ class DropdownButtonField extends StatelessWidget {
             ),
 
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(context.width * 0.040),
-              borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+              borderRadius: BorderRadius.circular(
+                context.width * 0.040,
+              ),
+              borderSide: const BorderSide(
+                color: Color(0xFFE5E7EB),
+              ),
             ),
 
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(context.width * 0.040),
-              borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+              borderRadius: BorderRadius.circular(
+                context.width * 0.040,
+              ),
+              borderSide: const BorderSide(
+                color: Color(0xFFE5E7EB),
+              ),
             ),
 
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(context.width * 0.040),
+              borderRadius: BorderRadius.circular(
+                context.width * 0.040,
+              ),
               borderSide: const BorderSide(
                 color: Color(0xFF28BF5E),
                 width: 1.5,
@@ -59,29 +76,16 @@ class DropdownButtonField extends StatelessWidget {
 
           dropdownColor: Colors.white,
 
-          items: [
-            DropdownMenuItem<String>(
-              value: 'Household Waste',
-              child: Text('Household Waste'),
-            ),
-            DropdownMenuItem<String>(
-              value: 'Plastic Waste',
-              child: Text('Plastic Waste'),
-            ),
-            DropdownMenuItem<String>(
-              value: 'Construction Debris',
-              child: Text('Construction Debris'),
-            ),
-            DropdownMenuItem<String>(
-              value: 'Garden Waste',
-              child: Text('Garden Waste'),
-            ),
-            DropdownMenuItem<String>(value: 'E-Waste', child: Text('E-Waste')),
-            DropdownMenuItem<String>(value: 'Other', child: Text('Other')),
-          ],
+          items: value.wasteTypes.map((wasteType) {
+            return DropdownMenuItem<String>(
+              value: wasteType,
+              child: Text(wasteType),
+            );
+          }).toList(),
 
           onChanged: (val) {
             value.selectedWaste = val;
+            value.notifyListeners();
           },
         );
       },

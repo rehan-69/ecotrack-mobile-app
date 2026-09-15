@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ComplaintService {
   final String baseUrl = "http://127.0.0.1:3000";
 
-// createComplaint method to create a new complaint
+  // createComplaint method to create a new complaint
 
   Future<void> createComplaint({
     required String description,
@@ -85,7 +85,7 @@ class ComplaintService {
   }
 
   // getMyComplaints method to fetch complaints for the Logged-in user
-  
+
   Future<List<RecentComplaint>> getMyComplaints() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -117,5 +117,19 @@ class ComplaintService {
     }
 
     throw Exception(data['message'] ?? 'Failed to fetch complaints');
+  }
+
+  Future<List<String>> getWasteTypes() async {
+    final response = await http.get(Uri.parse('$baseUrl/waste-types'));
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return List<String>.from(
+        (data['wasteTypes'] as List).map((item) => item['name'].toString()),
+      );
+    }
+
+    throw Exception(data['message'] ?? 'Failed to fetch waste types');
   }
 }

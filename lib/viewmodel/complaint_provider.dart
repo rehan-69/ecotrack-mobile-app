@@ -28,6 +28,9 @@ class ComplaintProvider extends ChangeNotifier {
   List<RecentComplaint> searchSource = [];
   List<RecentComplaint> filteredComplaints = [];
 
+  List<String> wasteTypes = [];
+  bool wasteTypesLoaded = false;
+
   Future<bool> createComplaint({
     required String description,
     List<String>? image,
@@ -259,5 +262,17 @@ class ComplaintProvider extends ChangeNotifier {
     latitude = null;
     longitude = null;
     notifyListeners();
+  }
+
+  Future<void> getWasteTypes() async {
+    try {
+      wasteTypes = await _complaintService.getWasteTypes();
+      wasteTypesLoaded = true;
+      notifyListeners();
+    } catch (error) {
+      wasteTypesLoaded = false;
+      errorMessage = error.toString().replaceFirst('Exception: ', '');
+      notifyListeners();
+    }
   }
 }
