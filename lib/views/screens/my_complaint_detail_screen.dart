@@ -48,379 +48,381 @@ class ComplaintDetailScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Divider(
-            color: const Color(0xFFE5E7EB),
-            thickness: 1,
-            height: context.height * 0.025,
-          ),
-
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.width * 0.05,
-              vertical: context.height * 0.02,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Divider(
+              color: const Color(0xFFE5E7EB),
+              thickness: 1,
+              height: context.height * 0.025,
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(context.width * 0.05),
-              child: Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(context.width * 0.05),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: context.height * 0.23,
-                      child: Image.network(
-                        'http://127.0.0.1:3000${complaint.image!.first}',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: context.height * 0.015,
-                    left: context.width * 0.025,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.width * 0.035,
-                        vertical: context.height * 0.007,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF26374A),
-                        borderRadius: BorderRadius.circular(
-                          context.width * 0.04,
-                        ),
-                      ),
-                      child: Text(
-                        'ECO-1042',
-                        style: GoogleFonts.inter(
-                          fontSize: context.width * 0.030,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
+
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.width * 0.05,
+                vertical: context.height * 0.02,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(context.width * 0.05),
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(context.width * 0.05),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: context.height * 0.23,
+                        child: Image.network(
+                          'http://127.0.0.1:3000${complaint.image!.first}',
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    Positioned(
+                      top: context.height * 0.015,
+                      left: context.width * 0.025,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.width * 0.035,
+                          vertical: context.height * 0.007,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF26374A),
+                          borderRadius: BorderRadius.circular(
+                            context.width * 0.04,
+                          ),
+                        ),
+                        child: Text(
+                          'ECO-1042',
+                          style: GoogleFonts.inter(
+                            fontSize: context.width * 0.030,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
 
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.only(left: context.width * 0.06),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: context.width * 0.06),
+                child: Text(
+                  complaint.wasteType,
+                  style: GoogleFonts.inter(
+                    fontSize: context.width * 0.050,
+                    fontWeight: FontWeight.w700,
+                    color: const Color(0xFF1F2937),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: context.height * 0.01),
+
+            Row(
+              children: [
+                SizedBox(width: context.width * 0.05),
+
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: context.width * 0.030,
+                    vertical: context.height * 0.008,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFEF6E7),
+                    borderRadius: BorderRadius.circular(context.width * 0.025),
+                  ),
+                  child: Text(
+                    complaint.status,
+                    style: GoogleFonts.inter(
+                      fontSize: context.width * 0.032,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 238, 151, 1),
+                    ),
+                  ),
+                ),
+
+                SizedBox(width: context.width * 0.03),
+
+                Text(
+                  'Submitted ${_formatDate(complaint.createdAt)}',
+                  style: GoogleFonts.inter(
+                    fontSize: context.width * 0.032,
+                    fontWeight: FontWeight.w400,
+                    color: const Color(0xFF6B7280),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: context.height * 0.02),
+
+            Row(
+              children: [
+                SizedBox(width: context.width * 0.05),
+
+                Row(
+                  children: [
+                    Icon(
+                      Icons.location_on_outlined,
+                      size: context.width * 0.060,
+                      color: const Color(0xFF9CA3AF),
+                    ),
+
+                    SizedBox(width: context.width * 0.015),
+
+                    Text(
+                      complaint.location,
+                      style: GoogleFonts.inter(
+                        fontSize: context.width * 0.035,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xFF6B7280),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            SizedBox(height: context.height * 0.015),
+
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: context.width * 0.07),
+                child: Text(
+                  complaint.description,
+                  style: GoogleFonts.inter(
+                    fontSize: context.width * 0.037,
+                    fontWeight: FontWeight.w400,
+                    color: const Color(0xFF6B7280),
+                    height: 1.4,
+                  ),
+                ),
+              ),
+            ),
+
+            SizedBox(height: context.height * 0.005),
+
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.width * 0.050),
+              child: Divider(
+                color: const Color(0xFFE5E7EB),
+                thickness: 1,
+                height: context.height * 0.025,
+              ),
+            ),
+
+            SizedBox(height: context.height * 0.005),
+
+            Padding(
+              padding: EdgeInsets.only(right: context.width * 0.53),
               child: Text(
-                complaint.wasteType,
+                'Status Timeline',
                 style: GoogleFonts.inter(
-                  fontSize: context.width * 0.050,
+                  fontSize: context.width * 0.045,
                   fontWeight: FontWeight.w700,
                   color: const Color(0xFF1F2937),
                 ),
               ),
             ),
-          ),
-          SizedBox(height: context.height * 0.01),
+            SizedBox(height: context.height * 0.01),
 
-          Row(
-            children: [
-              SizedBox(width: context.width * 0.05),
-
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.width * 0.030,
-                  vertical: context.height * 0.008,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFEF6E7),
-                  borderRadius: BorderRadius.circular(context.width * 0.025),
-                ),
-                child: Text(
-                  complaint.status,
-                  style: GoogleFonts.inter(
-                    fontSize: context.width * 0.032,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 238, 151, 1),
-                  ),
-                ),
-              ),
-
-              SizedBox(width: context.width * 0.03),
-
-              Text(
-                'Submitted ${_formatDate(complaint.createdAt)}',
-                style: GoogleFonts.inter(
-                  fontSize: context.width * 0.032,
-                  fontWeight: FontWeight.w400,
-                  color: const Color(0xFF6B7280),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: context.height * 0.02),
-
-          Row(
-            children: [
-              SizedBox(width: context.width * 0.05),
-
-              Row(
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.width * 0.090),
+              child: Column(
                 children: [
-                  Icon(
-                    Icons.location_on_outlined,
-                    size: context.width * 0.060,
-                    color: const Color(0xFF9CA3AF),
-                  ),
+                  TimelineTile(
+                    alignment: TimelineAlign.start,
+                    isFirst: true,
+                    indicatorStyle: IndicatorStyle(
+                      width: context.width * 0.055,
+                      color: AppColors.primaryColor,
 
-                  SizedBox(width: context.width * 0.015),
-
-                  Text(
-                    complaint.location,
-                    style: GoogleFonts.inter(
-                      fontSize: context.width * 0.035,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xFF6B7280),
+                      iconStyle: IconStyle(
+                        iconData: Icons.check,
+                        color: Colors.white,
+                        fontSize: context.width * 0.035,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                    afterLineStyle: const LineStyle(
+                      color: AppColors.primaryColor,
 
-          SizedBox(height: context.height * 0.015),
-
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.only(left: context.width * 0.07),
-              child: Text(
-                complaint.description,
-                style: GoogleFonts.inter(
-                  fontSize: context.width * 0.037,
-                  fontWeight: FontWeight.w400,
-                  color: const Color(0xFF6B7280),
-                  height: 1.4,
-                ),
-              ),
-            ),
-          ),
-
-          SizedBox(height: context.height * 0.005),
-
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: context.width * 0.050),
-            child: Divider(
-              color: const Color(0xFFE5E7EB),
-              thickness: 1,
-              height: context.height * 0.025,
-            ),
-          ),
-
-          SizedBox(height: context.height * 0.005),
-
-          Padding(
-            padding: EdgeInsets.only(right: context.width * 0.53),
-            child: Text(
-              'Status Timeline',
-              style: GoogleFonts.inter(
-                fontSize: context.width * 0.045,
-                fontWeight: FontWeight.w700,
-                color: const Color(0xFF1F2937),
-              ),
-            ),
-          ),
-          SizedBox(height: context.height * 0.01),
-
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: context.width * 0.090),
-            child: Column(
-              children: [
-                TimelineTile(
-                  alignment: TimelineAlign.start,
-                  isFirst: true,
-                  indicatorStyle: IndicatorStyle(
-                    width: context.width * 0.055,
-                    color: AppColors.primaryColor,
-
-                    iconStyle: IconStyle(
-                      iconData: Icons.check,
-                      color: Colors.white,
-                      fontSize: context.width * 0.035,
+                      thickness: 2,
                     ),
-                  ),
-                  afterLineStyle: const LineStyle(
-                    color: AppColors.primaryColor,
-
-                    thickness: 2,
-                  ),
-                  endChild: Padding(
-                    padding: EdgeInsets.only(
-                      left: context.width * 0.025,
-                      bottom: context.height * 0.015,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Submitted',
-                          style: GoogleFonts.inter(
-                            fontSize: context.width * 0.038,
-                            fontWeight: FontWeight.w700,
-                            color: const Color(0xFF1F2937),
+                    endChild: Padding(
+                      padding: EdgeInsets.only(
+                        left: context.width * 0.025,
+                        bottom: context.height * 0.015,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Submitted',
+                            style: GoogleFonts.inter(
+                              fontSize: context.width * 0.038,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFF1F2937),
+                            ),
                           ),
-                        ),
-                        Text(
-                          '${_formatDate(complaint.createdAt)} · ${_formatTime(complaint.createdAt)}',
-                          style: GoogleFonts.inter(
-                            fontSize: context.width * 0.030,
-                            fontWeight: FontWeight.w400,
-                            color: const Color(0xFF9CA3AF),
+                          Text(
+                            '${_formatDate(complaint.createdAt)} · ${_formatTime(complaint.createdAt)}',
+                            style: GoogleFonts.inter(
+                              fontSize: context.width * 0.030,
+                              fontWeight: FontWeight.w400,
+                              color: const Color(0xFF9CA3AF),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                TimelineTile(
-                  alignment: TimelineAlign.start,
-                  indicatorStyle: IndicatorStyle(
-                    width: context.width * 0.055,
-                    color: AppColors.primaryColor,
-
-                    iconStyle: IconStyle(
-                      iconData: Icons.check,
-                      color: Colors.white,
-                      fontSize: context.width * 0.035,
-                    ),
-                  ),
-                  beforeLineStyle: const LineStyle(
-                    color: AppColors.primaryColor,
-
-                    thickness: 2,
-                  ),
-                  afterLineStyle: const LineStyle(
-                    color: Color(0xFFE5E7EB),
-                    thickness: 2,
-                  ),
-                  endChild: Padding(
-                    padding: EdgeInsets.only(
-                      left: context.width * 0.025,
-                      bottom: context.height * 0.015,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'In Progress',
-                          style: GoogleFonts.inter(
-                            fontSize: context.width * 0.038,
-                            fontWeight: FontWeight.w700,
-                            color: const Color(0xFF1F2937),
-                          ),
-                        ),
-                        Text(
-                          '12 Mar · 02:40 PM',
-                          style: GoogleFonts.inter(
-                            fontSize: context.width * 0.030,
-                            color: const Color(0xFF9CA3AF),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                TimelineTile(
-                  alignment: TimelineAlign.start,
-                  isLast: true,
-                  indicatorStyle: IndicatorStyle(
-                    width: context.width * 0.055,
-                    color: Colors.white,
-                    indicator: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: const Color(0xFFE5E7EB),
-                          width: 2,
-                        ),
+                        ],
                       ),
                     ),
                   ),
-                  beforeLineStyle: const LineStyle(
-                    color: Color(0xFFE5E7EB),
-                    thickness: 2,
-                  ),
-                  endChild: Padding(
-                    padding: EdgeInsets.only(left: context.width * 0.025),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Completed',
-                          style: GoogleFonts.inter(
-                            fontSize: context.width * 0.038,
-                            fontWeight: FontWeight.w700,
-                            color: const Color(0xFF6B7280),
-                          ),
-                        ),
-                        Text(
-                          'Awaiting confirmation',
-                          style: GoogleFonts.inter(
-                            fontSize: context.width * 0.030,
-                            color: const Color(0xFF9CA3AF),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
 
-          SizedBox(height: context.height * 0.015),
-
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: context.width * 0.050),
-            child: Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(context.width * 0.035),
-              decoration: BoxDecoration(
-                color: const Color(0xFFF1F7F1),
-                borderRadius: BorderRadius.circular(context.width * 0.035),
-                border: Border.all(
-                  color: const Color.fromARGB(255, 217, 219, 224),
-                  width: 1,
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Municipality Remarks',
-                    style: GoogleFonts.inter(
-                      fontSize: context.width * 0.040,
-                      fontWeight: FontWeight.w700,
+                  TimelineTile(
+                    alignment: TimelineAlign.start,
+                    indicatorStyle: IndicatorStyle(
+                      width: context.width * 0.055,
                       color: AppColors.primaryColor,
+
+                      iconStyle: IconStyle(
+                        iconData: Icons.check,
+                        color: Colors.white,
+                        fontSize: context.width * 0.035,
+                      ),
+                    ),
+                    beforeLineStyle: const LineStyle(
+                      color: AppColors.primaryColor,
+
+                      thickness: 2,
+                    ),
+                    afterLineStyle: const LineStyle(
+                      color: Color(0xFFE5E7EB),
+                      thickness: 2,
+                    ),
+                    endChild: Padding(
+                      padding: EdgeInsets.only(
+                        left: context.width * 0.025,
+                        bottom: context.height * 0.015,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'In Progress',
+                            style: GoogleFonts.inter(
+                              fontSize: context.width * 0.038,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFF1F2937),
+                            ),
+                          ),
+                          Text(
+                            '12 Mar · 02:40 PM',
+                            style: GoogleFonts.inter(
+                              fontSize: context.width * 0.030,
+                              color: const Color(0xFF9CA3AF),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
 
-                  SizedBox(height: context.height * 0.008),
-
-                  Text(
-                    'Collection vehicle assigned to Ward 07. '
-                    'Clearance scheduled before 6 PM today.',
-                    style: GoogleFonts.inter(
-                      fontSize: context.width * 0.033,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xFF6B7280),
-                      height: 1.3,
+                  TimelineTile(
+                    alignment: TimelineAlign.start,
+                    isLast: true,
+                    indicatorStyle: IndicatorStyle(
+                      width: context.width * 0.055,
+                      color: Colors.white,
+                      indicator: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: const Color(0xFFE5E7EB),
+                            width: 2,
+                          ),
+                        ),
+                      ),
+                    ),
+                    beforeLineStyle: const LineStyle(
+                      color: Color(0xFFE5E7EB),
+                      thickness: 2,
+                    ),
+                    endChild: Padding(
+                      padding: EdgeInsets.only(left: context.width * 0.025),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Completed',
+                            style: GoogleFonts.inter(
+                              fontSize: context.width * 0.038,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFF6B7280),
+                            ),
+                          ),
+                          Text(
+                            'Awaiting confirmation',
+                            style: GoogleFonts.inter(
+                              fontSize: context.width * 0.030,
+                              color: const Color(0xFF9CA3AF),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-        ],
+
+            SizedBox(height: context.height * 0.015),
+
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.width * 0.050),
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(context.width * 0.035),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF1F7F1),
+                  borderRadius: BorderRadius.circular(context.width * 0.035),
+                  border: Border.all(
+                    color: const Color.fromARGB(255, 217, 219, 224),
+                    width: 1,
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Municipality Remarks',
+                      style: GoogleFonts.inter(
+                        fontSize: context.width * 0.040,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
+
+                    SizedBox(height: context.height * 0.008),
+
+                    Text(
+                      'Collection vehicle assigned to Ward 07. '
+                      'Clearance scheduled before 6 PM today.',
+                      style: GoogleFonts.inter(
+                        fontSize: context.width * 0.033,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xFF6B7280),
+                        height: 1.3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
