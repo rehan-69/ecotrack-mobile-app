@@ -567,8 +567,9 @@ class ComplaintDetailScreen extends StatelessWidget {
                     SizedBox(height: context.height * 0.008),
 
                     Text(
-                      'Collection vehicle assigned to Ward 07. '
-                      'Clearance scheduled before 6 PM today.',
+                      complaint.municipalityRemark?.isNotEmpty == true
+                          ? complaint.municipalityRemark!
+                          : 'No municipality remark available.',
                       style: GoogleFonts.inter(
                         fontSize: context.width * 0.033,
                         fontWeight: FontWeight.w400,

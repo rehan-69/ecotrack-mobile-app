@@ -81,6 +81,7 @@ class RecentComplaint {
   final double? latitude;
   final double? longitude;
   final List<StatusHistory> statusHistory;
+  final String? municipalityRemark;
 
   RecentComplaint({
     required this.id,
@@ -95,6 +96,7 @@ class RecentComplaint {
     this.latitude,
     this.longitude,
     required this.statusHistory,
+    this.municipalityRemark,
   });
 
   factory RecentComplaint.fromJson(Map<String, dynamic> json) {
@@ -118,6 +120,7 @@ class RecentComplaint {
               ?.map((item) => StatusHistory.fromJson(item))
               .toList() ??
           [],
+      municipalityRemark: json["municipality_remark"]?.toString(),
     );
   }
 }
