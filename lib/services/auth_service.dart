@@ -110,10 +110,9 @@ class AuthService {
     }
   }
 
-  // Reset Password
+  //Reset Password
   Future<bool> resetPassword({
     required String email,
-    required String otp,
     required String password,
     required String confirmPassword,
   }) async {
@@ -122,55 +121,50 @@ class AuthService {
         Uri.parse('http://127.0.0.1:3000/reset-password'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
-          "email": email.trim(),
-          "otp": otp.trim(),
+          "email": email,
           "password": password,
           "confirmPassword": confirmPassword,
         }),
       );
-
-      debugPrint("Reset Password Status: ${response.statusCode}");
-      debugPrint("Reset Password Body: ${response.body}");
-
-      return response.statusCode == 200;
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        debugPrint('Message : ${data["message"]}');
+        return true;
+      }
+      return false;
     } catch (e) {
-      debugPrint("Reset Password Error: $e");
       return false;
     }
   }
 
-  // Google Login
+  //Google Login
   Future<bool> googleLogin({required String? idToken}) async {
     try {
-      if (idToken == null || idToken.isEmpty) {
-        debugPrint("ID Token is missing");
-        return false;
-      }
-
       final response = await http.post(
         Uri.parse("http://127.0.0.1:3000/google-login"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"idToken": idToken}),
       );
 
-      debugPrint("Status Code: ${response.statusCode}");
-      debugPrint("Response: ${response.body}");
+      debugPrint(response.body);
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+
         final token = data["token"];
 
-        if (token == null) return false;
-
         final prefs = await SharedPreferences.getInstance();
-        await prefs.setString("jwt_token", token.toString());
+
+        await prefs.setString("jwt_token", token);
+
+        debugPrint("Google JWT Token Saved Successfully");
 
         return true;
       }
 
       return false;
     } catch (e) {
-      debugPrint("Google Login Error: $e");
+      debugPrint(e.toString());
       return false;
     }
   }

@@ -157,21 +157,19 @@ class AuthProvider extends ChangeNotifier {
   // Reset Password
   // ---------------------------
 
-  Future<bool> resetPassword(String email, String otp) async {
+  Future<bool> resetPassword(String email) async {
     isLoading = true;
     notifyListeners();
 
     try {
       final result = await _authService.resetPassword(
         email: email,
-        otp: otp,
         password: newPasswordController.text.trim(),
         confirmPassword: confirmPasswordController.text.trim(),
       );
 
       return result;
     } catch (e) {
-      debugPrint("Reset Password Error: $e");
       return false;
     } finally {
       isLoading = false;
