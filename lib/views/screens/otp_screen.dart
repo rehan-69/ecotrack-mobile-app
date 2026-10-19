@@ -229,6 +229,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                     .forgetPasswordEmailController
                                     .text
                                     .trim(),
+                                otp: authValue.otpController.text.trim(),
                               ),
                             ),
                           );

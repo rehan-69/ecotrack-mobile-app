@@ -11,8 +11,9 @@ import 'package:project/views/widgets/custom_text_field.dart';
 class ResetPasswordScreen extends StatelessWidget {
   final formKeyReset = GlobalKey<FormState>();
   final String email;
+  final String otp;
 
-  ResetPasswordScreen({super.key, required this.email});
+  ResetPasswordScreen({super.key, required this.email, required this.otp});
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +158,10 @@ class ResetPasswordScreen extends StatelessWidget {
                       isLoading: value.isLoading,
                       onPressed: () async {
                         if (formKeyReset.currentState!.validate()) {
-                          bool success = await value.resetPassword(email);
+                          bool success = await value.resetPassword(
+                            email,
+                            otp,
+                          );
 
                           if (success) {
                             Fluttertoast.showToast(
