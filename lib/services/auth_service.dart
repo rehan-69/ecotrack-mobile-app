@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
+  
   //Sign Up
   Future<String?> signUp({
     required String name,
@@ -37,29 +38,43 @@ class AuthService {
     }
   }
 
-  //Login
+  // Login
   Future<bool> login({required String email, required String password}) async {
     try {
       final response = await http.post(
         Uri.parse('http://127.0.0.1:3000/login'),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"email": email, "password": password}),
+        body: jsonEncode({"email": email.trim(), "password": password}),
       );
 
-      debugPrint("Status Code: ${response.statusCode}");
-      debugPrint("Body: ${response.body}");
+      debugPrint("Login Status Code: ${response.statusCode}");
+      debugPrint("Login Body: ${response.body}");
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+
         final token = data["token"];
+        final user = data["user"];
+
+        if (token == null || user == null) {
+          debugPrint("Login Error: Token or user data missing");
+          return false;
+        }
+
         final prefs = await SharedPreferences.getInstance();
+
         await prefs.setString("jwt_token", token);
+        await prefs.setString("logged_in_user", jsonEncode(user));
+
         debugPrint("JWT Token Saved Successfully");
+        debugPrint("User Data Saved Successfully");
+
         return true;
       }
 
       return false;
     } catch (e) {
+      debugPrint("Login Error: $e");
       return false;
     }
   }
@@ -137,41 +152,66 @@ class AuthService {
     }
   }
 
-  //Google Login
+  // Google Login
   Future<bool> googleLogin({required String? idToken}) async {
     try {
+      if (idToken == null || idToken.isEmpty) {
+        debugPrint("Google Login Error: ID Token is empty");
+        return false;
+      }
+
       final response = await http.post(
         Uri.parse("http://127.0.0.1:3000/google-login"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"idToken": idToken}),
       );
 
-      debugPrint(response.body);
+      debugPrint("Google Login Status: ${response.statusCode}");
+      debugPrint("Google Login Body: ${response.body}");
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
         final token = data["token"];
+        final user = data["user"];
+
+        if (token == null || user == null) {
+          debugPrint("Google Login Error: Token or user data missing");
+          return false;
+        }
 
         final prefs = await SharedPreferences.getInstance();
 
         await prefs.setString("jwt_token", token);
+        await prefs.setString("logged_in_user", jsonEncode(user));
 
         debugPrint("Google JWT Token Saved Successfully");
+        debugPrint("Google User Data Saved Successfully");
 
         return true;
       }
 
       return false;
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint("Google Login Error: $e");
       return false;
     }
   }
 
-  //Logout
+  // Logout
   Future<void> logout() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove("jwt_token");
+    try {
+      final prefs = await SharedPreferences.getInstance();
+
+      await prefs.remove("jwt_token");
+      await prefs.remove("logged_in_user");
+      await prefs.remove("profile_image_url");
+
+      debugPrint("Logout Successful");
+      debugPrint("Token and User Data Cleared");
+    } catch (e) {
+      debugPrint("Logout Error: $e");
+      rethrow;
+    }
   }
 }
