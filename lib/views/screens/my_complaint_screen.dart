@@ -76,7 +76,7 @@ class MyComplaintScreen extends StatelessWidget {
                     borderRadius: context.width * 0.040,
                     prefixIcon: Icons.search,
                     fontSize: context.width * 0.037,
-                    title: 'Search by ID, type or ward',
+                    title: 'Search by ID or type',
                     iconColor: Colors.grey.shade600,
                     borderColor: const Color(0xFFE5E7EB),
                   ),

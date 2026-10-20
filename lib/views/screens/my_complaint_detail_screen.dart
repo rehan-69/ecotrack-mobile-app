@@ -540,7 +540,7 @@ class ComplaintDetailScreen extends StatelessWidget {
             SizedBox(height: context.height * 0.015),
 
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: context.width * 0.050),
+              padding: EdgeInsets.symmetric(horizontal: context.width * 0.050,),
               child: Container(
                 width: double.infinity,
                 padding: EdgeInsets.all(context.width * 0.035),
