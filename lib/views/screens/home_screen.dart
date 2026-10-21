@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeProvider = context.watch<HomeProvider>();
-
+    final recentComplaints = homeProvider.homeData?.recentComplaints ?? [];
     final hour = DateTime.now().hour;
     String greeting;
 
@@ -48,11 +48,20 @@ class HomeScreen extends StatelessWidget {
       greeting = 'Good night,';
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (homeProvider.homeData == null && !homeProvider.isLoading) {
-        context.read<HomeProvider>().getHomeDatas();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('jwt_token');
+
+      if (!context.mounted) return;
+
+      if (token != null &&
+          token.isNotEmpty &&
+          homeProvider.homeData == null &&
+          !homeProvider.isLoading) {
+        await context.read<HomeProvider>().getHomeDatas();
       }
     });
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
         statusBarColor: Color(0xFFF1F8F1),
@@ -65,12 +74,14 @@ class HomeScreen extends StatelessWidget {
                 child: CircularProgressIndicator(color: AppColors.primaryColor),
               )
             : homeProvider.homeData == null
-            ? Center(child: Text(homeProvider.errorMessage!))
-            : homeProvider.homeData == null
             ? Center(
                 child: Text(
-                  'Unable to load home data',
-                  style: TextStyle(fontSize: 16, color: Color(0xFF9CA3AF)),
+                  homeProvider.errorMessage ?? 'Unable to load home data',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF9CA3AF),
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               )
             : SafeArea(
@@ -422,7 +433,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       SizedBox(height: context.height * 0.015),
 
-                      homeProvider.homeData!.recentComplaints.isEmpty
+                      homeProvider.homeData?.recentComplaints.isEmpty ?? true
                           ? SizedBox(
                               height: context.height * 0.28,
                               width: double.infinity,
@@ -438,9 +449,7 @@ class HomeScreen extends StatelessWidget {
                             )
                           : Column(
                               children: [
-                                ...homeProvider.homeData!.recentComplaints.map((
-                                  complaint,
-                                ) {
+                                ...recentComplaints.map((complaint) {
                                   return Column(
                                     children: [
                                       CustomRecentComplaint(

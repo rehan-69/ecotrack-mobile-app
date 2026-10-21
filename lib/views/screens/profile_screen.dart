@@ -127,6 +127,7 @@ class ProfileScreen extends StatelessWidget {
               color: const Color(0xFFFEF2F2),
               text: "Logout",
               isLoading: authProvider.isLoading,
+
               onPressed: () async {
                 authProvider.clearControllers();
                 otpProvider.resetTimer();
@@ -136,17 +137,19 @@ class ProfileScreen extends StatelessWidget {
                 } catch (e) {
                   debugPrint('Google Sign Out Error: $e');
                 }
-                context.read<HomeProvider>().clearHomeData();
 
                 await authProvider.logout();
 
-                if (context.mounted) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => LoginScreen()),
-                  );
-                }
+                if (!context.mounted) return;
+
+                context.read<HomeProvider>().clearHomeData();
+
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (_) => LoginScreen()),
+                  (route) => false,
+                );
               },
+
               width: context.width * 0.92,
               height: context.height * 0.065,
               borderRadius: context.width * 0.040,
