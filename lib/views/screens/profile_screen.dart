@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/viewmodel/home_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/models/home_models.dart';
@@ -135,6 +136,7 @@ class ProfileScreen extends StatelessWidget {
                 } catch (e) {
                   debugPrint('Google Sign Out Error: $e');
                 }
+                context.read<HomeProvider>().clearHomeData();
 
                 await authProvider.logout();
 

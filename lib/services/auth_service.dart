@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
-  
   //Sign Up
   Future<String?> signUp({
     required String name,
@@ -183,6 +182,8 @@ class AuthService {
         final prefs = await SharedPreferences.getInstance();
 
         await prefs.setString("jwt_token", token);
+
+        debugPrint("JWT TOKEN SAVED: ${prefs.getString("jwt_token") != null}");
         await prefs.setString("logged_in_user", jsonEncode(user));
 
         debugPrint("Google JWT Token Saved Successfully");

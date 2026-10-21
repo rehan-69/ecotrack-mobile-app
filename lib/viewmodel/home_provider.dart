@@ -11,6 +11,13 @@ class HomeProvider extends ChangeNotifier {
 
   String? errorMessage;
 
+  void clearHomeData() {
+  homeData = null;
+  errorMessage = null;
+  isLoading = false;
+  notifyListeners();
+}
+
   Future<void> getHomeDatas() async {
     isLoading = true;
     errorMessage = null;

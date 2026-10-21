@@ -15,6 +15,10 @@ class GoogleAuthProvider extends ChangeNotifier {
         return false;
       }
 
+      // Temporary debugging logs
+      debugPrint("FIREBASE SELECTED EMAIL: ${credential.user?.email}");
+      debugPrint("FIREBASE PHOTO URL: ${credential.user?.photoURL}");
+
       final prefs = await SharedPreferences.getInstance();
       final photoUrl = credential.user?.photoURL;
 
@@ -23,7 +27,7 @@ class GoogleAuthProvider extends ChangeNotifier {
       } else {
         await prefs.remove('profile_image_url');
       }
-      
+
       final idToken = await credential.user?.getIdToken();
 
       final result = await _authService.googleLogin(idToken: idToken);
