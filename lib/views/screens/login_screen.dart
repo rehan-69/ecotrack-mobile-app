@@ -279,25 +279,44 @@ class LoginScreen extends StatelessWidget {
 
                       CustomButton(
                         text: "Login with Google",
+
                         onPressed: () async {
-                          final success = await context
-                              .read<GoogleAuthProvider>()
-                              .googleLogin();
+                          final googleProvider = context
+                              .read<GoogleAuthProvider>();
 
-                          if (success) {
-                            Fluttertoast.showToast(
-                              msg: "Google Login Successful",
-                              backgroundColor: const Color(0xFF33A444),
-                              textColor: Colors.white,
-                            );
+                          try {
+                            final success = await googleProvider.googleLogin();
 
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => MainNavigationScreen(),
-                              ),
-                            );
-                          } else {
+                            if (!context.mounted) return;
+
+                            if (success) {
+                              navigationProvider.changeIndex(0);
+
+                              Fluttertoast.showToast(
+                                msg: "Google Login Successful",
+                                backgroundColor: const Color(0xFF33A444),
+                                textColor: Colors.white,
+                              );
+
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => MainNavigationScreen(),
+                                ),
+                                (route) => false,
+                              );
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: "Google Sign In Failed",
+                                backgroundColor: const Color(0xFFB91C1C),
+                                textColor: Colors.white,
+                              );
+                            }
+                          } catch (e) {
+                            debugPrint("Google Button Error: $e");
+
+                            if (!context.mounted) return;
+
                             Fluttertoast.showToast(
                               msg: "Google Sign In Failed",
                               backgroundColor: const Color(0xFFB91C1C),
@@ -305,6 +324,7 @@ class LoginScreen extends StatelessWidget {
                             );
                           }
                         },
+
                         image: "assets/google.png",
                         color: Colors.white,
                         textColor: AppColors.primaryColor,
