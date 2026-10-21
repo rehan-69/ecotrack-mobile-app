@@ -14,14 +14,16 @@ class GoogleAuthProvider extends ChangeNotifier {
       if (credential == null) {
         return false;
       }
-      
+
+      final prefs = await SharedPreferences.getInstance();
       final photoUrl = credential.user?.photoURL;
 
-      if (photoUrl != null) {
-        final prefs = await SharedPreferences.getInstance();
+      if (photoUrl != null && photoUrl.isNotEmpty) {
         await prefs.setString('profile_image_url', photoUrl);
+      } else {
+        await prefs.remove('profile_image_url');
       }
-
+      
       final idToken = await credential.user?.getIdToken();
 
       final result = await _authService.googleLogin(idToken: idToken);
@@ -31,5 +33,9 @@ class GoogleAuthProvider extends ChangeNotifier {
       debugPrint(e.toString());
       return false;
     }
+  }
+
+  Future<void> signOutGoogle() async {
+    await _googleAuthService.signOut();
   }
 }

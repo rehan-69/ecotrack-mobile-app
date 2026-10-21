@@ -8,6 +8,7 @@ import 'package:project/viewmodel/auth_provider.dart';
 import 'package:project/views/screens/login_screen.dart';
 import 'package:project/views/widgets/custom_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:project/viewmodel/google_auth_provider.dart';
 import 'package:project/views/screens/help_support_screen.dart';
 import 'package:project/views/widgets/custom_profile_option.dart';
 import 'package:project/views/screens/about_ecotrack_screen.dart';
@@ -22,6 +23,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     final otpProvider = Provider.of<OtpProvider>(context);
+    final googleAuthProvider = context.read<GoogleAuthProvider>();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -128,12 +130,18 @@ class ProfileScreen extends StatelessWidget {
                 authProvider.clearControllers();
                 otpProvider.resetTimer();
 
+                try {
+                  await googleAuthProvider.signOutGoogle();
+                } catch (e) {
+                  debugPrint('Google Sign Out Error: $e');
+                }
+
                 await authProvider.logout();
 
                 if (context.mounted) {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                    MaterialPageRoute(builder: (_) => LoginScreen()),
                   );
                 }
               },
