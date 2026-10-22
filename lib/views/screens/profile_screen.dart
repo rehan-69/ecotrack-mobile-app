@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/viewmodel/complaint_provider.dart';
 import 'package:project/viewmodel/home_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -152,6 +153,7 @@ class ProfileScreen extends StatelessWidget {
                 if (!context.mounted) return;
 
                 context.read<HomeProvider>().clearHomeData();
+                context.read<ComplaintProvider>().resetMyComplaints();
 
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (_) => LoginScreen()),

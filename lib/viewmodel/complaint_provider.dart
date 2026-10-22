@@ -264,6 +264,19 @@ class ComplaintProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void resetMyComplaints() {
+    searchSource.clear();
+    filteredComplaints.clear();
+
+    myComplaintsLoaded = false;
+    selectedFilter = 'All';
+    searchController.clear();
+
+    errorMessage = null;
+
+    notifyListeners();
+  }
+
   Future<void> getWasteTypes() async {
     try {
       wasteTypes = await _complaintService.getWasteTypes();
