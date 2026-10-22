@@ -51,19 +51,28 @@ class ProfileScreen extends StatelessWidget {
                   FutureBuilder<SharedPreferences>(
                     future: SharedPreferences.getInstance(),
                     builder: (context, snapshot) {
-                      final photoUrl = snapshot.data?.getString(
-                        'profile_image_url',
-                      );
+                      if (!snapshot.hasData) {
+                        return CircleAvatar(
+                          radius: context.width * 0.110,
+                          backgroundImage: const AssetImage(
+                            'assets/avatar.png',
+                          ),
+                        );
+                      }
+
+                      final prefs = snapshot.data!;
+                      final photoUrl = prefs.getString('profile_image_url');
+
+                      debugPrint('SAVED PHOTO: $photoUrl');
 
                       return CircleAvatar(
                         radius: context.width * 0.110,
                         backgroundColor: Colors.white,
-                        child: CircleAvatar(
-                          radius: context.width * 0.100,
-                          backgroundImage: photoUrl != null
-                              ? NetworkImage(photoUrl)
-                              : const AssetImage('assets/avatar.png'),
-                        ),
+                        backgroundImage:
+                            photoUrl != null && photoUrl.trim().isNotEmpty
+                            ? NetworkImage(photoUrl)
+                            : const AssetImage('assets/avatar.png')
+                                  as ImageProvider,
                       );
                     },
                   ),

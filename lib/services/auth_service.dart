@@ -47,7 +47,6 @@ class AuthService {
       );
 
       debugPrint("Login Status Code: ${response.statusCode}");
-      debugPrint("Login Body: ${response.body}");
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -62,15 +61,29 @@ class AuthService {
 
         final prefs = await SharedPreferences.getInstance();
 
-        await prefs.setString("jwt_token", token);
+        // Save JWT token and user data
+        await prefs.setString("jwt_token", token.toString());
         await prefs.setString("logged_in_user", jsonEncode(user));
+
+        // Save profile image URL
+        final photoUrl = user["profile_image_url"];
+
+        if (photoUrl != null && photoUrl.toString().trim().isNotEmpty) {
+          await prefs.setString("profile_image_url", photoUrl.toString());
+        } else {
+          await prefs.remove("profile_image_url");
+        }
 
         debugPrint("JWT Token Saved Successfully");
         debugPrint("User Data Saved Successfully");
+        debugPrint(
+          "SAVED PROFILE IMAGE: ${prefs.getString('profile_image_url')}",
+        );
 
         return true;
       }
 
+      debugPrint("Login Failed: ${response.body}");
       return false;
     } catch (e) {
       debugPrint("Login Error: $e");
@@ -174,20 +187,22 @@ class AuthService {
         final token = data["token"];
         final user = data["user"];
 
+        debugPrint("NORMAL LOGIN USER DATA: ${jsonEncode(user)}");
+        debugPrint("NORMAL LOGIN PHOTO URL: ${user?["photoURL"]}");
+        debugPrint("NORMAL LOGIN PROFILE IMAGE: ${user?["profile_image_url"]}");
+
         if (token == null || user == null) {
-          debugPrint("Google Login Error: Token or user data missing");
+          debugPrint("Login Error: Token or user data missing");
           return false;
         }
 
         final prefs = await SharedPreferences.getInstance();
 
         await prefs.setString("jwt_token", token);
-
-        debugPrint("JWT TOKEN SAVED: ${prefs.getString("jwt_token") != null}");
         await prefs.setString("logged_in_user", jsonEncode(user));
 
-        debugPrint("Google JWT Token Saved Successfully");
-        debugPrint("Google User Data Saved Successfully");
+        debugPrint("JWT Token Saved Successfully");
+        debugPrint("User Data Saved Successfully");
 
         return true;
       }

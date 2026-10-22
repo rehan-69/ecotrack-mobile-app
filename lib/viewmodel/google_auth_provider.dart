@@ -22,12 +22,15 @@ class GoogleAuthProvider extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       final photoUrl = credential.user?.photoURL;
 
+      debugPrint("GOOGLE PHOTO URL: $photoUrl");
+
       if (photoUrl != null && photoUrl.isNotEmpty) {
         await prefs.setString('profile_image_url', photoUrl);
       } else {
         await prefs.remove('profile_image_url');
       }
 
+      debugPrint("SAVED PHOTO URL: ${prefs.getString('profile_image_url')}");
       final idToken = await credential.user?.getIdToken();
 
       final result = await _authService.googleLogin(idToken: idToken);
