@@ -134,7 +134,7 @@ class ProfileScreen extends StatelessWidget {
             ),
 
             CustomButton(
-              color: const Color(0xFFFEF2F2),
+              color: const Color(0xFF33A444),
               text: "Logout",
               isLoading: authProvider.isLoading,
 
@@ -289,9 +289,9 @@ class ProfileScreen extends StatelessWidget {
               borderRadius: context.width * 0.040,
               fontSize: context.width * 0.043,
               fontWeight: FontWeight.w700,
-              textColor: const Color(0xFFF58585),
+              textColor: Colors.white,
               icon: Icons.logout_outlined,
-              border: Border.all(color: const Color(0xFFFBD8D8)),
+              border: Border.all(color:Color(0xFF33A444)),
             ),
 
             SizedBox(height: context.height * 0.020),

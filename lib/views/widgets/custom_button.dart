@@ -70,7 +70,7 @@ class CustomButton extends StatelessWidget {
               Icon(
                 icon,
                 size: context.width * 0.055,
-                color: const Color(0xFFF58585),
+                color: Colors.white,
               ),
 
             SizedBox(width: context.width * 0.03),
