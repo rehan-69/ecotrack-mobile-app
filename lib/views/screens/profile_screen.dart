@@ -139,6 +139,57 @@ class ProfileScreen extends StatelessWidget {
               isLoading: authProvider.isLoading,
 
               onPressed: () async {
+                final shouldLogout = await showDialog<bool>(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (dialogContext) {
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      title: const Text(
+                        'Confirm Logout',
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                      content: const Text(
+                        'Are you sure you want to log out of your account?',
+                        style: TextStyle(fontSize: 15, color: Colors.black87),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(dialogContext).pop(false);
+                          },
+                          child: const Text(
+                            'No, Cancel',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(dialogContext).pop(true);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFF58585),
+                            foregroundColor: Colors.white,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: const Text('Yes, Log Out'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+
+                // No or dialog dismissed: don't log out.
+                if (shouldLogout != true) return;
+
                 authProvider.clearControllers();
                 otpProvider.resetTimer();
 
