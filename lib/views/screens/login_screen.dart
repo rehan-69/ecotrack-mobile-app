@@ -23,8 +23,6 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navigationProvider = Provider.of<NavigationProvider>(context);
-    final googleProvider = context.read<GoogleAuthProvider>();
-
     return Consumer<AuthProvider>(
       builder: (context, value, child) {
         return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -281,11 +279,10 @@ class LoginScreen extends StatelessWidget {
 
                       CustomButton(
                         text: "Login with Google",
-                        isLoading: googleProvider.isLoading,
-                        onPressed: () async {
-                          if (googleProvider.isLoading) return;
 
-                          googleProvider.setLoading(true);
+                        onPressed: () async {
+                          final googleProvider = context
+                              .read<GoogleAuthProvider>();
 
                           try {
                             final success = await googleProvider.googleLogin();
@@ -294,6 +291,12 @@ class LoginScreen extends StatelessWidget {
 
                             if (success) {
                               navigationProvider.changeIndex(0);
+
+                              Fluttertoast.showToast(
+                                msg: "Google Login Successful",
+                                backgroundColor: const Color(0xFF33A444),
+                                textColor: Colors.white,
+                              );
 
                               Navigator.pushAndRemoveUntil(
                                 context,
@@ -319,10 +322,9 @@ class LoginScreen extends StatelessWidget {
                               backgroundColor: const Color(0xFFB91C1C),
                               textColor: Colors.white,
                             );
-                          } finally {
-                            googleProvider.setLoading(false);
                           }
                         },
+
                         image: "assets/google.png",
                         color: Colors.white,
                         textColor: AppColors.primaryColor,
