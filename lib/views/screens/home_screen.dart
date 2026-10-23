@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project/views/screens/eco_tips_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/constants/app_colors.dart';
@@ -150,27 +151,38 @@ class HomeScreen extends StatelessWidget {
 
                                   Padding(
                                     padding: EdgeInsets.only(
-                                      left: context.width * 0.3,
+                                      left: context.width * 0.33,
                                     ),
-                                    child: Container(
-                                      height: context.width * 0.115,
-                                      width: context.width * 0.115,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Color(0x1A000000),
-                                            blurRadius: 8,
-                                            spreadRadius: 1,
-                                            offset: Offset(0, 3),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) =>
+                                                const EcoTipsScreen(),
                                           ),
-                                        ],
-                                      ),
-                                      child: Icon(
-                                        Icons.notifications_none_outlined,
-                                        size: context.width * 0.055,
-                                        color: const Color(0xFF1F2937),
+                                        );
+                                      },
+                                      child: Container(
+                                        height: context.width * 0.115,
+                                        width: context.width * 0.115,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Color(0x1A000000),
+                                              blurRadius: 8,
+                                              spreadRadius: 1,
+                                              offset: Offset(0, 3),
+                                            ),
+                                          ],
+                                        ),
+                                        child: const Icon(
+                                          Icons.eco_outlined,
+                                          color: Color(0xFF33A444),
+                                          size: 26,
+                                        ),
                                       ),
                                     ),
                                   ),
