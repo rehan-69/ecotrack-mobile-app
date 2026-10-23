@@ -59,7 +59,7 @@ class CustomButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (image != null)
+            if (image != null && !isLoading)
               Image.asset(
                 image!,
                 height: context.width * 0.047,

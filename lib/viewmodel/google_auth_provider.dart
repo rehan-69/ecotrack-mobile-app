@@ -7,6 +7,17 @@ class GoogleAuthProvider extends ChangeNotifier {
   final GoogleAuthService _googleAuthService = GoogleAuthService();
   final AuthService _authService = AuthService();
 
+  bool _isLoading = false;
+
+  bool get isLoading => _isLoading;
+
+  void setLoading(bool value) {
+    if (_isLoading == value) return;
+
+    _isLoading = value;
+    notifyListeners();
+  }
+
   Future<bool> googleLogin() async {
     try {
       final credential = await _googleAuthService.signInWithGoogle();

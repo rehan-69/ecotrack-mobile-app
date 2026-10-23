@@ -277,66 +277,75 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
 
-                      CustomButton(
-                        text: "Login with Google",
+                      Consumer<GoogleAuthProvider>(
+                        builder: (context, googleProvider, child) {
+                          return CustomButton(
+                            text: "Login with Google",
+                            isLoading: googleProvider.isLoading,
 
-                        onPressed: () async {
-                          final googleProvider = context
-                              .read<GoogleAuthProvider>();
+                            onPressed: () async {
+                              if (googleProvider.isLoading) return;
 
-                          try {
-                            final success = await googleProvider.googleLogin();
+                              googleProvider.setLoading(true);
 
-                            if (!context.mounted) return;
+                              try {
+                                final success = await googleProvider
+                                    .googleLogin();
 
-                            if (success) {
-                              navigationProvider.changeIndex(0);
+                                if (!context.mounted) return;
 
-                              Fluttertoast.showToast(
-                                msg: "Google Login Successful",
-                                backgroundColor: const Color(0xFF33A444),
-                                textColor: Colors.white,
-                              );
+                                if (success) {
+                                  navigationProvider.changeIndex(0);
 
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => MainNavigationScreen(),
-                                ),
-                                (route) => false,
-                              );
-                            } else {
-                              Fluttertoast.showToast(
-                                msg: "Google Sign In Failed",
-                                backgroundColor: const Color(0xFFB91C1C),
-                                textColor: Colors.white,
-                              );
-                            }
-                          } catch (e) {
-                            debugPrint("Google Button Error: $e");
+                                  Fluttertoast.showToast(
+                                    msg: "Google Login Successful",
+                                    backgroundColor: const Color(0xFF33A444),
+                                    textColor: Colors.white,
+                                  );
 
-                            if (!context.mounted) return;
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => MainNavigationScreen(),
+                                    ),
+                                    (route) => false,
+                                  );
+                                } else {
+                                  Fluttertoast.showToast(
+                                    msg: "Google Sign In Failed",
+                                    backgroundColor: const Color(0xFFB91C1C),
+                                    textColor: Colors.white,
+                                  );
+                                }
+                              } catch (e) {
+                                debugPrint("Google Button Error: $e");
 
-                            Fluttertoast.showToast(
-                              msg: "Google Sign In Failed",
-                              backgroundColor: const Color(0xFFB91C1C),
-                              textColor: Colors.white,
-                            );
-                          }
+                                if (!context.mounted) return;
+
+                                Fluttertoast.showToast(
+                                  msg: "Google Sign In Failed",
+                                  backgroundColor: const Color(0xFFB91C1C),
+                                  textColor: Colors.white,
+                                );
+                              } finally {
+                                googleProvider.setLoading(false);
+                              }
+                            },
+
+                            image: "assets/google.png",
+                            color: Colors.white,
+                            textColor: AppColors.primaryColor,
+                            border: Border.all(
+                              color: AppColors.primaryColor,
+                              width: 1.2,
+                            ),
+                            width: context.width * 0.85,
+                            height: context.height * 0.065,
+                            borderRadius: context.width * 0.040,
+                            fontSize: context.width * 0.045,
+                            fontWeight: FontWeight.w700,
+                          );
                         },
-
-                        image: "assets/google.png",
-                        color: Colors.white,
-                        textColor: AppColors.primaryColor,
-                        border: Border.all(
-                          color: AppColors.primaryColor,
-                          width: 1.2,
-                        ),
-                        width: context.width * 0.85,
-                        height: context.height * 0.065,
-                        borderRadius: context.width * 0.040,
-                        fontSize: context.width * 0.045,
-                        fontWeight: FontWeight.w700,
                       ),
 
                       SizedBox(height: context.height * 0.040),
