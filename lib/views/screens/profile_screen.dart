@@ -143,51 +143,123 @@ class ProfileScreen extends StatelessWidget {
                   context: context,
                   barrierDismissible: false,
                   builder: (dialogContext) {
-                    return AlertDialog(
+                    return Dialog(
+                      backgroundColor: Colors.white,
+                      elevation: 12,
+                      insetPadding: const EdgeInsets.symmetric(horizontal: 32),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(14),
                       ),
-                      title: const Text(
-                        'Confirm Logout',
-                        style: TextStyle(fontWeight: FontWeight.w700),
-                      ),
-                      content: const Text(
-                        'Are you sure you want to log out of your account?',
-                        style: TextStyle(fontSize: 15, color: Colors.black87),
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(dialogContext).pop(false);
-                          },
-                          child: const Text(
-                            'No, Cancel',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w600,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(18, 24, 18, 20),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.logout_rounded,
+                              color: Color(0xFF34A853),
+                              size: 28,
                             ),
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(dialogContext).pop(true);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFF58585),
-                            foregroundColor: Colors.white,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+
+                            const SizedBox(height: 20),
+
+                            const Text(
+                              'Log out?',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xFF202124),
+                              ),
                             ),
-                          ),
-                          child: const Text('Yes, Log Out'),
+
+                            const SizedBox(height: 6),
+
+                            const Text(
+                              "You'll need to log in again to access\n"
+                              'your account.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 13,
+                                height: 1.5,
+                                color: Color(0xFF888888),
+                              ),
+                            ),
+
+                            const SizedBox(height: 22),
+
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 45,
+                                    child: OutlinedButton(
+                                      onPressed: () {
+                                        Navigator.of(dialogContext).pop(false);
+                                      },
+                                      style: OutlinedButton.styleFrom(
+                                        foregroundColor: const Color(
+                                          0xFF333333,
+                                        ),
+                                        side: const BorderSide(
+                                          color: Color(0xFFDADCE0),
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                        ),
+                                      ),
+                                      child: const Text(
+                                        'Cancel',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                const SizedBox(width: 18),
+
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 45,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(dialogContext).pop(true);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: const Color(
+                                          0xFF34A853,
+                                        ),
+                                        foregroundColor: Colors.white,
+                                        elevation: 0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                        ),
+                                      ),
+                                      child: const Text(
+                                        'CONFIRM',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     );
                   },
                 );
 
-                // No or dialog dismissed: don't log out.
                 if (shouldLogout != true) return;
 
                 authProvider.clearControllers();
