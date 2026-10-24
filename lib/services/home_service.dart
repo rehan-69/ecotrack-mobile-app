@@ -4,8 +4,7 @@ import 'package:project/models/home_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeService {
-  final String baseUrl = "http://127.0.0.1:3000";
-  
+  final String baseUrl = "https://ecotrack-mobile-backend.onrender.com";
   Future<HomeModel> getHomeData() async {
     final prefs = await SharedPreferences.getInstance();
 

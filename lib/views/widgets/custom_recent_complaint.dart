@@ -91,7 +91,7 @@ class CustomRecentComplaint extends StatelessWidget {
                         body: PhotoView(
                           imageProvider: complaint.image?.isNotEmpty == true
                               ? NetworkImage(
-                                  'http://127.0.0.1:3000${complaint.image!.first}',
+                                  'http://https://ecotrack-mobile-backend.onrender.com${complaint.image!.first}',
                                 )
                               : const AssetImage('assets/waste1.png'),
                         ),
@@ -103,7 +103,7 @@ class CustomRecentComplaint extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                   child: complaint.image?.isNotEmpty == true
                       ? Image.network(
-                          'http://127.0.0.1:3000${complaint.image!.first}',
+                          'http://https://ecotrack-mobile-backend.onrender.com${complaint.image!.first}',
                           height: height,
                           width: width,
                           fit: BoxFit.cover,
