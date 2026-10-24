@@ -14,7 +14,7 @@ class AuthService {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('http://https://ecotrack-mobile-backend.onrender.com/signup'),
+        Uri.parse('https://ecotrack-mobile-backend.onrender.com/signup'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           "name": name,
@@ -41,7 +41,7 @@ class AuthService {
   Future<bool> login({required String email, required String password}) async {
     try {
       final response = await http.post(
-        Uri.parse('http://https://ecotrack-mobile-backend.onrender.com/login'),
+        Uri.parse('https://ecotrack-mobile-backend.onrender.com/login'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"email": email.trim(), "password": password}),
       );
@@ -95,7 +95,7 @@ class AuthService {
   Future<bool> forgetPassword({required String email}) async {
     try {
       final response = await http.post(
-        Uri.parse('http://https://ecotrack-mobile-backend.onrender.com/forgot-password'),
+        Uri.parse('https://ecotrack-mobile-backend.onrender.com/forgot-password'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"email": email}),
       );
@@ -116,7 +116,7 @@ class AuthService {
   Future<bool> verifyOTP({required String email, required String otp}) async {
     try {
       final response = await http.post(
-        Uri.parse('http://https://ecotrack-mobile-backend.onrender.com/verify-otp'),
+        Uri.parse('https://ecotrack-mobile-backend.onrender.com/verify-otp'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"email": email, "otp": otp}),
       );
@@ -145,7 +145,7 @@ class AuthService {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('http://https://ecotrack-mobile-backend.onrender.com/reset-password'),
+        Uri.parse('https://ecotrack-mobile-backend.onrender.com/reset-password'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           "email": email,
@@ -173,7 +173,7 @@ class AuthService {
       }
 
       final response = await http.post(
-        Uri.parse("http://https://ecotrack-mobile-backend.onrender.com/google-login"),
+        Uri.parse("https://ecotrack-mobile-backend.onrender.com/google-login"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"idToken": idToken}),
       );

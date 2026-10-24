@@ -72,7 +72,7 @@ class ComplaintDetailScreen extends StatelessWidget {
                         width: double.infinity,
                         height: context.height * 0.23,
                         child: Image.network(
-                          'http://https://ecotrack-mobile-backend.onrender.com${complaint.image!.first}',
+                          'https://ecotrack-mobile-backend.onrender.com${complaint.image!.first}',
                           fit: BoxFit.cover,
                         ),
                       ),

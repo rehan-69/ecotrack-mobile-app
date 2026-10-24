@@ -4,7 +4,7 @@ import 'package:project/models/home_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ComplaintService {
-  final String baseUrl = "http://https://ecotrack-mobile-backend.onrender.com";
+  final String baseUrl = "https://ecotrack-mobile-backend.onrender.com";
 
   // createComplaint method to create a new complaint
 
