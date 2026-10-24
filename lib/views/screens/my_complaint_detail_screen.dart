@@ -11,6 +11,15 @@ class ComplaintDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imagePath = complaint.image?.isNotEmpty == true
+        ? complaint.image!.first
+        : null;
+
+    final imageUrl = imagePath == null
+        ? null
+        : (imagePath.startsWith('http://') || imagePath.startsWith('https://'))
+        ? imagePath
+        : 'https://ecotrack-mobile-backend.onrender.com$imagePath';
     String _formatDate(DateTime date) {
       final months = [
         'Jan',
@@ -71,9 +80,22 @@ class ComplaintDetailScreen extends StatelessWidget {
                       child: SizedBox(
                         width: double.infinity,
                         height: context.height * 0.23,
-                        child: Image.network(
-                          'https://ecotrack-mobile-backend.onrender.com${complaint.image!.first}',
+
+                        child: Image(
+                          image: imageUrl != null
+                              ? NetworkImage(imageUrl)
+                              : const AssetImage('assets/waste1.png')
+                                    as ImageProvider,
                           fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            debugPrint('DETAIL IMAGE ERROR: $error');
+                            debugPrint('DETAIL IMAGE URL: $imageUrl');
+
+                            return Image.asset(
+                              'assets/waste1.png',
+                              fit: BoxFit.cover,
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -540,7 +562,7 @@ class ComplaintDetailScreen extends StatelessWidget {
             SizedBox(height: context.height * 0.015),
 
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: context.width * 0.050,),
+              padding: EdgeInsets.symmetric(horizontal: context.width * 0.050),
               child: Container(
                 width: double.infinity,
                 padding: EdgeInsets.all(context.width * 0.035),

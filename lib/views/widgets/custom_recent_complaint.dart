@@ -26,6 +26,15 @@ class CustomRecentComplaint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imagePath = complaint.image?.isNotEmpty == true
+        ? complaint.image!.first
+        : null;
+
+    final imageUrl = imagePath == null
+        ? null
+        : (imagePath.startsWith('http://') || imagePath.startsWith('https://'))
+        ? imagePath
+        : 'https://ecotrack-mobile-backend.onrender.com$imagePath';
     return Padding(
       padding: EdgeInsets.only(
         left: context.width * 0.035,
@@ -89,36 +98,37 @@ class CustomRecentComplaint extends StatelessWidget {
                           iconTheme: IconThemeData(color: Colors.white),
                         ),
                         body: PhotoView(
-                          imageProvider: complaint.image?.isNotEmpty == true
-                              ? NetworkImage(
-                                  'https://ecotrack-mobile-backend.onrender.com${complaint.image!.first}',
-                                )
+                          imageProvider: imageUrl != null
+                              ? NetworkImage(imageUrl)
                               : const AssetImage('assets/waste1.png'),
                         ),
                       ),
                     ),
                   );
                 },
+
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: complaint.image?.isNotEmpty == true
-                      ? Image.network(
-                          'https://ecotrack-mobile-backend.onrender.com${complaint.image!.first}',
-                          height: height,
-                          width: width,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            print('IMAGE ERROR: $error');
-                            print('IMAGE URL: ${complaint.image!.first}');
-                            return const Icon(Icons.image_not_supported);
-                          },
-                        )
-                      : Image.asset(
-                          'assets/waste1.png',
-                          height: height,
-                          width: width,
-                          fit: BoxFit.cover,
-                        ),
+                  child: Image(
+                    image: imageUrl != null
+                        ? NetworkImage(imageUrl)
+                        : const AssetImage('assets/waste1.png')
+                              as ImageProvider,
+                    height: height,
+                    width: width,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      debugPrint('IMAGE ERROR: $error');
+                      debugPrint('IMAGE URL: $imageUrl');
+
+                      return Image.asset(
+                        'assets/waste1.png',
+                        height: height,
+                        width: width,
+                        fit: BoxFit.cover,
+                      );
+                    },
+                  ),
                 ),
               ),
 
