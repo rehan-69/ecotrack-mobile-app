@@ -92,22 +92,29 @@ class AuthService {
   }
 
   //Forget Password
+  // Forget Password
   Future<bool> forgetPassword({required String email}) async {
     try {
-      final response = await http.post(
-        Uri.parse('https://ecotrack-mobile-backend.onrender.com/forgot-password'),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"email": email}),
-      );
+      final response = await http
+          .post(
+            Uri.parse(
+              'https://ecotrack-mobile-backend.onrender.com/forgot-password',
+            ),
+            headers: {"Content-Type": "application/json"},
+            body: jsonEncode({"email": email.trim()}),
+          )
+          .timeout(const Duration(seconds: 30));
+
+      debugPrint("Forgot Password Status: ${response.statusCode}");
+      debugPrint("Forgot Password Response: ${response.body}");
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        debugPrint("Message : ${data["message"]}");
         return true;
       }
 
       return false;
     } catch (e) {
+      debugPrint("Forgot Password Error: $e");
       return false;
     }
   }
@@ -145,7 +152,9 @@ class AuthService {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('https://ecotrack-mobile-backend.onrender.com/reset-password'),
+        Uri.parse(
+          'https://ecotrack-mobile-backend.onrender.com/reset-password',
+        ),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           "email": email,

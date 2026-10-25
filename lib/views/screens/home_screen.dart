@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project/views/screens/eco_tips_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/constants/app_colors.dart';
@@ -8,6 +7,7 @@ import 'package:project/constants/mediaquery.dart';
 import 'package:project/viewmodel/home_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:project/viewmodel/navigation_provider.dart';
+import 'package:project/views/screens/eco_tips_screen.dart';
 import 'package:project/views/widgets/custom_statuscard.dart';
 import 'package:project/views/screens/my_complaint_screen.dart';
 import 'package:project/views/screens/report_complaint_screen.dart';
@@ -94,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                         color: const Color(0xFFF1F8F1),
                         child: Padding(
                           padding: EdgeInsets.only(
-                            left: context.width * 0.080,
+                            left: context.width * 0.070,
                             top: context.height * 0.010,
                             bottom: context.height * 0.010,
                           ),
@@ -151,7 +151,7 @@ class HomeScreen extends StatelessWidget {
 
                                   Padding(
                                     padding: EdgeInsets.only(
-                                      left: context.width * 0.40,
+                                      left: context.width * 0.32,
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
