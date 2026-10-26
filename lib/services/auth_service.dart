@@ -196,12 +196,8 @@ class AuthService {
         final token = data["token"];
         final user = data["user"];
 
-        debugPrint("NORMAL LOGIN USER DATA: ${jsonEncode(user)}");
-        debugPrint("NORMAL LOGIN PHOTO URL: ${user?["photoURL"]}");
-        debugPrint("NORMAL LOGIN PROFILE IMAGE: ${user?["profile_image_url"]}");
-
         if (token == null || user == null) {
-          debugPrint("Login Error: Token or user data missing");
+          debugPrint("Google Login Error: Token or user data missing");
           return false;
         }
 
@@ -210,7 +206,7 @@ class AuthService {
         await prefs.setString("jwt_token", token);
         await prefs.setString("logged_in_user", jsonEncode(user));
 
-        debugPrint("JWT Token Saved Successfully");
+        debugPrint("Google Login Successful");
         debugPrint("User Data Saved Successfully");
 
         return true;
@@ -220,6 +216,88 @@ class AuthService {
     } catch (e) {
       debugPrint("Google Login Error: $e");
       return false;
+    }
+  }
+
+  // Update Mobile Number
+  Future<Map<String, dynamic>> updateMobile({required String mobile}) async {
+    try {
+      final cleanMobile = mobile.trim();
+
+      if (!RegExp(r'^[0-9]{10}$').hasMatch(cleanMobile)) {
+        return {
+          "success": false,
+          "message": "Please enter a valid 10-digit mobile number.",
+        };
+      }
+
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString("jwt_token");
+
+      if (token == null || token.isEmpty) {
+        return {
+          "success": false,
+          "message": "Session expired. Please login again.",
+        };
+      }
+
+      final response = await http.patch(
+        Uri.parse(
+          "https://ecotrack-mobile-backend.onrender.com/profile/mobile",
+        ),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+        body: jsonEncode({"mobile": cleanMobile}),
+      );
+
+      final dynamic decoded = jsonDecode(response.body);
+
+      if (decoded is! Map<String, dynamic>) {
+        return {
+          "success": false,
+          "message": "Invalid server response. Please try again.",
+        };
+      }
+
+      if (response.statusCode == 200 && decoded["success"] == true) {
+        final dynamic userData = decoded["user"];
+
+        // Update cached user data if present.
+        final savedUser = prefs.getString("logged_in_user");
+
+        if (savedUser != null) {
+          final dynamic parsedUser = jsonDecode(savedUser);
+
+          if (parsedUser is Map) {
+            final user = Map<String, dynamic>.from(parsedUser);
+            user["mobile"] = userData is Map ? userData["mobile"] : cleanMobile;
+
+            await prefs.setString("logged_in_user", jsonEncode(user));
+          }
+        }
+
+        return {
+          "success": true,
+          "message": decoded["message"] ?? "Mobile number saved successfully.",
+          "mobile": userData is Map ? userData["mobile"] : cleanMobile,
+        };
+      }
+
+      return {
+        "success": false,
+        "message":
+            decoded["message"] ??
+            "Failed to save mobile number. Please try again.",
+      };
+    } catch (e) {
+      debugPrint("Update Mobile Error: $e");
+
+      return {
+        "success": false,
+        "message": "Unable to connect. Please try again.",
+      };
     }
   }
 

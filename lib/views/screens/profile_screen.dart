@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/viewmodel/complaint_provider.dart';
 import 'package:project/viewmodel/home_provider.dart';
+import 'package:project/views/widgets/profile_contact_section.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/models/home_models.dart';
@@ -14,7 +15,6 @@ import 'package:project/viewmodel/google_auth_provider.dart';
 import 'package:project/views/screens/help_support_screen.dart';
 import 'package:project/views/widgets/custom_profile_option.dart';
 import 'package:project/views/screens/about_ecotrack_screen.dart';
-import 'package:project/views/widgets/custom_contact_info_card.dart';
 
 class ProfileScreen extends StatelessWidget {
   final UserData user;
@@ -102,7 +102,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
 
-            CustomContactInfoCard(email: user.email, phone: user.mobile ?? ''),
+            ProfileContactSection(email: user.email, phone: user.mobile),
 
             Padding(
               padding: EdgeInsets.only(right: context.width * 0.70),
@@ -291,7 +291,7 @@ class ProfileScreen extends StatelessWidget {
               fontWeight: FontWeight.w700,
               textColor: Colors.white,
               icon: Icons.logout_outlined,
-              border: Border.all(color:Color(0xFF33A444)),
+              border: Border.all(color: Color(0xFF33A444)),
             ),
 
             SizedBox(height: context.height * 0.020),
