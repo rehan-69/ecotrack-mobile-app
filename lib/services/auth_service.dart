@@ -318,6 +318,37 @@ class AuthService {
     }
   }
 
+  Future<Map<String, dynamic>> completeGoogleProfile({
+    required String mobile,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('jwt_token');
+
+    if (token == null || token.isEmpty) {
+      return {
+        'success': false,
+        'message': 'Login session expired. Please login again.',
+      };
+    }
+
+    final response = await http.post(
+      Uri.parse('https://ecotrack-mobile-backend.onrender.com/profile/complete'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'mobile': mobile,
+        'password': password,
+        'confirmPassword': confirmPassword,
+      }),
+    );
+
+    return jsonDecode(response.body) as Map<String, dynamic>;
+  }
+
   // Logout
   Future<void> logout() async {
     try {

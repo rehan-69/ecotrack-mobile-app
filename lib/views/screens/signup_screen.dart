@@ -161,7 +161,7 @@ class Signupscreen extends StatelessWidget {
 
                           SizedBox(height: context.height * .016),
 
-                          if (!isGoogleProfileCompletion) ...[
+                          ...[
                             CustomTextField(
                               controller: authValue.signupPasswordController,
                               validator: (value) {
@@ -242,28 +242,13 @@ class Signupscreen extends StatelessWidget {
                         color: const Color(0xFFC7C3FF),
                         width: 1.2,
                       ),
+
                       onPressed: () async {
                         FocusManager.instance.primaryFocus?.unfocus();
 
                         if (!formKeySignup.currentState!.validate()) return;
 
-                        if (isGoogleProfileCompletion) {
-                          final result = await authValue
-                              .completeGoogleProfile();
-
-                          // Baaki Google profile completion code
-                        }
-
-                        if (complaintValue.selectedLocation == null ||
-                            complaintValue.selectedLocation!.isEmpty) {
-                          Fluttertoast.showToast(
-                            msg: "Unable to get current location",
-                            backgroundColor: const Color(0xFFB91C1C),
-                            textColor: Colors.white,
-                          );
-                          return;
-                        }
-
+                        // Google user: save mobile number without requiring location.
                         if (isGoogleProfileCompletion) {
                           final result = await authValue
                               .completeGoogleProfile();
@@ -299,6 +284,19 @@ class Signupscreen extends StatelessWidget {
                           return;
                         }
 
+                        // Normal signup only: location is required.
+                        await complaintValue.getCurrentLocation();
+
+                        if (complaintValue.selectedLocation == null ||
+                            complaintValue.selectedLocation!.isEmpty) {
+                          Fluttertoast.showToast(
+                            msg: "Unable to get current location",
+                            backgroundColor: const Color(0xFFB91C1C),
+                            textColor: Colors.white,
+                          );
+                          return;
+                        }
+
                         final error = await authValue.signUp(
                           location: complaintValue.selectedLocation!,
                         );
@@ -326,6 +324,7 @@ class Signupscreen extends StatelessWidget {
                           );
                         }
                       },
+
                       width: context.width * 0.95,
                       height: context.height * 0.070,
                       borderRadius: context.width * 0.040,
