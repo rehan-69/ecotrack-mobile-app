@@ -12,7 +12,9 @@ import 'package:project/views/widgets/custom_text_field.dart';
 class Signupscreen extends StatelessWidget {
   final formKeySignup = GlobalKey<FormState>();
 
-  Signupscreen({super.key});
+  final bool isGoogleProfileCompletion;
+
+  Signupscreen({super.key, this.isGoogleProfileCompletion = false});
 
   final RegExp emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
 

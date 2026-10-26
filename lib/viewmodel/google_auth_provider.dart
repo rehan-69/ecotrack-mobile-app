@@ -1,7 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:project/services/auth_service.dart';
 import 'package:project/services/google_auth_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class GoogleAuthProvider extends ChangeNotifier {
   final GoogleAuthService _googleAuthService = GoogleAuthService();
@@ -18,38 +18,33 @@ class GoogleAuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> googleLogin() async {
+  Future<Map<String, dynamic>?> googleLogin() async {
     try {
       final credential = await _googleAuthService.signInWithGoogle();
 
-      if (credential == null) {
-        return false;
-      }
+      if (credential == null) return null;
 
-      // Temporary debugging logs
-      debugPrint("FIREBASE SELECTED EMAIL: ${credential.user?.email}");
-      debugPrint("FIREBASE PHOTO URL: ${credential.user?.photoURL}");
+      final googleUser = credential.user;
+      if (googleUser == null) return null;
 
-      final prefs = await SharedPreferences.getInstance();
-      final photoUrl = credential.user?.photoURL;
+      debugPrint('GOOGLE EMAIL: ${googleUser.email}');
+      debugPrint('GOOGLE NAME: ${googleUser.displayName}');
 
-      debugPrint("GOOGLE PHOTO URL: $photoUrl");
-
-      if (photoUrl != null && photoUrl.isNotEmpty) {
-        await prefs.setString('profile_image_url', photoUrl);
-      } else {
-        await prefs.remove('profile_image_url');
-      }
-
-      debugPrint("SAVED PHOTO URL: ${prefs.getString('profile_image_url')}");
-      final idToken = await credential.user?.getIdToken();
+      final idToken = await googleUser.getIdToken();
 
       final result = await _authService.googleLogin(idToken: idToken);
 
+      if (result == null) return null;
+
+      // Pass Google details to the profile completion screen.
+      result['googleName'] = googleUser.displayName ?? '';
+      result['googleEmail'] = googleUser.email ?? '';
+      result['googlePhotoUrl'] = googleUser.photoURL ?? '';
+
       return result;
     } catch (e) {
-      debugPrint(e.toString());
-      return false;
+      debugPrint('Google Login Error: $e');
+      return null;
     }
   }
 

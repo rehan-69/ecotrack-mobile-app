@@ -174,11 +174,11 @@ class AuthService {
   }
 
   // Google Login
-  Future<bool> googleLogin({required String? idToken}) async {
+  Future<Map<String, dynamic>?> googleLogin({required String? idToken}) async {
     try {
       if (idToken == null || idToken.isEmpty) {
         debugPrint("Google Login Error: ID Token is empty");
-        return false;
+        return null;
       }
 
       final response = await http.post(
@@ -190,32 +190,36 @@ class AuthService {
       debugPrint("Google Login Status: ${response.statusCode}");
       debugPrint("Google Login Body: ${response.body}");
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+      if (response.statusCode != 200) return null;
 
-        final token = data["token"];
-        final user = data["user"];
+      final data = jsonDecode(response.body);
+      final token = data["token"];
+      final user = data["user"];
 
-        if (token == null || user == null) {
-          debugPrint("Google Login Error: Token or user data missing");
-          return false;
-        }
+      if (token == null || user == null) return null;
 
-        final prefs = await SharedPreferences.getInstance();
+      final prefs = await SharedPreferences.getInstance();
 
-        await prefs.setString("jwt_token", token);
-        await prefs.setString("logged_in_user", jsonEncode(user));
+      await prefs.setString("jwt_token", token.toString());
+      await prefs.setString("logged_in_user", jsonEncode(user));
 
-        debugPrint("Google Login Successful");
-        debugPrint("User Data Saved Successfully");
+      final photoUrl = user["profile_image_url"];
 
-        return true;
+      if (photoUrl != null && photoUrl.toString().isNotEmpty) {
+        await prefs.setString("profile_image_url", photoUrl.toString());
+      } else {
+        await prefs.remove("profile_image_url");
       }
 
-      return false;
+      return {
+        "success": true,
+        "user": Map<String, dynamic>.from(user),
+        "isNewUser": data["isNewUser"] == true,
+        "needsProfileCompletion": data["needsProfileCompletion"] == true,
+      };
     } catch (e) {
       debugPrint("Google Login Error: $e");
-      return false;
+      return null;
     }
   }
 
