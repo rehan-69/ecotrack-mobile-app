@@ -129,6 +129,7 @@ class ReportComplaintScreen extends StatelessWidget {
                       : Container(
                           width: double.infinity,
                           height: context.height * 0.18,
+                          padding: EdgeInsets.all(context.width * 0.015),
                           decoration: BoxDecoration(
                             color: const Color(0xFFFAFCFA),
                             border: Border.all(
@@ -143,24 +144,57 @@ class ReportComplaintScreen extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             itemCount: value.selectedImages.length,
                             itemBuilder: (context, index) {
-                              // final image = value.selectedImages[index];
+                              final image = value.selectedImages[index];
 
                               return Padding(
                                 padding: EdgeInsets.only(
                                   right: context.width * 0.025,
                                 ),
-                                child: Center(
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(
-                                      context.width * 0.035,
-                                    ),
-                                    child: Image.file(
-                                      File(value.selectedImages[index].path),
-                                      width: context.width * 0.42,
-                                      height: context.height * 0.165,
-                                      fit: BoxFit.cover,
-                                      cacheWidth: 500,
-                                    ),
+                                child: SizedBox(
+                                  width: context.width * 0.42,
+                                  height: context.height * 0.165,
+                                  child: Stack(
+                                    children: [
+                                      Positioned.fill(
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            context.width * 0.035,
+                                          ),
+                                          child: Image.file(
+                                            File(image.path),
+                                            fit: BoxFit.cover,
+                                            cacheWidth: 500,
+                                          ),
+                                        ),
+                                      ),
+
+                                      // Remove selected image button
+                                      Positioned(
+                                        top: 6,
+                                        right: 6,
+                                        child: Material(
+                                          color: Colors.black54,
+                                          shape: const CircleBorder(),
+                                          child: InkWell(
+                                            customBorder: const CircleBorder(),
+                                            onTap: () {
+                                              value.selectedImages.removeAt(
+                                                index,
+                                              );
+                                              value.notifyListeners();
+                                            },
+                                            child: const Padding(
+                                              padding: EdgeInsets.all(6),
+                                              child: Icon(
+                                                Icons.close,
+                                                color: Colors.white,
+                                                size: 20,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               );
@@ -394,6 +428,7 @@ class ReportComplaintScreen extends StatelessWidget {
                   text: value.isSubmittingComplaint
                       ? 'Submitting...'
                       : 'Submit Complaint',
+                  isLoading: value.isSubmittingComplaint,
                   onPressed: () async {
                     if (value.isSubmittingComplaint) return;
 
@@ -427,12 +462,11 @@ class ReportComplaintScreen extends StatelessWidget {
                     if (!context.mounted) return;
 
                     if (success) {
-                      await value.getMyComplaints();
-                      await context.read<HomeProvider>().getHomeDatas();
-
-                      if (!context.mounted) return;
-
                       value.clearReportDetailed();
+                      await Future.wait([
+                        value.getMyComplaints(),
+                        context.read<HomeProvider>().getHomeDatas(),
+                      ]);
                     }
                   },
                   width: context.width * 0.93,

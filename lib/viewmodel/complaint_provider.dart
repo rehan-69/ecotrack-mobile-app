@@ -133,84 +133,72 @@ class ComplaintProvider extends ChangeNotifier {
   Future<void> getCurrentLocation() async {
     print('LOCATION BUTTON CLICKED');
 
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-
-    print('Location service: $serviceEnabled');
-
-    if (!serviceEnabled) {
-      errorMessage = 'Please turn on location service';
-      notifyListeners();
-      return;
-    }
-
-    LocationPermission permission = await Geolocator.checkPermission();
-
-    print('Permission before request: $permission');
-
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-    }
-
-    print('Permission after request: $permission');
-
-    if (permission == LocationPermission.denied) {
-      errorMessage = 'Location permission denied';
-      notifyListeners();
-      return;
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      errorMessage = 'Location permission permanently denied';
-      notifyListeners();
-      return;
-    }
+    errorMessage = null;
+    notifyListeners();
 
     try {
+      final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+      if (!serviceEnabled) {
+        errorMessage = 'Please turn on location service';
+        return;
+      }
+
+      var permission = await Geolocator.checkPermission();
+
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+      }
+
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        errorMessage = 'Location permission denied';
+        return;
+      }
+
       final position = await Geolocator.getCurrentPosition(
         locationSettings: const LocationSettings(
-          accuracy: LocationAccuracy.high,
+          accuracy: LocationAccuracy.medium,
+          timeLimit: Duration(seconds: 12),
         ),
       );
-
-      print('Latitude: ${position.latitude}');
-      print('Longitude: ${position.longitude}');
 
       latitude = position.latitude;
       longitude = position.longitude;
 
-      final geocoding = Geocoding();
+      // Set a fallback immediately so the form has a location.
+      selectedLocation = 'Current Location';
 
-      final placemarks = await geocoding.placemarkFromCoordinates(
-        position.latitude,
-        position.longitude,
-      );
+      try {
+        final geocoding = Geocoding();
 
-      if (placemarks.isNotEmpty) {
-        final place = placemarks.first;
+        final placemarks = await geocoding
+            .placemarkFromCoordinates(position.latitude, position.longitude)
+            .timeout(const Duration(seconds: 8));
 
-        print('--- GEOCODING RESULT ---');
-        print('Name: ${place.name}');
-        print('Street: ${place.street}');
-        print('SubLocality: ${place.subLocality}');
-        print('Locality: ${place.locality}');
-        print('SubAdministrativeArea: ${place.subAdministrativeArea}');
-        print('AdministrativeArea: ${place.administrativeArea}');
-        print('PostalCode: ${place.postalCode}');
-        print('Country: ${place.country}');
+        if (placemarks.isNotEmpty) {
+          final place = placemarks.first;
 
-        selectedLocation = [
-          place.subLocality,
-          place.locality,
-        ].where((e) => e != null && e.isNotEmpty).join(', ');
+          final locationParts = [place.subLocality, place.locality]
+              .whereType<String>()
+              .map((part) => part.trim())
+              .where((part) => part.isNotEmpty)
+              .toList();
 
-        print('Selected Location: $selectedLocation');
+          if (locationParts.isNotEmpty) {
+            selectedLocation = locationParts.join(', ');
+          }
+        }
+      } catch (e) {
+        // GPS coordinates are still available if geocoding fails.
+        print('GEOCODING WARNING: $e');
       }
 
-      notifyListeners();
+      print('Selected Location: $selectedLocation');
     } catch (e) {
       print('LOCATION ERROR: $e');
-
-      errorMessage = 'Unable to get current location';
+      errorMessage = 'Unable to get current location. Please try again.';
+    } finally {
       notifyListeners();
     }
   }
