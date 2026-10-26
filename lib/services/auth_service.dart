@@ -252,7 +252,20 @@ class AuthService {
         body: jsonEncode({"mobile": cleanMobile}),
       );
 
-      final dynamic decoded = jsonDecode(response.body);
+      dynamic decoded;
+
+      try {
+        decoded = jsonDecode(response.body);
+      } catch (e) {
+        debugPrint('Update Mobile Status: ${response.statusCode}');
+        debugPrint('Update Mobile Response: ${response.body}');
+
+        return {
+          "success": false,
+          "message":
+              "Server returned an invalid response. Check backend URL and deployment.",
+        };
+      }
 
       if (decoded is! Map<String, dynamic>) {
         return {

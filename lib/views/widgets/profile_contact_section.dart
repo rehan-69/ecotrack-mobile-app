@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/constants/mediaquery.dart';
@@ -18,12 +17,10 @@ class ProfileContactSection extends StatefulWidget {
   });
 
   @override
-  State<ProfileContactSection> createState() =>
-      _ProfileContactSectionState();
+  State<ProfileContactSection> createState() => _ProfileContactSectionState();
 }
 
-class _ProfileContactSectionState
-    extends State<ProfileContactSection> {
+class _ProfileContactSectionState extends State<ProfileContactSection> {
   late String? _phone;
   bool _isSaving = false;
 
@@ -64,6 +61,11 @@ class _ProfileContactSectionState
           return StatefulBuilder(
             builder: (dialogContext, setDialogState) {
               return AlertDialog(
+                insetPadding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 24,
+                ),
+                scrollable: true,
                 backgroundColor: Colors.white,
                 title: const Text('Add Phone Number'),
                 content: Form(
@@ -117,8 +119,7 @@ class _ProfileContactSectionState
                             }
 
                             try {
-                              final result =
-                                  await AuthService().updateMobile(
+                              final result = await AuthService().updateMobile(
                                 mobile: controller.text.trim(),
                               );
 
@@ -142,14 +143,11 @@ class _ProfileContactSectionState
                                       result['message']?.toString() ??
                                           'Phone number saved successfully.',
                                     ),
-                                    backgroundColor:
-                                        const Color(0xFF33A444),
+                                    backgroundColor: const Color(0xFF33A444),
                                   ),
                                 );
 
-                                context
-                                    .read<HomeProvider>()
-                                    .getHomeDatas();
+                                context.read<HomeProvider>().getHomeDatas();
                               } else {
                                 setDialogState(() => saving = false);
                                 setState(() => _isSaving = false);
@@ -196,8 +194,6 @@ class _ProfileContactSectionState
         },
       );
     } finally {
-      controller.dispose();
-
       if (mounted && _isSaving) {
         setState(() => _isSaving = false);
       }
@@ -227,15 +223,11 @@ class _ProfileContactSectionState
               label: const Text('Add Phone Number'),
               style: OutlinedButton.styleFrom(
                 foregroundColor: const Color(0xFF33A444),
-                side: const BorderSide(
-                  color: Color(0xFF33A444),
-                ),
+                side: const BorderSide(color: Color(0xFF33A444)),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                textStyle: GoogleFonts.inter(
-                  fontWeight: FontWeight.w600,
-                ),
+                textStyle: GoogleFonts.inter(fontWeight: FontWeight.w600),
               ),
             ),
           ),
