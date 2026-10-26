@@ -85,6 +85,12 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  Future<Map<String, dynamic>> completeGoogleProfile() async {
+  return _authService.updateMobile(
+    mobile: mobileController.text.trim(),
+  );
+}
+
   // ---------------------------
   // Login
   // ---------------------------

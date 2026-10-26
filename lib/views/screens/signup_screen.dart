@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/views/widgets/main_navigation_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:project/constants/app_colors.dart';
@@ -138,8 +139,10 @@ class Signupscreen extends StatelessWidget {
                                 return 'Please enter your mobile number';
                               }
 
-                              if (value.length != 10) {
-                                return 'Please enter a valid mobile number';
+                              if (!RegExp(
+                                r'^[0-9]{10}$',
+                              ).hasMatch(value.trim())) {
+                                return 'Please enter a valid 10-digit mobile number';
                               }
 
                               return null;
@@ -158,68 +161,70 @@ class Signupscreen extends StatelessWidget {
 
                           SizedBox(height: context.height * .016),
 
-                          CustomTextField(
-                            controller: authValue.signupPasswordController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your password';
-                              }
+                          if (!isGoogleProfileCompletion) ...[
+                            CustomTextField(
+                              controller: authValue.signupPasswordController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your password';
+                                }
 
-                              if (value.length < 6) {
-                                return 'Password must be at least 6 characters';
-                              }
+                                if (value.length < 6) {
+                                  return 'Password must be at least 6 characters';
+                                }
 
-                              return null;
-                            },
-                            onChanged: (value) {},
-                            height: context.height * .075,
-                            color: AppColors.appWhiteColor,
-                            borderRadius: context.width * .04,
-                            prefixIcon: Icons.lock_outline,
-                            fontSize: context.width * 0.041,
-                            suffixIcon: authValue.newPasswordObscure
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            onSuffixTap: authValue.toggleNewPassword,
-                            obscureText: authValue.newPasswordObscure,
-                            title: "Password",
-                            labelText: "Password",
-                            iconColor: Colors.grey.shade600,
-                            keyboardType: TextInputType.visiblePassword,
-                          ),
+                                return null;
+                              },
+                              onChanged: (value) {},
+                              height: context.height * .075,
+                              color: AppColors.appWhiteColor,
+                              borderRadius: context.width * .04,
+                              prefixIcon: Icons.lock_outline,
+                              fontSize: context.width * 0.041,
+                              suffixIcon: authValue.newPasswordObscure
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              onSuffixTap: authValue.toggleNewPassword,
+                              obscureText: authValue.newPasswordObscure,
+                              title: "Password",
+                              labelText: "Password",
+                              iconColor: Colors.grey.shade600,
+                              keyboardType: TextInputType.visiblePassword,
+                            ),
 
-                          SizedBox(height: context.height * .016),
+                            SizedBox(height: context.height * .016),
 
-                          CustomTextField(
-                            controller: authValue.confirmPasswordController,
-                            validator: (val) {
-                              if (val == null || val.isEmpty) {
-                                return 'Please enter confirm password';
-                              }
+                            CustomTextField(
+                              controller: authValue.confirmPasswordController,
+                              validator: (val) {
+                                if (val == null || val.isEmpty) {
+                                  return 'Please enter confirm password';
+                                }
 
-                              if (val !=
-                                  authValue.signupPasswordController.text) {
-                                return 'Password does not match';
-                              }
+                                if (val !=
+                                    authValue.signupPasswordController.text) {
+                                  return 'Password does not match';
+                                }
 
-                              return null;
-                            },
-                            onChanged: (value) {},
-                            height: context.height * .075,
-                            color: AppColors.appWhiteColor,
-                            borderRadius: context.width * .04,
-                            fontSize: context.width * 0.041,
-                            prefixIcon: Icons.lock_outline,
-                            suffixIcon: authValue.confirmPasswordObscure
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            onSuffixTap: authValue.toggleConfirmPassword,
-                            obscureText: authValue.confirmPasswordObscure,
-                            title: "Confirm Password",
-                            labelText: "Confirm Password",
-                            iconColor: Colors.grey.shade600,
-                            keyboardType: TextInputType.visiblePassword,
-                          ),
+                                return null;
+                              },
+                              onChanged: (value) {},
+                              height: context.height * .075,
+                              color: AppColors.appWhiteColor,
+                              borderRadius: context.width * .04,
+                              fontSize: context.width * 0.041,
+                              prefixIcon: Icons.lock_outline,
+                              suffixIcon: authValue.confirmPasswordObscure
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              onSuffixTap: authValue.toggleConfirmPassword,
+                              obscureText: authValue.confirmPasswordObscure,
+                              title: "Confirm Password",
+                              labelText: "Confirm Password",
+                              iconColor: Colors.grey.shade600,
+                              keyboardType: TextInputType.visiblePassword,
+                            ),
+                          ],
                         ],
                       ),
                     ),
@@ -227,7 +232,9 @@ class Signupscreen extends StatelessWidget {
                     SizedBox(height: context.height * .03),
 
                     CustomButton(
-                      text: "Sign Up",
+                      text: isGoogleProfileCompletion
+                          ? "Complete Profile"
+                          : "Sign Up",
                       isLoading: authValue.isLoading,
                       color: AppColors.primaryColor,
                       textColor: Theme.of(context).scaffoldBackgroundColor,
@@ -238,52 +245,85 @@ class Signupscreen extends StatelessWidget {
                       onPressed: () async {
                         FocusManager.instance.primaryFocus?.unfocus();
 
-                        if (formKeySignup.currentState!.validate()) {
-                          await complaintValue.getCurrentLocation();
+                        if (!formKeySignup.currentState!.validate()) return;
 
-                          if (complaintValue.selectedLocation == null ||
-                              complaintValue.selectedLocation!.isEmpty) {
-                            Fluttertoast.showToast(
-                              msg: "Unable to get current location",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              backgroundColor: const Color(0xFFB91C1C),
-                              textColor: Colors.white,
-                              fontSize: 14,
-                            );
-                            return;
-                          }
+                        if (isGoogleProfileCompletion) {
+                          final result = await authValue
+                              .completeGoogleProfile();
 
-                          String? error = await authValue.signUp(
-                            location: complaintValue.selectedLocation!,
+                          // Baaki Google profile completion code
+                        }
+
+                        if (complaintValue.selectedLocation == null ||
+                            complaintValue.selectedLocation!.isEmpty) {
+                          Fluttertoast.showToast(
+                            msg: "Unable to get current location",
+                            backgroundColor: const Color(0xFFB91C1C),
+                            textColor: Colors.white,
                           );
+                          return;
+                        }
 
-                          if (error == null) {
+                        if (isGoogleProfileCompletion) {
+                          final result = await authValue
+                              .completeGoogleProfile();
+
+                          if (!context.mounted) return;
+
+                          if (result["success"] == true) {
                             Fluttertoast.showToast(
-                              msg: "Account created successfully.",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
+                              msg: "Profile completed successfully",
                               backgroundColor: const Color(0xFF33A444),
                               textColor: Colors.white,
-                              fontSize: 14,
                             );
 
                             authValue.clearControllers();
 
-                            Navigator.pushReplacement(
+                            Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(builder: (_) => LoginScreen()),
+                              MaterialPageRoute(
+                                builder: (_) => MainNavigationScreen(),
+                              ),
+                              (route) => false,
                             );
                           } else {
                             Fluttertoast.showToast(
-                              msg: error,
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
+                              msg:
+                                  result["message"] ??
+                                  "Unable to save mobile number",
                               backgroundColor: const Color(0xFFB91C1C),
                               textColor: Colors.white,
-                              fontSize: 14,
                             );
                           }
+
+                          return;
+                        }
+
+                        final error = await authValue.signUp(
+                          location: complaintValue.selectedLocation!,
+                        );
+
+                        if (!context.mounted) return;
+
+                        if (error == null) {
+                          Fluttertoast.showToast(
+                            msg: "Account created successfully.",
+                            backgroundColor: const Color(0xFF33A444),
+                            textColor: Colors.white,
+                          );
+
+                          authValue.clearControllers();
+
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (_) => LoginScreen()),
+                          );
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: error,
+                            backgroundColor: const Color(0xFFB91C1C),
+                            textColor: Colors.white,
+                          );
                         }
                       },
                       width: context.width * 0.95,
