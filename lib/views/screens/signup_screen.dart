@@ -248,7 +248,7 @@ class Signupscreen extends StatelessWidget {
 
                         if (!formKeySignup.currentState!.validate()) return;
 
-                        // Google user: save mobile number without requiring location.
+                        // Google profile completion
                         if (isGoogleProfileCompletion) {
                           final result = await authValue
                               .completeGoogleProfile();
@@ -275,7 +275,7 @@ class Signupscreen extends StatelessWidget {
                             Fluttertoast.showToast(
                               msg:
                                   result["message"] ??
-                                  "Unable to save mobile number",
+                                  "Unable to complete profile",
                               backgroundColor: const Color(0xFFB91C1C),
                               textColor: Colors.white,
                             );
@@ -284,7 +284,7 @@ class Signupscreen extends StatelessWidget {
                           return;
                         }
 
-                        // Normal signup only: location is required.
+                        // Normal signup: existing flow
                         await complaintValue.getCurrentLocation();
 
                         if (complaintValue.selectedLocation == null ||

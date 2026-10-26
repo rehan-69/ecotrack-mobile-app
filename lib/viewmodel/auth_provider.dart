@@ -86,12 +86,27 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> completeGoogleProfile() async {
-  return await _authService.completeGoogleProfile(
-    mobile: mobileController.text.trim(),
-    password: signupPasswordController.text,
-    confirmPassword: confirmPasswordController.text,
-  );
-}
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      return await _authService.completeGoogleProfile(
+        mobile: mobileController.text.trim(),
+        password: signupPasswordController.text,
+        confirmPassword: confirmPasswordController.text,
+      );
+    } catch (e) {
+      debugPrint('Complete Google Profile Error: $e');
+
+      return {
+        'success': false,
+        'message': 'Something went wrong. Please try again.',
+      };
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
 
   // ---------------------------
   // Login
