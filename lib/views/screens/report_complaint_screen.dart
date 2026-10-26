@@ -391,11 +391,21 @@ class ReportComplaintScreen extends StatelessWidget {
                 SizedBox(height: context.height * 0.010),
 
                 CustomButton(
-                  text: 'Submit Complaint',
+                  text: value.isSubmittingComplaint
+                      ? 'Submitting...'
+                      : 'Submit Complaint',
                   onPressed: () async {
+                    if (value.isSubmittingComplaint) return;
+
                     if (value.latitude == null || value.longitude == null) {
                       value.errorMessage =
                           'Please select your current location';
+                      value.notifyListeners();
+                      return;
+                    }
+
+                    if (value.selectedWaste == null) {
+                      value.errorMessage = 'Please select a waste type';
                       value.notifyListeners();
                       return;
                     }
@@ -413,9 +423,15 @@ class ReportComplaintScreen extends StatelessWidget {
                       latitude: value.latitude!,
                       longitude: value.longitude!,
                     );
+
+                    if (!context.mounted) return;
+
                     if (success) {
                       await value.getMyComplaints();
                       await context.read<HomeProvider>().getHomeDatas();
+
+                      if (!context.mounted) return;
+
                       value.clearReportDetailed();
                     }
                   },
@@ -425,7 +441,6 @@ class ReportComplaintScreen extends StatelessWidget {
                   fontSize: context.width * 0.040,
                   fontWeight: FontWeight.bold,
                 ),
-
                 SizedBox(height: context.height * 0.010),
               ],
             ),

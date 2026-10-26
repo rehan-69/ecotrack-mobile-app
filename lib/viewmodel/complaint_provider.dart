@@ -13,6 +13,7 @@ class ComplaintProvider extends ChangeNotifier {
   final TextEditingController searchController = TextEditingController();
 
   bool isLoading = false;
+  bool isSubmittingComplaint = false;
   String? errorMessage;
   String? selectedWaste;
   List<XFile> selectedImages = [];
@@ -40,6 +41,12 @@ class ComplaintProvider extends ChangeNotifier {
     required double latitude,
     required double longitude,
   }) async {
+    if (isSubmittingComplaint) {
+      print('Duplicate submit blocked');
+      return false;
+    }
+
+    isSubmittingComplaint = true;
     print('CREATE COMPLAINT STARTED');
     print('Title: $title');
     print('Waste Type: $wasteType');
@@ -70,6 +77,7 @@ class ComplaintProvider extends ChangeNotifier {
       errorMessage = e.toString();
       return false;
     } finally {
+      isSubmittingComplaint = false;
       isLoading = false;
       notifyListeners();
     }
