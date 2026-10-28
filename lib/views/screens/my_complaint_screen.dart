@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/views/widgets/complaint_list_shimmer.dart';
 import 'package:provider/provider.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/viewmodel/complaint_provider.dart';
@@ -107,36 +108,40 @@ class MyComplaintScreen extends StatelessWidget {
 
             Consumer<ComplaintProvider>(
               builder: (context, value, child) {
-                return value.filteredComplaints.isEmpty
-                    ? SizedBox(
-                        height: context.height * 0.55,
-                        child: Center(
-                          child: Text(
-                            'No complaints found',
-                            style: TextStyle(
-                              fontSize: context.width * 0.040,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                if (!value.myComplaintsLoaded) {
+                  return const ComplaintListShimmer();
+                }
+
+                if (value.filteredComplaints.isEmpty) {
+                  return SizedBox(
+                    height: context.height * 0.55,
+                    child: Center(
+                      child: Text(
+                        'No complaints found',
+                        style: TextStyle(
+                          fontSize: context.width * 0.040,
+                          fontWeight: FontWeight.w500,
                         ),
-                      )
-                    : Column(
-                        children: value.filteredComplaints.map((complaint) {
-                          return Column(
-                            children: [
-                              CustomRecentComplaint(
-                                complaint: complaint,
-                                height: context.width * 0.20,
-                                width: context.width * 0.20,
-                                progressColor: _getStatusColor(
-                                  complaint.status,
-                                ),
-                              ),
-                              SizedBox(height: context.height * 0.020),
-                            ],
-                          );
-                        }).toList(),
-                      );
+                      ),
+                    ),
+                  );
+                }
+
+                return Column(
+                  children: value.filteredComplaints.map((complaint) {
+                    return Column(
+                      children: [
+                        CustomRecentComplaint(
+                          complaint: complaint,
+                          height: context.width * 0.20,
+                          width: context.width * 0.20,
+                          progressColor: _getStatusColor(complaint.status),
+                        ),
+                        SizedBox(height: context.height * 0.020),
+                      ],
+                    );
+                  }).toList(),
+                );
               },
             ),
           ],

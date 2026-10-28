@@ -4,6 +4,7 @@ import 'package:project/models/home_models.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:project/constants/app_colors.dart';
 import 'package:project/constants/mediaquery.dart';
+import 'package:project/views/widgets/complaint_list_shimmer.dart';
 
 class ComplaintDetailScreen extends StatelessWidget {
   final RecentComplaint complaint;
