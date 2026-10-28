@@ -10,6 +10,7 @@ import 'package:project/viewmodel/navigation_provider.dart';
 import 'package:project/views/screens/eco_tips_screen.dart';
 import 'package:project/views/widgets/custom_statuscard.dart';
 import 'package:project/views/screens/my_complaint_screen.dart';
+import 'package:project/views/widgets/home_screen_shimmer.dart';
 import 'package:project/views/screens/report_complaint_screen.dart';
 import 'package:project/views/widgets/custom_recent_complaint.dart';
 
@@ -71,9 +72,7 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: homeProvider.isLoading
-            ? Center(
-                child: CircularProgressIndicator(color: AppColors.primaryColor),
-              )
+            ? const HomeScreenShimmer()
             : homeProvider.homeData == null
             ? Center(
                 child: Text(
