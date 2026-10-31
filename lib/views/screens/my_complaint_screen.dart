@@ -30,11 +30,14 @@ class MyComplaintScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final complaintProvider = context.watch<ComplaintProvider>();
 
-    if (!complaintProvider.myComplaintsLoaded) {
+    if (!complaintProvider.myComplaintsLoaded &&
+        !complaintProvider.isLoadingMyComplaints &&
+        complaintProvider.myComplaintsError == null) {
       Future.microtask(() {
         context.read<ComplaintProvider>().getMyComplaints();
       });
     }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -73,7 +76,7 @@ class MyComplaintScreen extends StatelessWidget {
                       value.searchComplaints();
                     },
                     height: context.height * 0.072,
-                    color: Color.fromARGB(255, 247, 247, 252),
+                    color: const Color.fromARGB(255, 247, 247, 252),
                     borderRadius: context.width * 0.040,
                     prefixIcon: Icons.search,
                     fontSize: context.width * 0.037,
@@ -85,7 +88,7 @@ class MyComplaintScreen extends StatelessWidget {
               },
             ),
 
-            SizedBox(height: context.height * .010),
+            SizedBox(height: context.height * 0.010),
 
             Row(
               children: [
@@ -108,10 +111,35 @@ class MyComplaintScreen extends StatelessWidget {
 
             Consumer<ComplaintProvider>(
               builder: (context, value, child) {
-                if (!value.myComplaintsLoaded) {
+                // 1. API loading: Show shimmer
+                if (value.isLoadingMyComplaints ||
+                    (!value.myComplaintsLoaded &&
+                        value.myComplaintsError == null)) {
                   return const ComplaintListShimmer();
                 }
 
+                // 2. API error: Show retry option
+                if (value.myComplaintsError != null) {
+                  return SizedBox(
+                    height: context.height * 0.55,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('Failed to load complaints'),
+                          TextButton(
+                            onPressed: () {
+                              value.getMyComplaints();
+                            },
+                            child: const Text('Retry'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+
+                // 3. API loaded but no complaints
                 if (value.filteredComplaints.isEmpty) {
                   return SizedBox(
                     height: context.height * 0.55,
@@ -127,6 +155,7 @@ class MyComplaintScreen extends StatelessWidget {
                   );
                 }
 
+                // 4. Show complaints list
                 return Column(
                   children: value.filteredComplaints.map((complaint) {
                     return Column(

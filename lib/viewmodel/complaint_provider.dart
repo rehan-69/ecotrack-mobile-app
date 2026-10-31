@@ -24,6 +24,8 @@ class ComplaintProvider extends ChangeNotifier {
   String camera = 'Camera';
   String selectedFilter = 'All';
   bool myComplaintsLoaded = false;
+  bool isLoadingMyComplaints = false;
+  String? myComplaintsError;
 
   //My Complaint Variables
   List<RecentComplaint> searchSource = [];
@@ -84,25 +86,27 @@ class ComplaintProvider extends ChangeNotifier {
   }
 
   Future<void> getMyComplaints() async {
-    myComplaintsLoaded = true;
+    if (isLoadingMyComplaints || myComplaintsLoaded) return;
+
+    isLoadingMyComplaints = true;
+    myComplaintsError = null;
+    notifyListeners();
 
     try {
-      isLoading = true;
-      errorMessage = null;
-      notifyListeners();
-
       final complaints = await _complaintService.getMyComplaints();
 
       searchSource = complaints;
       filteredComplaints = complaints;
 
+      // API successfully loaded
+      myComplaintsLoaded = true;
+
       print('MY COMPLAINTS COUNT: ${complaints.length}');
     } catch (e) {
       print('GET MY COMPLAINTS ERROR: $e');
-      errorMessage = e.toString();
-      myComplaintsLoaded = false;
+      myComplaintsError = e.toString();
     } finally {
-      isLoading = false;
+      isLoadingMyComplaints = false;
       notifyListeners();
     }
   }
@@ -263,8 +267,11 @@ class ComplaintProvider extends ChangeNotifier {
   void resetMyComplaints() {
     searchSource.clear();
     filteredComplaints.clear();
+    isLoadingMyComplaints = false;
+    myComplaintsError = null;
 
     myComplaintsLoaded = false;
+
     selectedFilter = 'All';
     searchController.clear();
 
