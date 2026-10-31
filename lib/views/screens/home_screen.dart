@@ -150,7 +150,7 @@ class HomeScreen extends StatelessWidget {
 
                                   Padding(
                                     padding: EdgeInsets.only(
-                                      left: context.width * 0.40,
+                                      left: context.width * 0.32,
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
