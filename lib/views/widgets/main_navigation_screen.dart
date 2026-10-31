@@ -20,11 +20,7 @@ class MainNavigationScreen extends StatelessWidget {
     final screens = [
       const HomeScreen(),
       const MyComplaintScreen(),
-      homeProvider.homeData == null
-          ? Center(
-              child: CircularProgressIndicator(color: AppColors.primaryColor),
-            )
-          : ProfileScreen(user: homeProvider.homeData!.user),
+      ProfileScreen(user: homeProvider.homeData?.user),
     ];
 
     return AnnotatedRegion<SystemUiOverlayStyle>(

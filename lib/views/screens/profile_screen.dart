@@ -1,31 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:project/viewmodel/complaint_provider.dart';
-import 'package:project/viewmodel/home_provider.dart';
-import 'package:project/views/widgets/custom_contact_info_card.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/models/home_models.dart';
 import 'package:project/constants/mediaquery.dart';
 import 'package:project/viewmodel/otp_provider.dart';
 import 'package:project/viewmodel/auth_provider.dart';
+import 'package:project/viewmodel/home_provider.dart';
 import 'package:project/views/screens/login_screen.dart';
 import 'package:project/views/widgets/custom_button.dart';
+import 'package:project/viewmodel/complaint_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:project/viewmodel/google_auth_provider.dart';
 import 'package:project/views/screens/help_support_screen.dart';
 import 'package:project/views/widgets/custom_profile_option.dart';
 import 'package:project/views/screens/about_ecotrack_screen.dart';
+import 'package:project/views/widgets/profile_screen_shimmer.dart';
+import 'package:project/views/widgets/custom_contact_info_card.dart';
 
 class ProfileScreen extends StatelessWidget {
-  final UserData user;
+  final UserData? user;
 
-  const ProfileScreen({super.key, required this.user});
+  const ProfileScreen({super.key, this.user});
 
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     final otpProvider = Provider.of<OtpProvider>(context);
     final googleAuthProvider = context.read<GoogleAuthProvider>();
+    final homeProvider = context.watch<HomeProvider>();
+    final isProfileLoading = homeProvider.isLoading || user == null;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -80,34 +83,38 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     SizedBox(height: context.height * 0.015),
 
-                    Text(
-                      user.name,
-                      style: GoogleFonts.inter(
-                        fontSize: context.width * 0.045,
-                        fontWeight: FontWeight.bold,
-                        color: const Color(0xFF1F2937),
+                    if (isProfileLoading) ...[
+                      const ProfileScreenShimmer(),
+                    ] else ...[
+                      Text(
+                        user!.name,
+                        style: GoogleFonts.inter(
+                          fontSize: context.width * 0.045,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFF1F2937),
+                        ),
                       ),
-                    ),
-
-                    SizedBox(height: context.height * 0.004),
-
-                    Text(
-                      user.location ?? '',
-                      style: GoogleFonts.inter(
-                        fontSize: context.width * 0.032,
-                        fontWeight: FontWeight.w400,
-                        color: const Color(0xFF79808C),
+                      SizedBox(height: context.height * 0.004),
+                      Text(
+                        user!.location ?? '',
+                        style: GoogleFonts.inter(
+                          fontSize: context.width * 0.032,
+                          fontWeight: FontWeight.w400,
+                          color: const Color(0xFF79808C),
+                        ),
                       ),
-                    ),
+                    ],
                   ],
                 ),
               ),
 
-              CustomContactInfoCard(
-                email: user.email,
-                phone: user.mobile ?? '',
-              ),
-              
+              if (isProfileLoading)
+                const ProfileContactShimmer()
+              else
+                CustomContactInfoCard(
+                  email: user!.email,
+                  phone: user!.mobile ?? '',
+                ),
               Padding(
                 padding: EdgeInsets.only(right: context.width * 0.70),
                 child: Text(
