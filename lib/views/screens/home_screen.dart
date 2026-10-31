@@ -85,6 +85,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               )
             : SafeArea(
+                top: false,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -94,7 +95,9 @@ class HomeScreen extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.only(
                             left: context.width * 0.070,
-                            top: context.height * 0.010,
+                            top:
+                                MediaQuery.of(context).padding.top +
+                                context.height * 0.010,
                             bottom: context.height * 0.010,
                           ),
                           child: Column(
@@ -150,7 +153,7 @@ class HomeScreen extends StatelessWidget {
 
                                   Padding(
                                     padding: EdgeInsets.only(
-                                      left: context.width * 0.32,
+                                      left: context.width * 0.34,
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
